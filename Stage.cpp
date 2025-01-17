@@ -12,7 +12,7 @@ Stage::~Stage()
 
 void Stage::Initialize()
 {
-	hModel=Model::Load("Assets/Model/Floor.fbx");
+	hModel=Model::Load("Model/Floor.fbx");
 	assert(hModel >= 0);
 	transform_.position_ = { 0,10,5 };
 }

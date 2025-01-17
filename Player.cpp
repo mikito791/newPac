@@ -7,20 +7,20 @@
 
 enum CAM_TYPE
 {
-	TEST_TYPE,
+	TPS_TYPE,
 	FIXED_TYPE,
 	FPS_TYPE,
-	//TPS_TYPE,
 	MAX_TYPE,
 };
 
 Player::Player(GameObject* parent)
+	:GameObject(parent, "Player")
 {
 }
 
 void Player::Initialize()
 {
-	hModel = Model::Load("Assets/Model/Player.fbx");
+	hModel = Model::Load("Model/Player.fbx");
 	assert(hModel >= 0);
 	/*x = 0.5;
 	y = 10;
@@ -91,39 +91,40 @@ void Player::Update()
 	{
 		camState++;
 		if (camState == CAM_TYPE::MAX_TYPE)
-			camState = CAM_TYPE::TEST_TYPE;
+			camState = CAM_TYPE::TPS_TYPE;
 	}
 
 	switch (camState)
 	{
-	case CAM_TYPE::TEST_TYPE:
+	case CAM_TYPE::TPS_TYPE:
 	{
 		XMFLOAT3 camposplay = transform_.position_;
-		XMVECTOR camplay = XMLoadFloat3(&(camposplay));
-		Camera::SetTarget(camplay);
+		//XMVECTOR camplay = XMLoadFloat3(&(camposplay));
+		Camera::SetTarget(camposplay);
 		//Camera::SetTarget(transform_.position_);
 		XMVECTOR vEye{ 0,10,-10,0 };
 		vEye = XMVector3TransformCoord(vEye, rotY);
 		XMFLOAT3 camPos;
 		XMStoreFloat3(&camPos, pos + vEye);
-		XMVECTOR Campos = XMLoadFloat3(&camPos);
-		Camera::SetPosition(Campos);
+		//XMVECTOR Campos = XMLoadFloat3(&camPos);
+		Camera::SetPosition(camPos);
 		break;
 	}
 	case CAM_TYPE::FIXED_TYPE:
 	{
-		Camera::SetPosition(XMVectorSet(0.5, 10, -5, 0));
-		Camera::SetTarget(XMVectorSet(0.5, 0, 5, 0));
+		Camera::SetPosition(XMFLOAT3(0.5, 10, -5));
+		Camera::SetTarget(XMFLOAT3(0.5, 0, 5));
 		break;
 	}
 	case CAM_TYPE::FPS_TYPE:
 	{
-		XMVECTOR pos2 = XMLoadFloat3(&(transform_.position_));
-		Camera::SetPosition(pos);
+		//XMFLOAT3 pos2 = XMFLOAT3(transform_.position_.x+1,transform_.position_.y+1,transform_.position_.z+1);
+		Camera::SetPosition(transform_.position_);
+		//Camera::SetPosition(pos2);
 		XMFLOAT3 camTarget;
 		XMStoreFloat3(&camTarget, pos + move);
 		XMVECTOR camTarget3 = XMLoadFloat3(&camTarget);
-		Camera::SetTarget(camTarget3);
+		Camera::SetTarget(camTarget);
 		break;
 	}
 	default:
