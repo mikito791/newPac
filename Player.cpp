@@ -4,6 +4,10 @@
 #include"Engine/SphereCollider.h"
 #include"Engine/SceneManager.h"
 #include"Engine/Camera.h"
+#include"Stage.h"
+
+float JUMP_HEIGHT = 48.0f * 4.0f;//ジャンプの高さ
+const float GRAVITY = 9.8f / 60.0f;//重力加速度
 
 enum CAM_TYPE
 {
@@ -16,6 +20,9 @@ enum CAM_TYPE
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player")
 {
+	/*prevSpacekey = false;
+	OnGround = false;
+	jumpSpeed = 0.0;*/
 }
 
 void Player::Initialize()
@@ -27,6 +34,9 @@ void Player::Initialize()
 	z = -5;*/
 	speed = 0.05;
 	front = XMVECTOR({ 0,0,1,0 });
+	//transform_.position_.y = 10;
+	SphereCollider* collision = new SphereCollider(transform_.position_, 1.2f);
+	AddCollider(collision);
 }
 
 void Player::Update()
@@ -85,6 +95,20 @@ void Player::Update()
 	XMVECTOR pos = XMLoadFloat3(&(transform_.position_));
 	pos = pos + dir * move;
 	XMStoreFloat3(&(transform_.position_), pos);
+	
+	
+	Stage* pStage = (Stage*)FindObject("Stage");
+	int hStageModel = pStage->GetModelHandle();
+
+	RayCastData data;
+	data.start=transform_.position_;
+	data.start.y = 0;
+	data.dir = XMFLOAT3(0, -1, 0);
+	Model::RayCast(hStageModel, &data);
+	if(data.hit==true)
+	{
+		transform_.position_.y -= data.dist;
+	}
 
 	//カメラのいろいろ
 	if (Input::IsKeyDown(DIK_Z))
@@ -112,8 +136,11 @@ void Player::Update()
 	}
 	case CAM_TYPE::FIXED_TYPE:
 	{
-		Camera::SetPosition(XMFLOAT3(0.5, 10, -5));
-		Camera::SetTarget(XMFLOAT3(0.5, 0, 5));
+		XMFLOAT3 camPos = transform_.position_;
+		camPos.y = transform_.position_.y + 5.0f;
+		camPos.z = transform_.position_.z - 10.0f;
+		Camera::SetPosition(camPos);
+		Camera::SetTarget(transform_.position_);
 		break;
 	}
 	case CAM_TYPE::FPS_TYPE:
@@ -146,4 +173,8 @@ void Player::Release()
 
 void Player::OnCollision(GameObject* pTarget)
 {
+	if (pTarget->GetObjectName() == "Stage")
+	{
+		transform_.position_.y = 0;
+	}
 }

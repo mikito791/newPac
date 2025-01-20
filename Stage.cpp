@@ -34,6 +34,15 @@ void Stage::Draw()
 			Model::Draw(hModel);
 		}
 	}
+	/*for (int z = 0; z < 10; z++)
+	{
+		for (int x = 0; x < 20; x++)
+		{
+			floorTrans.position_ = { (float)x,0,(float)z };
+			Model::SetTransform(hModel, floorTrans);
+			Model::Draw(hModel);
+		}
+	}*/
 }
 
 void Stage::Release()
