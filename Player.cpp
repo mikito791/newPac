@@ -20,9 +20,9 @@ enum CAM_TYPE
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player")
 {
-	/*prevSpacekey = false;
+	prevSpacekey = false;
 	OnGround = false;
-	jumpSpeed = 0.0;*/
+	jumpSpeed = 0.0;
 }
 
 void Player::Initialize()

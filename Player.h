@@ -8,9 +8,9 @@ class Player :
 	float speed;
 	int camState;
 	int x, y, z;
-	/*bool prevSpacekey;
+	bool prevSpacekey;
 	bool OnGround;
-	float jumpSpeed;*/
+	float jumpSpeed;
 public:
 	Player(GameObject* parent);
 
