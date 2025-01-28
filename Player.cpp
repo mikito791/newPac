@@ -11,8 +11,8 @@ const float GRAVITY = 9.8f / 60.0f;//重力加速度
 
 enum CAM_TYPE
 {
-	TPS_TYPE,
 	FIXED_TYPE,
+	TPS_TYPE,
 	FPS_TYPE,
 	MAX_TYPE,
 };
@@ -61,32 +61,33 @@ void Player::Update()
 	//{
 	//	transform_.rotate_.z += 1;
 	//}
-	if (Input::IsKey(DIK_UP))//前に進む
-	{
-		dir = 1.0;
-	}
+	//if (Input::IsKey(DIK_UP))//前に進む
+	//{
+	//	dir = 1.0;
+	//}
 	//if (Input::IsKey(DIK_DOWN))//バック
 	//{
 	//	dir = -1.0;
 	//}
-	if (Input::IsKey(DIK_LEFT))//左向く
+
+	dir = 1.0;
+	if (Input::IsKeyDown(DIK_UP))//前向く
 	{
-		this->transform_.rotate_.y -= 3;
+		this->transform_.rotate_.y = 0;
 	}
-	if (Input::IsKey(DIK_RIGHT))//右向く
+	if (Input::IsKeyDown(DIK_DOWN))//後ろ向く
 	{
-		this->transform_.rotate_.y += 3;
+		this->transform_.rotate_.y = 180;
 	}
-	/*if (Input::IsKey(DIK_A))
+	if (Input::IsKeyDown(DIK_RIGHT))//右向く
 	{
-		x += 1;
-		z += 1;
+		this->transform_.rotate_.y = 90;
 	}
-	if (Input::IsKey(DIK_D))
+	if (Input::IsKeyDown(DIK_LEFT))//左向く
 	{
-		x -= 1;
-		z -= 1;
-	}*/
+		this->transform_.rotate_.y = 270;
+	}
+
 	//回転行列を求める
 	rotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
 	//ベクトルの回転結果を求める
@@ -115,7 +116,7 @@ void Player::Update()
 	{
 		camState++;
 		if (camState == CAM_TYPE::MAX_TYPE)
-			camState = CAM_TYPE::TPS_TYPE;
+			camState = CAM_TYPE::FIXED_TYPE;
 	}
 
 	switch (camState)
