@@ -3,7 +3,9 @@
 class Stage :
     public GameObject
 {
-    int hModel;
+    int hFloor;
+    int hWall;
+    XMFLOAT3 position;
 public:
     Stage(GameObject* parent);
     ~Stage();
@@ -11,6 +13,7 @@ public:
     void Update() override;
     void Draw() override;
     void Release() override;
-    int GetModelHandle() { return hModel; }
+    int GetModelHandle() { return hFloor; }
+    XMFLOAT3 GetPosition(XMFLOAT3 pos) { return position=pos; }
 };
 

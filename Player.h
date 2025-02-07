@@ -7,10 +7,11 @@ class Player :
 	XMVECTOR front;
 	float speed;
 	int camState;
-	int x, y, z;
-	bool prevSpacekey;
-	bool OnGround;
-	float jumpSpeed;
+	XMMATRIX rotY = XMMatrixIdentity();
+	XMVECTOR move{ 0,0,0,0 };
+	XMVECTOR rotVec{ 0,0,0,0 };
+	XMVECTOR pos;
+	float dir = 0;
 public:
 	Player(GameObject* parent);
 
@@ -23,5 +24,6 @@ public:
 	void Release() override;
 	void OnCollision(GameObject* pTarget) override;
 
+	
 };
 

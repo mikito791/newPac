@@ -20,9 +20,7 @@ enum CAM_TYPE
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player")
 {
-	prevSpacekey = false;
-	OnGround = false;
-	jumpSpeed = 0.0;
+	
 }
 
 void Player::Initialize()
@@ -37,6 +35,7 @@ void Player::Initialize()
 	//transform_.position_.y = 10;
 	SphereCollider* collision = new SphereCollider(transform_.position_, 1.2f);
 	AddCollider(collision);
+	transform_.position_=XMFLOAT3(10, 0, 10);
 }
 
 void Player::Update()
