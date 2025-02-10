@@ -35,7 +35,7 @@ void Player::Initialize()
 	//transform_.position_.y = 10;
 	SphereCollider* collision = new SphereCollider(transform_.position_, 1.2f);
 	AddCollider(collision);
-	transform_.position_=XMFLOAT3(10, 0, 10);
+	transform_.position_=XMFLOAT3(14, 0, 1.5);
 }
 
 void Player::Update()
@@ -86,6 +86,10 @@ void Player::Update()
 	{
 		this->transform_.rotate_.y = 270;
 	}
+	/*if (Input::IsKey(DIK_W))
+	{
+		dir = 1.0;
+	}*/
 
 	//‰ñ“]s—ñ‚ğ‹‚ß‚é
 	rotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));

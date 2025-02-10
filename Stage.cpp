@@ -16,7 +16,7 @@ void Stage::Initialize()
 	assert(hFloor >= 0);
 	hWall= Model::Load("Model/Wall.fbx");
 	assert(hWall >= 0);
-	transform_.position_ = { 0,10,5 };
+	//transform_.position_ = { 0,10,5 };
 }
 
 void Stage::Update()
@@ -27,11 +27,11 @@ void Stage::Draw()
 {
 	Transform wallTrans;
 	wallTrans.position_ = { 0,0,0 };
-	for (int z = 0; z < 20; z++)
+	for (int z = 0; z < 10; z++)
 	{
-		for (int x = 0; x < 20; x++)
+		for (int x = 0; x < 30; x++)
 		{
-			if (z == 0 || z == 19 || x == 0 || x == 19)
+			if (z == 0 || z == 9 || x == 0 || x == 29)
 			{
 				wallTrans.position_ = { (float)x,-0.5,(float)z };
 				Model::SetTransform(hWall, wallTrans);
@@ -42,11 +42,11 @@ void Stage::Draw()
 
 	Transform floorTrans;
 	floorTrans.position_ = { 0,0,0 };
-	for (int z = 0; z < 20; z++)
+	for (int z = 0; z < 10; z++)
 	{
-		for (int x = 0; x < 20; x++)
+		for (int x = 0; x < 30; x++)
 		{
-			if (z == 0 || z == 19 || x == 0 || x == 19)continue;
+			if (z == 0 || z == 9 || x == 0 || x == 29)continue;
 			{
 				floorTrans.position_ = { (float)x,-0.5,(float)z };
 				Model::SetTransform(hFloor, floorTrans);
