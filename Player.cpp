@@ -141,8 +141,8 @@ void Player::Update()
 	case CAM_TYPE::FIXED_TYPE:
 	{
 		XMFLOAT3 camPos = transform_.position_;
-		camPos.y = transform_.position_.y + 5.0f;
-		camPos.z = transform_.position_.z - 10.0f;
+		camPos.y = transform_.position_.y + 10.0f;
+		camPos.z = transform_.position_.z - 1.0f;
 		Camera::SetPosition(camPos);
 		Camera::SetTarget(transform_.position_);
 		break;
