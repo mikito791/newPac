@@ -1,5 +1,11 @@
 #include "Stage.h"
 #include "Engine/Model.h"
+enum STG_TYPE
+{
+	FLOOR,
+	WALL,
+	MAX,
+};
 Stage::Stage(GameObject* parent)
 	:GameObject(parent, "Stage")
 {
@@ -25,22 +31,32 @@ void Stage::Update()
 
 void Stage::Draw()
 {
-	Transform wallTrans;
-	wallTrans.position_ = { 0,0,0 };
+	Transform stageTrans;
+	STG_TYPE type;
+	stageTrans.position_ = { 0,0,0 };
 	for (int z = 0; z < 10; z++)
 	{
 		for (int x = 0; x < 30; x++)
 		{
 			if (z == 0 || z == 9 || x == 0 || x == 29)
 			{
-				wallTrans.position_ = { (float)x,-0.5,(float)z };
-				Model::SetTransform(hWall, wallTrans);
+				stageTrans.position_ = { (float)x,-0.5,(float)z };
+				Model::SetTransform(hWall, stageTrans);
 				Model::Draw(hWall);
+				type = WALL;
 			}
+			else if (z == 0 || z == 9 || x == 0 || x == 29)continue;
+			{
+				stageTrans.position_ = { (float)x,-0.5,(float)z };
+				Model::SetTransform(hFloor, stageTrans);
+				Model::Draw(hFloor);
+				type = FLOOR;
+			}
+
 		}
 	}
 
-	Transform floorTrans;
+	/*Transform floorTrans;
 	floorTrans.position_ = { 0,0,0 };
 	for (int z = 0; z < 10; z++)
 	{
@@ -53,7 +69,7 @@ void Stage::Draw()
 				Model::Draw(hFloor);
 			}
 		}
-	}
+	}*/
 	/*for (int z = 0; z < 10; z++)
 	{
 		for (int x = 0; x < 20; x++)

@@ -1,11 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
-enum STG_TYPE
-{
-	FLOOR,
-	WALL,
-	MAX_TYPE,
-};
+
 class Stage :
     public GameObject
 {
