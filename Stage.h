@@ -1,6 +1,11 @@
 #pragma once
 #include "Engine/GameObject.h"
-
+enum STG_TYPE
+{
+    FLOOR,
+    WALL,
+    MAX,
+};
 class Stage :
     public GameObject
 {
@@ -8,6 +13,8 @@ class Stage :
     int hFloor;
     int hWall;
     XMFLOAT3 position;
+    Transform stageTrans;
+    STG_TYPE type;
 public:
     Stage(GameObject* parent);
     ~Stage();
@@ -16,6 +23,6 @@ public:
     void Draw() override;
     void Release() override;
     int GetModelHandle() { return hFloor; }
-    XMFLOAT3 GetPosition(XMFLOAT3 pos) { return position=pos; }
+    XMFLOAT3 GetPosition(XMFLOAT3 pos) { return position = pos; }
 };
 

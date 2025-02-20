@@ -1,13 +1,8 @@
 #include "Stage.h"
 #include "Engine/Model.h"
-enum STG_TYPE
-{
-	FLOOR,
-	WALL,
-	MAX,
-};
+
 Stage::Stage(GameObject* parent)
-	:GameObject(parent, "Stage")
+	:GameObject(parent, "Stage"),hFloor(-1),hWall(-1),position({0,0,0})
 {
 	
 }
@@ -31,8 +26,6 @@ void Stage::Update()
 
 void Stage::Draw()
 {
-	Transform stageTrans;
-	STG_TYPE type;
 	stageTrans.position_ = { 0,0,0 };
 	for (int z = 0; z < 10; z++)
 	{

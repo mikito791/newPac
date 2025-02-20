@@ -44,52 +44,52 @@ void Player::Update()
 	XMVECTOR move{ 0,0,0,0 };
 	XMVECTOR rotVec{ 0,0,0,0 };
 	float dir = 0;
-	//if (Input::IsKey(DIK_UP))//前に進む
-	//{
-	//	transform_.position_.x += 1;
-	//}
-	//if (Input::IsKey(DIK_DOWN))//バック
-	//{
-	//	transform_.position_.x -= 1;
-	//}
-	//if (Input::IsKey(DIK_LEFT))//左向く
-	//{
-	//	transform_.rotate_.z -= 1;
-	//}
-	//if (Input::IsKey(DIK_RIGHT))//右向く
-	//{
-	//	transform_.rotate_.z += 1;
-	//}
-	//if (Input::IsKey(DIK_UP))//前に進む
-	//{
-	//	dir = 1.0;
-	//}
-	//if (Input::IsKey(DIK_DOWN))//バック
-	//{
-	//	dir = -1.0;
-	//}
 
-	dir = 1.0;
-	if (Input::IsKeyDown(DIK_UP))//前向く
+	//キーを押して移動
+	if (Input::IsKey(DIK_UP))//前向く
 	{
 		this->transform_.rotate_.y = 0;
+		dir = 1.0;
 	}
-	if (Input::IsKeyDown(DIK_DOWN))//後ろ向く
+	if (Input::IsKey(DIK_DOWN))//後ろ向く
 	{
 		this->transform_.rotate_.y = 180;
+		dir = 1.0;
 	}
-	if (Input::IsKeyDown(DIK_RIGHT))//右向く
+	if (Input::IsKey(DIK_RIGHT))//右向く
 	{
 		this->transform_.rotate_.y = 90;
+		dir = 1.0;
 	}
-	if (Input::IsKeyDown(DIK_LEFT))//左向く
+	if (Input::IsKey(DIK_LEFT))//左向く
 	{
 		this->transform_.rotate_.y = 270;
-	}
-	/*if (Input::IsKey(DIK_W))
-	{
 		dir = 1.0;
-	}*/
+	}
+	
+	//方向だけを決めて勝手に移動
+	//dir = 1.0;
+	//if (Input::IsKeyDown(DIK_UP))//前向く
+	//{
+	//	this->transform_.rotate_.y = 0;
+	//	dir = 1.0;
+	//}
+	//if (Input::IsKeyDown(DIK_DOWN))//後ろ向く
+	//{
+	//	this->transform_.rotate_.y = 180;
+	//	dir = 1.0;
+	//}
+	//if (Input::IsKeyDown(DIK_RIGHT))//右向く
+	//{
+	//	this->transform_.rotate_.y = 90;
+	//	dir = 1.0;
+	//}
+	//if (Input::IsKeyDown(DIK_LEFT))//左向く
+	//{
+	//	this->transform_.rotate_.y = 270;
+	//	dir = 1.0;
+	//}
+	
 
 	//回転行列を求める
 	rotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
