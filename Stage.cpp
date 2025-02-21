@@ -17,6 +17,7 @@ void Stage::Initialize()
 	assert(hFloor >= 0);
 	hWall= Model::Load("Model/Wall.fbx");
 	assert(hWall >= 0);
+
 	//transform_.position_ = { 0,10,5 };
 }
 
@@ -26,22 +27,23 @@ void Stage::Update()
 
 void Stage::Draw()
 {
-	stageTrans.position_ = { 0,0,0 };
+	wallTrans.position_ = { 0,0,0 };
+	floorTrans.position_ = { 0,0,0 };
 	for (int z = 0; z < 10; z++)
 	{
 		for (int x = 0; x < 30; x++)
 		{
 			if (z == 0 || z == 9 || x == 0 || x == 29)
 			{
-				stageTrans.position_ = { (float)x,-0.5,(float)z };
-				Model::SetTransform(hWall, stageTrans);
+				wallTrans.position_ = { (float)x,-0.5,(float)z };
+				Model::SetTransform(hWall, wallTrans);
 				Model::Draw(hWall);
 				type = WALL;
 			}
-			else if (z == 0 || z == 9 || x == 0 || x == 29)continue;
+			else 
 			{
-				stageTrans.position_ = { (float)x,-0.5,(float)z };
-				Model::SetTransform(hFloor, stageTrans);
+				floorTrans.position_ = { (float)x,-0.5,(float)z };
+				Model::SetTransform(hFloor, floorTrans);
 				Model::Draw(hFloor);
 				type = FLOOR;
 			}
@@ -76,6 +78,17 @@ void Stage::Draw()
 
 void Stage::Release()
 {
+}
+
+void Stage::OnCollision(GameObject* pTarget)
+{
+	if (pTarget->GetObjectName() == "Player")
+	{
+		if (type == WALL)
+		{
+			this->transform_.position_ = { 0,0,0 };
+		}
+	}
 }
 
 

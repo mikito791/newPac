@@ -13,7 +13,8 @@ class Stage :
     int hFloor;
     int hWall;
     XMFLOAT3 position;
-    Transform stageTrans;
+    Transform wallTrans;
+    Transform floorTrans;
     STG_TYPE type;
 public:
     Stage(GameObject* parent);
@@ -24,5 +25,6 @@ public:
     void Release() override;
     int GetModelHandle() { return hFloor; }
     XMFLOAT3 GetPosition(XMFLOAT3 pos) { return position = pos; }
+    void OnCollision(GameObject* pTarget)override;
 };
 

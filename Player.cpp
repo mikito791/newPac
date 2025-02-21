@@ -175,10 +175,4 @@ void Player::Release()
 {
 }
 
-void Player::OnCollision(GameObject* pTarget)
-{
-	if (pTarget->GetObjectName() == "Stage")
-	{
-		transform_.position_.y = 0;
-	}
-}
+
