@@ -35,7 +35,7 @@ void Player::Initialize()
 	//transform_.position_.y = 10;
 	SphereCollider* collision = new SphereCollider(transform_.position_, 1.2f);
 	AddCollider(collision);
-	transform_.position_=XMFLOAT3(14, 0, 1.5);
+	transform_.position_=XMFLOAT3(4, 0, 2);
 }
 
 void Player::Update()

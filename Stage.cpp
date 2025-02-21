@@ -1,5 +1,7 @@
 #include "Stage.h"
 #include "Engine/Model.h"
+#include "Engine/BoxCollider.h"
+#include"Player.h"
 
 Stage::Stage(GameObject* parent)
 	:GameObject(parent, "Stage"),hFloor(-1),hWall(-1),position({0,0,0})
@@ -29,11 +31,13 @@ void Stage::Draw()
 {
 	wallTrans.position_ = { 0,0,0 };
 	floorTrans.position_ = { 0,0,0 };
+	BoxCollider* collision = new BoxCollider(wallTrans.position_, { 0.2,0.2,0.2 });
+	AddCollider(collision);
 	for (int z = 0; z < 10; z++)
 	{
-		for (int x = 0; x < 30; x++)
+		for (int x = 0; x < 10; x++)
 		{
-			if (z == 0 || z == 9 || x == 0 || x == 29)
+			if (z == 0 || z == 9 || x == 0 || x == 9)
 			{
 				wallTrans.position_ = { (float)x,-0.5,(float)z };
 				Model::SetTransform(hWall, wallTrans);
@@ -82,11 +86,12 @@ void Stage::Release()
 
 void Stage::OnCollision(GameObject* pTarget)
 {
+	Player*pPlayer= (Player*)FindObject("Player");
 	if (pTarget->GetObjectName() == "Player")
 	{
 		if (type == WALL)
 		{
-			this->transform_.position_ = { 0,0,0 };
+			pPlayer->KillMe();
 		}
 	}
 }
