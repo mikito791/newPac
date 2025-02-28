@@ -4,6 +4,7 @@
 #include"Engine/SphereCollider.h"
 #include"Engine/SceneManager.h"
 #include"Engine/Camera.h"
+#include"RedWall.h"
 
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player"), hModel(-1), front({ 0,0,1,0 })
@@ -24,6 +25,7 @@ void Player::Initialize()
 	SphereCollider* collision = new SphereCollider(transform_.position_, 1.2f);
 	AddCollider(collision);
 	transform_.position_=XMFLOAT3(4, 0, 2);
+	RedWall* wall = Instantiate<RedWall>(this);
 }
 
 void Player::Update()
@@ -34,7 +36,11 @@ void Player::Update()
 	XMVECTOR rotVecY{ 0,0,0,0 };
 	XMVECTOR rotVecX{ 0,0,0,0 };
 	
-
+	if(Input::IsKey(DIK_SPACE))
+	{
+		Instantiate<RedWall>(this);
+		
+	}
 	////ƒL[‚ğ‰Ÿ‚µ‚ÄˆÚ“®
 	//if (Input::IsKey(DIK_UP))//‘OŒü‚­
 	//{

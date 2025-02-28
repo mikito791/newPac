@@ -12,7 +12,7 @@ TestScene::TestScene(GameObject * parent)
 void TestScene::Initialize()
 {
 	Instantiate<Player>(this);
-	Instantiate<RedWall>(this);
+	//Instantiate<RedWall>(this);
 }
 
 //XV

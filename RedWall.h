@@ -16,6 +16,7 @@ public:
 	void Draw() override;
 
 	void Release() override;
+	void setPos(XMFLOAT3 pos) { transform_.position_ = pos; }
 	
 };
 
