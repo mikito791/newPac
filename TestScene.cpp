@@ -1,6 +1,6 @@
 #include "TestScene.h"
 #include"Player.h"
-
+#include"RedWall.h"
 
 //コンストラクタ
 TestScene::TestScene(GameObject * parent)
@@ -12,7 +12,7 @@ TestScene::TestScene(GameObject * parent)
 void TestScene::Initialize()
 {
 	Instantiate<Player>(this);
-	
+	Instantiate<RedWall>(this);
 }
 
 //更新

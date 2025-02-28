@@ -1,14 +1,13 @@
 #pragma once
 #include "Engine/GameObject.h"
-class Player :
+class RedWall :
     public GameObject
 {
-	int hModel;
-	XMVECTOR front;
-	XMVECTOR pos;
+	int hRedWall;
+	int hBlueWall;
 public:
-	Player(GameObject* parent);
-	~Player();
+	RedWall(GameObject* parent);
+	~RedWall();
 
 	void Initialize() override;
 
@@ -17,8 +16,6 @@ public:
 	void Draw() override;
 
 	void Release() override;
-	void OnCollision(GameObject* pTarget) override;
-
 	
 };
 

@@ -11,6 +11,10 @@ Player::Player(GameObject* parent)
 	
 }
 
+Player::~Player()
+{
+}
+
 void Player::Initialize()
 {
 	hModel = Model::Load("Model/Player.fbx");
@@ -153,6 +157,10 @@ void Player::Draw()
 }
 
 void Player::Release()
+{
+}
+
+void Player::OnCollision(GameObject* pTarget)
 {
 }
 
