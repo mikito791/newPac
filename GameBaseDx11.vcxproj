@@ -149,7 +149,6 @@
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +176,6 @@
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Stage.h" />
     <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <ItemGroup>
