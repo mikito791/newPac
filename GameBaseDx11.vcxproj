@@ -161,6 +161,7 @@
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RedEnemy.cpp" />
     <ClCompile Include="RedWall.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
@@ -189,6 +190,7 @@
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RedEnemy.h" />
     <ClInclude Include="RedWall.h" />
     <ClInclude Include="TestScene.h" />
   </ItemGroup>

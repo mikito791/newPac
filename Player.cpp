@@ -22,10 +22,10 @@ void Player::Initialize()
 	assert(hModel >= 0);
 	front = XMVECTOR({ 0,0,1,0 });
 	//transform_.position_.y = 10;
-	SphereCollider* collision = new SphereCollider(transform_.position_, 1.2f);
+	
+	SphereCollider* collision = new SphereCollider(transform_.position_, 0.4f);
 	AddCollider(collision);
 	transform_.position_=XMFLOAT3(4, 0, 2);
-	RedWall* wall = Instantiate<RedWall>(this);
 }
 
 void Player::Update()
@@ -36,11 +36,11 @@ void Player::Update()
 	XMVECTOR rotVecY{ 0,0,0,0 };
 	XMVECTOR rotVecX{ 0,0,0,0 };
 	
-	if(Input::IsKey(DIK_SPACE))
+	/*if(Input::IsKey(DIK_SPACE))
 	{
 		Instantiate<RedWall>(this);
 		
-	}
+	}*/
 	////ƒL[‚ð‰Ÿ‚µ‚ÄˆÚ“®
 	//if (Input::IsKey(DIK_UP))//‘OŒü‚­
 	//{
@@ -150,7 +150,7 @@ void Player::Update()
 	//}
 
 	XMFLOAT3 camPos = transform_.position_;
-	camPos.y = transform_.position_.y + 10.0f;
+	camPos.y = transform_.position_.y + 8.0f;
 	camPos.z = transform_.position_.z - 5.0f;
 	Camera::SetPosition(camPos);
 	Camera::SetTarget(transform_.position_);	
@@ -168,6 +168,10 @@ void Player::Release()
 
 void Player::OnCollision(GameObject* pTarget)
 {
+	if (pTarget->GetObjectName() == "RedEnemy")
+	{
+		this->KillMe();
+	}
 }
 
 
