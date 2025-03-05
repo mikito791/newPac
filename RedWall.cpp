@@ -74,6 +74,10 @@ void RedWall::Update()
 		this->transform_.rotate_.y = 0;
 		//ˆÊ’u
 	}
+	if(Input::IsKeyDown(DIK_SPACE))
+	{
+		transform_.rotate_.y = 90;//‚±‚¤‚·‚é—\’è
+	}
 	//cŠ[
 	//« 
 	
