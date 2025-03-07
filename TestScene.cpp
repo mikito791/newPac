@@ -14,7 +14,7 @@ void TestScene::Initialize()
 {
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
-	//Instantiate<RedEnemy>(this);
+	Instantiate<RedEnemy>(this);
 }
 
 //XV

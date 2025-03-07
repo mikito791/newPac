@@ -14,15 +14,15 @@ RedEnemy::~RedEnemy()
 
 void RedEnemy::Initialize()
 {
-	hRedEnemy = Model::Load("Model//RedEnemy.fbx");
-	pos=transform_.position_ = { 0.0f,0.0f,0.5f };
-	SphereCollider* collision = new SphereCollider(pos, 0.5f);
+	hRedEnemy = Model::Load("Model//RedEnemy0.fbx");
+	SphereCollider* collision = new SphereCollider(transform_.position_, 0.2f);
 	AddCollider(collision);
+	transform_.position_ = XMFLOAT3(0, 0, 2);
 }
 
 void RedEnemy::Update()
 {
-	transform_.position_.x += 0.01f;
+	transform_.position_.x += 0.05f;
 }
 
 void RedEnemy::Draw()
