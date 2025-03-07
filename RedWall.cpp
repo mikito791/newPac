@@ -48,7 +48,7 @@ void RedWall::Update()
 		transform_.rotate_= XMFLOAT3(0, 180, 0);
 		transform_.position_ = XMFLOAT3(4, 0, 1);
 	}
-	if (Input::IsKeyDown(DIK_W))
+	/*if (Input::IsKeyDown(DIK_W))
 	{
 		transform_.rotate_= XMFLOAT3(270, 0, 0);
 		transform_.position_ = XMFLOAT3(4, 1, 1.5);
@@ -57,7 +57,7 @@ void RedWall::Update()
 	{
 		transform_.rotate_ = XMFLOAT3(90, 0, 0);
 		transform_.position_ = XMFLOAT3(4, -1, 1.5);
-	}
+	}*/
 	//écä[
 	//Å´ 
 	
