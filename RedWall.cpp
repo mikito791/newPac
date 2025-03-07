@@ -15,7 +15,7 @@ RedWall::~RedWall()
 
 void RedWall::Initialize()
 {
-	hRedWall = Model::Load("Model/PlayerWallred.fbx");
+	hRedWall = Model::Load("Model/PlayerWallred0.fbx");
 	XMFLOAT3 boxSize = { 0.2f,1.0f,1.0f };
 	BoxCollider* collision = new BoxCollider(transform_.position_, boxSize);
 	AddCollider(collision);
@@ -77,6 +77,12 @@ void RedWall::Update()
 	if(Input::IsKeyDown(DIK_SPACE))
 	{
 		transform_.rotate_.y = 90;//Ç±Ç§Ç∑ÇÈó\íË
+		transform_.position_.x = 3;
+	}
+	if (Input::IsKeyDown(DIK_C))
+	{
+		transform_.rotate_.y = 90;//Ç±Ç§Ç∑ÇÈó\íË
+		transform_.position_.x = 5;
 	}
 	//écä[
 	//Å´ 
