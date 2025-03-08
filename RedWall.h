@@ -4,8 +4,6 @@ class RedWall :
     public GameObject
 {
 	int hRedWall;
-	XMVECTOR front;
-	XMVECTOR pos;
 public:
 	RedWall(GameObject* parent);
 	~RedWall();

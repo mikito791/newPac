@@ -1,10 +1,10 @@
 #include "RedWall.h"
 #include"Engine/Model.h"
-#include"Engine/BoxCollider.h"
+#include"Engine/SphereCollider.h"
 #include"Engine/Input.h"
 
 RedWall::RedWall(GameObject* parent): 
-	GameObject(parent, "RedWall"),hRedWall(-1),front({ 0,0,1,0 })
+	GameObject(parent, "RedWall"),hRedWall(-1)
 {
 	
 }
@@ -17,7 +17,7 @@ void RedWall::Initialize()
 {
 	hRedWall = Model::Load("Model/PlayerWallred0.fbx");
 	XMFLOAT3 boxSize = { 0.2f,1.0f,1.0f };
-	BoxCollider* collision = new BoxCollider(transform_.position_, boxSize);
+	SphereCollider* collision = new SphereCollider(transform_.position_, 0.01f);
 	//BoxCollider* collision2 = new BoxCollider(transform_.rotate_, boxSize);
 	AddCollider(collision);
 	//AddCollider(collision2);

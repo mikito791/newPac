@@ -171,6 +171,8 @@ void Player::OnCollision(GameObject* pTarget)
 	if (pTarget->GetObjectName() == "RedEnemy")
 	{
 		this->KillMe();
+		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
+		pSM->ChangeScene(SCENE_ID::SCENE_ID_TITLE);
 	}
 }
 

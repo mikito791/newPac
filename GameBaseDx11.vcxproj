@@ -163,7 +163,9 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RedEnemy.cpp" />
     <ClCompile Include="RedWall.cpp" />
-    <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="Spawner.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Audio.h" />
@@ -192,7 +194,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RedEnemy.h" />
     <ClInclude Include="RedWall.h" />
-    <ClInclude Include="TestScene.h" />
+    <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="Spawner.h" />
+    <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
