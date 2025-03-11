@@ -49,7 +49,7 @@ void RedEnemy::Update()
 
 void RedEnemy::Draw()
 {
-	Model::SetTransform(hRedEnemy, transform_);
+	Model::SetTransform(hRedEnemy,transform_);
 	Model::Draw(hRedEnemy);
 }
 

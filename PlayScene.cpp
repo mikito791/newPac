@@ -2,6 +2,7 @@
 #include"Player.h"
 #include"RedWall.h"
 #include"RedEnemy.h"
+#include"Spawner.h"
 
 //コンストラクタ
 PlayScene::PlayScene(GameObject * parent)
@@ -14,7 +15,7 @@ void PlayScene::Initialize()
 {
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
-	Instantiate<RedEnemy>(this);
+	Instantiate<Spawner>(this);
 }
 
 //更新
