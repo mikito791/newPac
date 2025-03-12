@@ -100,8 +100,8 @@
     <ClCompile Include="RedWall.cpp" />
     <ClCompile Include="RedEnemy.cpp" />
     <ClCompile Include="TitleScene.cpp" />
-    <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="RedEnemySpawner.cpp" />
+    <ClCompile Include="Spawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -178,8 +178,8 @@
     <ClInclude Include="RedWall.h" />
     <ClInclude Include="RedEnemy.h" />
     <ClInclude Include="TitleScene.h" />
-    <ClInclude Include="Spawner.h" />
     <ClInclude Include="RedEnemySpawner.h" />
+    <ClInclude Include="Spawner.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
