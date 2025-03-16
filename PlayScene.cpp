@@ -16,6 +16,7 @@ void PlayScene::Initialize()
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
 	Instantiate<Spawner>(this);
+	Instantiate<RedEnemy>(this);
 }
 
 //XV
