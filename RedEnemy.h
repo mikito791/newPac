@@ -22,6 +22,6 @@ public:
 	void OnCollision(GameObject* pTarget) override;
 	void SetPos(XMFLOAT3 pos) { transform_.position_ = pos; }
 	void SetMove(XMFLOAT3 move) { moveDirection = move; }
-	Transform GetTransform() { return transform_; }
+	XMFLOAT3 GetPos() { return transform_.position_; }
 };
 

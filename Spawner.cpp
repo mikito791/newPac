@@ -20,6 +20,7 @@ Spawner::~Spawner()
 void Spawner::Initialize()
 {
     // 必要に応じて初期化コードを追加
+    SpawnEnemy();
 }
 
 void Spawner::Update()
@@ -60,8 +61,10 @@ void Spawner::SpawnEnemy()
     RedEnemy* newEnemy = new RedEnemy(this);
     newEnemy->Initialize();
     enemies.push_back(newEnemy);
-
-    SphereCollider* collision = new SphereCollider(newEnemy->GetTransform().position_, 0.5f); // 半径0.5のコライダーを設定
+    XMFLOAT3 pos=XMFLOAT3(0, 0, 0); // スポーン位置を指定（例：原点）
+    XMFLOAT3 enepos = newEnemy->GetPos(); // 新しい敵の位置を取得
+    //pos = enepos;
+    SphereCollider* collision = new SphereCollider(pos, 0.5f); // 半径0.5のコライダーを設定
     newEnemy->AddCollider(collision);
 }
 

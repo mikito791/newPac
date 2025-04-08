@@ -17,8 +17,8 @@ RedEnemy::~RedEnemy()
 void RedEnemy::Initialize()
 {
 	hRedEnemy = Model::Load("Model//RedEnemy0.fbx");
-	SphereCollider* collision = new SphereCollider(transform_.position_, 0.2f);
-	AddCollider(collision);
+	/*SphereCollider* collision = new SphereCollider(transform_.position_, 0.2f);
+	AddCollider(collision);*/
 	num = rand() % 4 + 1; // 1`4 ‚Ìƒ‰ƒ“ƒ_ƒ€’l
 	switch (num)
 	{
