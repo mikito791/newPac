@@ -16,6 +16,6 @@ public:
 
 	void Release() override;
 	void setPos(XMFLOAT3 pos) { transform_.position_ = pos; }
-	
+	XMFLOAT3 GetPos() const { return transform_.position_; }
 };
 

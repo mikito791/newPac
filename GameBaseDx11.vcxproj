@@ -162,7 +162,6 @@
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RedEnemy.cpp" />
-    <ClCompile Include="RedEnemySpawner.cpp" />
     <ClCompile Include="RedWall.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Spawner.cpp" />
@@ -194,7 +193,6 @@
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RedEnemy.h" />
-    <ClInclude Include="RedEnemySpawner.h" />
     <ClInclude Include="RedWall.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Spawner.h" />

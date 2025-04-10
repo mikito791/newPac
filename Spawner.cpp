@@ -71,9 +71,8 @@ void Spawner::SpawnEnemy()
     //XMFLOAT3 pos=XMFLOAT3(0, 0, 0); // スポーン位置を指定（例：原点）
     //XMFLOAT3 enepos = newEnemy->GetPos(); // 新しい敵の位置を取得
     ////pos = enepos;
-    //SphereCollider* collision = new SphereCollider(enepos, 0.5f); // 半径0.5のコライダーを設定
+    //SphereCollider* collision = new SphereCollider(pos, 0.5f); // 半径0.5のコライダーを設定
     //newEnemy->AddCollider(collision);
-
 }
 
 bool Spawner::ShouldSpawn()

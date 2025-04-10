@@ -100,7 +100,6 @@
     <ClCompile Include="RedWall.cpp" />
     <ClCompile Include="RedEnemy.cpp" />
     <ClCompile Include="TitleScene.cpp" />
-    <ClCompile Include="RedEnemySpawner.cpp" />
     <ClCompile Include="Spawner.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -178,7 +177,6 @@
     <ClInclude Include="RedWall.h" />
     <ClInclude Include="RedEnemy.h" />
     <ClInclude Include="TitleScene.h" />
-    <ClInclude Include="RedEnemySpawner.h" />
     <ClInclude Include="Spawner.h" />
   </ItemGroup>
   <ItemGroup>

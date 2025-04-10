@@ -1,8 +1,11 @@
 #include "RedEnemy.h"
 #include"Engine/Model.h"
 #include"Engine/SphereCollider.h"
+#include"Player.h"
 #include <cstdlib> // for rand()
 #include<ctime>
+#include<cmath>
+#include"Engine/Debug.h"
 
 RedEnemy::RedEnemy(GameObject* parent)
 	: GameObject(parent, "RedEnemy")
@@ -45,8 +48,26 @@ void RedEnemy::Initialize()
 void RedEnemy::Update()
 {
 	transform_.position_.x += moveDirection.x;
+	if (transform_.position_.x > 15 || transform_.position_.x < -15)
+	{
+		this->KillMe();
+	}
+
 	transform_.position_.y = 0;
+
 	transform_.position_.z += moveDirection.z;
+	if (transform_.position_.z > 15 || transform_.position_.z < -15)
+	{
+		this->KillMe();
+	}
+
+	float distance = CalculateDistancePlayer(transform_.position_, ((Player*)GetParent())->GetPos());
+	Debug::Log("DIS=");
+	Debug::Log(distance,true);
+	if (distance < 2.0f)
+	{
+		this->KillMe();
+	}
 }
 
 void RedEnemy::Draw()
@@ -66,3 +87,26 @@ void RedEnemy::OnCollision(GameObject* pTarget)
 		this->KillMe();
 	}
 }
+
+float RedEnemy::CalculateDistancePlayer(const XMFLOAT3& EnemyPos, const XMFLOAT3& Playerpos)
+{
+	//2“_ŠÔ‚Ì‹——£‚ðŒvŽZ
+	float dx = EnemyPos.x - Playerpos.x;
+	float dy = EnemyPos.y - Playerpos.y;
+	float dz = EnemyPos.z - Playerpos.z;
+
+	//‹——£‚ð•Ô‚·(ŒvŽZ)
+	return sqrt(dx * dx + dy * dy + dz * dz);
+}
+
+float RedEnemy::CalculateDistanceWall(const XMFLOAT3& EnemyPos, const XMFLOAT3& Wallpos)
+{
+	//2“_ŠÔ‚Ì‹——£‚ðŒvŽZ
+	float dx = EnemyPos.x - Wallpos.x;
+	float dy = EnemyPos.y - Wallpos.y;
+	float dz = EnemyPos.z - Wallpos.z;
+	//‹——£‚ð•Ô‚·(ŒvŽZ)
+	return sqrt(dx * dx + dy * dy + dz * dz);
+}
+
+
