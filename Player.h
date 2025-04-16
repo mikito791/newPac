@@ -4,7 +4,6 @@ class Player :
     public GameObject
 {
 	int hModel;
-	XMVECTOR front;
 	XMVECTOR pos;
 public:
 	Player(GameObject* parent);

@@ -48,23 +48,12 @@ void RedEnemy::Initialize()
 void RedEnemy::Update()
 {
 	transform_.position_.x += moveDirection.x;
-	if (transform_.position_.x > 15 || transform_.position_.x < -15)
-	{
-		this->KillMe();
-	}
-
 	transform_.position_.y = 0;
-
 	transform_.position_.z += moveDirection.z;
-	if (transform_.position_.z > 15 || transform_.position_.z < -15)
-	{
-		this->KillMe();
-	}
-
 	float distance = CalculateDistancePlayer(transform_.position_, ((Player*)GetParent())->GetPos());
 	Debug::Log("DIS=");
 	Debug::Log(distance,true);
-	if (distance < 2.0f)
+	if (distance < 10.0f)
 	{
 		this->KillMe();
 	}
