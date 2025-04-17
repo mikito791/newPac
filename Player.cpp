@@ -5,6 +5,7 @@
 #include"Engine/SceneManager.h"
 #include"Engine/Camera.h"
 #include"RedWall.h"
+#include"RedEnemy.h"
 
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player"), hModel(-1)
@@ -20,11 +21,7 @@ void Player::Initialize()
 {
 	hModel = Model::Load("Model/Player.fbx");
 	assert(hModel >= 0);
-	
 	//transform_.position_.y = 10;
-	
-	SphereCollider* collision = new SphereCollider(transform_.position_, 0.4f);
-	AddCollider(collision);
 	transform_.position_=XMFLOAT3(4, 0, 2);
 }
 
@@ -51,7 +48,7 @@ void Player::Update()
 	camPos.y = transform_.position_.y + 8.0f;
 	camPos.z = transform_.position_.z - 5.0f;
 	Camera::SetPosition(camPos);
-	Camera::SetTarget(transform_.position_);	
+	Camera::SetTarget(transform_.position_);
 }
 
 void Player::Draw()
@@ -64,14 +61,16 @@ void Player::Release()
 {
 }
 
-void Player::OnCollision(GameObject* pTarget)
+float Player::CalculateDistanceEnemy(const XMFLOAT3& PlayPos, const XMFLOAT3& EnemyPos)
 {
-	if (pTarget->GetObjectName() == "RedEnemy")
-	{
-		this->KillMe();
-		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-		pSM->ChangeScene(SCENE_ID::SCENE_ID_TITLE);
-	}
+	//2“_ŠÔ‚Ì‹——£‚ðŒvŽZ
+	float dx = PlayPos.x - EnemyPos.x;
+	float dy = PlayPos.y - EnemyPos.y;
+	float dz = PlayPos.z - EnemyPos.z;
+
+	//‹——£‚ð•Ô‚·(ŒvŽZ)
+	float distance = sqrt(dx * dx + dy * dy + dz * dz);
+	return distance;
 }
 
 

@@ -58,6 +58,11 @@ void Spawner::Release()
     {
 		enemy->Release();
 	}
+	// enemiesのポインタを解放
+    for (auto enemy : enemies)
+    {
+		delete enemy;
+	}
 	enemies.clear();
 }
 // 必要に応じてリリースコードを追加
@@ -65,13 +70,10 @@ void Spawner::Release()
 
 void Spawner::SpawnEnemy()
 {
-    RedEnemy* newEnemy = new RedEnemy(this);
-    newEnemy->Initialize();
+    RedEnemy* newEnemy =(RedEnemy*)FindObject("RedEnemy");
     //XMFLOAT3 pos=XMFLOAT3(0, 0, 0); // スポーン位置を指定（例：原点）
-    XMFLOAT3 enepos = newEnemy->GetPos(); // 新しい敵の位置を取得
+    //XMFLOAT3 enepos = newEnemy->GetPos(); // 新しい敵の位置を取得
     ////pos = enepos;
-    SphereCollider* collision = new SphereCollider(enepos, 0.5f); // 半径0.5のコライダーを設定
-    newEnemy->AddCollider(collision);
     enemies.push_back(newEnemy);
 }
 
