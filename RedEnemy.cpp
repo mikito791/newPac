@@ -60,6 +60,7 @@ void RedEnemy::Update()
 		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
 		pSM->ChangeScene(SCENE_ID::SCENE_ID_TITLE);
 	}
+	// •Ç‚Æ‚Ì‹——£‚ðŒvŽZ
 	float distanceWall = CalculateDistanceWall(transform_.position_,redwall->GetPos());
 	if (distanceWall < 0.001f)
 	{
