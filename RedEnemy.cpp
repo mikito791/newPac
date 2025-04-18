@@ -13,6 +13,8 @@ RedEnemy::RedEnemy(GameObject* parent)
 	: GameObject(parent, "RedEnemy")
 {
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
+	speed = 0.05f; // 移動速度
+	distance = 0.001f; // 衝突判定の距離
 }
 
 RedEnemy::~RedEnemy()
@@ -28,19 +30,19 @@ void RedEnemy::Initialize()
 	{
 	case 1: // 左から
 		transform_.position_ = XMFLOAT3(-2, 0, 2);
-		moveDirection = XMFLOAT3(0.05f, 0, 0);
+		moveDirection = XMFLOAT3(speed, 0, 0);
 		break;
 	case 2: // 右から
 		transform_.position_ = XMFLOAT3(10, 0, 2);
-		moveDirection = XMFLOAT3(-0.05f, 0, 0);
+		moveDirection = XMFLOAT3(-speed, 0, 0);
 		break;
 	case 3: // 奥から
 		transform_.position_ = XMFLOAT3(4, 0, 6);
-		moveDirection = XMFLOAT3(0, 0, -0.05f);
+		moveDirection = XMFLOAT3(0, 0, -speed);
 		break;
 	case 4: // 手前から
 		transform_.position_ = XMFLOAT3(4, 0, -4);
-		moveDirection = XMFLOAT3(0, 0, 0.05f);
+		moveDirection = XMFLOAT3(0, 0, speed);
 		break;
 	}
 }
@@ -50,11 +52,10 @@ void RedEnemy::Update()
 	Player* player = (Player*)FindObject("Player");
 	RedWall* redwall = (RedWall*)FindObject("RedWall");
 	transform_.position_.x += moveDirection.x;
-	transform_.position_.y = 0;
 	transform_.position_.z += moveDirection.z;
 	// プレイヤーとの距離を計算
 	float distancePlayer = CalculateDistancePlayer(transform_.position_, player->GetPos());
-	if (distancePlayer < 0.001f)
+	if (distancePlayer < distance)
 	{
 		player->KillMe();
 		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
@@ -62,7 +63,7 @@ void RedEnemy::Update()
 	}
 	// 壁との距離を計算
 	float distanceWall = CalculateDistanceWall(transform_.position_,redwall->GetPos());
-	if (distanceWall < 0.001f)
+	if (distanceWall < distance)
 	{
 		this->KillMe();
 	}

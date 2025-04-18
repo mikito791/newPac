@@ -8,6 +8,8 @@ class RedEnemy :
 	int num;
 	Transform transform_; // Transformメンバ変数
 	GameObject* parent_ = nullptr; // 親オブジェクトへのポインタ
+	float speed; // 移動速度
+	float distance; // 衝突判定の距離
 public:
 	
 	RedEnemy(GameObject* parent);
