@@ -1,6 +1,5 @@
 #include "RedEnemy.h"
 #include"Engine/Model.h"
-#include"Engine/SphereCollider.h"
 #include"Player.h"
 #include"RedWall.h"
 #include <cstdlib> // for rand()
@@ -9,12 +8,21 @@
 #include"Engine/Debug.h"
 #include"Engine/SceneManager.h"
 
+enum Enemydirection
+{
+	LEFT,
+	RIGHT,
+	BACK,
+	FRONT,
+};
+
 RedEnemy::RedEnemy(GameObject* parent)
 	: GameObject(parent, "RedEnemy")
 {
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	speed = 0.05f; // 移動速度
 	distance = 0.001f; // 衝突判定の距離
+	isDead = false; // 死亡フラグ
 }
 
 RedEnemy::~RedEnemy()
@@ -25,24 +33,27 @@ void RedEnemy::Initialize()
 {
 	hRedEnemy = Model::Load("Model//RedEnemy0.fbx");
 	
-	num = rand() % 4 + 1; // 1～4 のランダム値
+	num = rand() % 4; // 0～3 のランダム値
+	DirState = num;
 	switch (num)
 	{
-	case 1: // 左から
+	case 0: // 左から
 		transform_.position_ = XMFLOAT3(-2, 0, 2);
 		moveDirection = XMFLOAT3(speed, 0, 0);
 		break;
-	case 2: // 右から
+	case 1: // 右から
 		transform_.position_ = XMFLOAT3(10, 0, 2);
 		moveDirection = XMFLOAT3(-speed, 0, 0);
 		break;
-	case 3: // 奥から
+	case 2: // 奥から
 		transform_.position_ = XMFLOAT3(4, 0, 6);
 		moveDirection = XMFLOAT3(0, 0, -speed);
 		break;
-	case 4: // 手前から
+	case 3: // 手前から
 		transform_.position_ = XMFLOAT3(4, 0, -4);
 		moveDirection = XMFLOAT3(0, 0, speed);
+		break;
+	default:
 		break;
 	}
 }
@@ -71,20 +82,13 @@ void RedEnemy::Update()
 
 void RedEnemy::Draw()
 {
+	
 	Model::SetTransform(hRedEnemy,transform_);
 	Model::Draw(hRedEnemy);
 }
 
 void RedEnemy::Release()
 {
-}
-
-void RedEnemy::OnCollision(GameObject* pTarget)
-{
-	if (pTarget->GetObjectName() == "RedWall")
-	{
-		this->KillMe();
-	}
 }
 
 float RedEnemy::CalculateDistancePlayer(const XMFLOAT3& EnemyPos, const XMFLOAT3& Playerpos)
