@@ -7,6 +7,14 @@
 #include"RedWall.h"
 #include"RedEnemy.h"
 
+enum PlayerDirection
+{
+	LEFT,
+	RIGHT,
+	BACK,
+	FRONT,
+};
+
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player"), hModel(-1)
 {

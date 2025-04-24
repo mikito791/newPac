@@ -6,11 +6,8 @@ class RedEnemy :
     int hRedEnemy;
 	XMFLOAT3 moveDirection;
 	int num;
-	Transform transform_; // Transformメンバ変数
-	GameObject* parent_ = nullptr; // 親オブジェクトへのポインタ
 	float speed; // 移動速度
 	float distance; // 衝突判定の距離
-	bool isDead;
 	int DirState;
 public:
 	
@@ -29,6 +26,5 @@ public:
 	XMFLOAT3 GetPos() { return transform_.position_; }
 	float CalculateDistancePlayer(const XMFLOAT3& EnemyPos, const XMFLOAT3& Playerpos);
 	float CalculateDistanceWall(const XMFLOAT3& EnemyPos, const XMFLOAT3& Wallpos);
-	void SetParent(GameObject* parent) { parent_ = parent; }
 };
 

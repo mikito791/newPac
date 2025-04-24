@@ -4,6 +4,8 @@
 //テストシーンを管理するクラス
 class PlayScene : public GameObject
 {
+	int EnemyRandom;
+	int counter;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

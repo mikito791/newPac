@@ -22,7 +22,6 @@ RedEnemy::RedEnemy(GameObject* parent)
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	speed = 0.05f; // 移動速度
 	distance = 0.001f; // 衝突判定の距離
-	isDead = false; // 死亡フラグ
 }
 
 RedEnemy::~RedEnemy()
