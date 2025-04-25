@@ -6,7 +6,8 @@
 
 //コンストラクタ
 PlayScene::PlayScene(GameObject * parent)
-	: GameObject(parent, "PlayScene")
+	: GameObject(parent, "PlayScene"),Left(-2, 0, 2),Right(10, 0, 2),Back(4, 0, 6),Front(4, 0, -4),
+	speed(0.05f)
 {
 }
 
@@ -31,23 +32,23 @@ void PlayScene::Update()
 		{
 		case 0: // 左から
 			Renemy = Instantiate<RedEnemy>(this);
-			Renemy->SetPos(XMFLOAT3(-2, 0, 2));
-			Renemy->SetMove(XMFLOAT3(0.05f, 0, 0));
+			Renemy->SetPos(Left);
+			Renemy->SetMove(XMFLOAT3(speed, 0, 0));
 			break;
 		case 1: // 右から
 			Renemy = Instantiate<RedEnemy>(this);
-			Renemy->SetPos(XMFLOAT3(10, 0, 2));
-			Renemy->SetMove(XMFLOAT3(-0.05f, 0, 0));
+			Renemy->SetPos(Right);
+			Renemy->SetMove(XMFLOAT3(-speed, 0, 0));
 			break;
 		case 2: // 奥から
 			Renemy = Instantiate<RedEnemy>(this);
-			Renemy->SetPos(XMFLOAT3(4, 0, 6));
-			Renemy->SetMove(XMFLOAT3(0, 0, -0.05f));
+			Renemy->SetPos(Back);
+			Renemy->SetMove(XMFLOAT3(0, 0, -speed));
 			break;
 		case 3: // 手前から
 			Renemy = Instantiate<RedEnemy>(this);
-			Renemy->SetPos(XMFLOAT3(4, 0, -4));
-			Renemy->SetMove(XMFLOAT3(0, 0, 0.05f));
+			Renemy->SetPos(Front);
+			Renemy->SetMove(XMFLOAT3(0, 0, speed));
 			break;
 		default:
 			break;

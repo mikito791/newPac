@@ -30,22 +30,22 @@ void RedWall::Update()
 	
 	if(Input::IsKeyDown(DIK_LEFT))
 	{
-		transform_.rotate_= XMFLOAT3(0, 270, 0);
+		transform_.rotate_.y = 270;
 		transform_.position_ = XMFLOAT3(3, 0, 2);
 	}
 	if (Input::IsKeyDown(DIK_RIGHT))
 	{
-		transform_.rotate_= XMFLOAT3(0, 90, 0);
+		transform_.rotate_.y = 90;
 		transform_.position_ = XMFLOAT3(5, 0, 2);
 	}
 	if (Input::IsKeyDown(DIK_UP))
 	{
-		transform_.rotate_= XMFLOAT3(0, 0, 0);
+		transform_.rotate_.y = 0;
 		transform_.position_ = XMFLOAT3(4, 0, 3);
 	}
 	if (Input::IsKeyDown(DIK_DOWN))
 	{
-		transform_.rotate_= XMFLOAT3(0, 180, 0);
+		transform_.rotate_.y = 180;
 		transform_.position_ = XMFLOAT3(4, 0, 1);
 	}
 	/*if (Input::IsKeyDown(DIK_W))

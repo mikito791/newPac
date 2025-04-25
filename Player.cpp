@@ -30,26 +30,27 @@ void Player::Initialize()
 	hModel = Model::Load("Model/Player.fbx");
 	assert(hModel >= 0);
 	//transform_.position_.y = 10;
-	transform_.position_=XMFLOAT3(4, 0, 2);
+	transform_.position_ = XMFLOAT3(4, 0, 2);
+	transform_.rotate_ = XMFLOAT3(0, 0, 0);
 }
 
 void Player::Update()
 {
 	if (Input::IsKeyDown(DIK_LEFT))
 	{
-		transform_.rotate_ = XMFLOAT3(0, 270, 0);
+		transform_.rotate_.y = 270;
 	}
 	if (Input::IsKeyDown(DIK_RIGHT))
 	{
-		transform_.rotate_ = XMFLOAT3(0, 90, 0);
+		transform_.rotate_.y = 90;
 	}
 	if (Input::IsKeyDown(DIK_UP))
 	{
-		transform_.rotate_ = XMFLOAT3(0, 0, 0);
+		transform_.rotate_.y = 0;
 	}
 	if (Input::IsKeyDown(DIK_DOWN))
 	{
-		transform_.rotate_ = XMFLOAT3(0, 180, 0);
+		transform_.rotate_.y = 180;
 	}
 	//ÉJÉÅÉâ
 	XMFLOAT3 camPos = transform_.position_;

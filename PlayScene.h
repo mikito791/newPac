@@ -6,6 +6,11 @@ class PlayScene : public GameObject
 {
 	int EnemyRandom;
 	int counter;
+	XMFLOAT3 Left;
+	XMFLOAT3 Right;
+	XMFLOAT3 Back;
+	XMFLOAT3 Front;
+	float speed;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
