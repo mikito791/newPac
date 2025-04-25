@@ -7,14 +7,9 @@
 #include<cmath>
 #include"Engine/Debug.h"
 #include"Engine/SceneManager.h"
+#include"Engine/SphereCollider.h"
 
-enum Enemydirection
-{
-	LEFT,
-	RIGHT,
-	BACK,
-	FRONT,
-};
+
 
 RedEnemy::RedEnemy(GameObject* parent)
 	: GameObject(parent, "RedEnemy")
@@ -55,6 +50,8 @@ void RedEnemy::Initialize()
 	default:
 		break;
 	}
+	SphereCollider* collider = new SphereCollider(XMFLOAT3(0,0,0), 0.3f);
+	AddCollider(collider);
 }
 
 void RedEnemy::Update()
@@ -69,7 +66,7 @@ void RedEnemy::Update()
 	{
 		player->KillMe();
 		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-		pSM->ChangeScene(SCENE_ID::SCENE_ID_TITLE);
+		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
 	}
 	// 壁との距離を計算
 	float distanceWall = CalculateDistanceWall(transform_.position_,redwall->GetPos());
@@ -111,6 +108,22 @@ float RedEnemy::CalculateDistanceWall(const XMFLOAT3& EnemyPos, const XMFLOAT3& 
 	//距離を返す(計算)
 	float distance = sqrt(dx * dx + dy * dy + dz * dz);
 	return distance;
+}
+
+void RedEnemy::OnCollision(GameObject* pTarget)
+{
+	// プレイヤーとの衝突判定
+	if (pTarget->GetObjectName() == "Player")
+	{
+		pTarget->KillMe();
+		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
+		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
+	}
+	// 壁との衝突判定
+	if (pTarget->GetObjectName() == "RedWall")
+	{
+		this->KillMe();
+	}
 }
 
 

@@ -26,5 +26,6 @@ public:
 	XMFLOAT3 GetPos() { return transform_.position_; }
 	float CalculateDistancePlayer(const XMFLOAT3& EnemyPos, const XMFLOAT3& Playerpos);
 	float CalculateDistanceWall(const XMFLOAT3& EnemyPos, const XMFLOAT3& Wallpos);
+	void OnCollision(GameObject* pTarget) override;
 };
 

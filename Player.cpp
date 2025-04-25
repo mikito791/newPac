@@ -7,14 +7,6 @@
 #include"RedWall.h"
 #include"RedEnemy.h"
 
-enum PlayerDirection
-{
-	LEFT,
-	RIGHT,
-	BACK,
-	FRONT,
-};
-
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player"), hModel(-1)
 {
@@ -32,6 +24,9 @@ void Player::Initialize()
 	//transform_.position_.y = 10;
 	transform_.position_ = XMFLOAT3(4, 0, 2);
 	transform_.rotate_ = XMFLOAT3(0, 0, 0);
+	//コライダー
+	SphereCollider* collider = new SphereCollider(XMFLOAT3(0,0,0), 0.3f);
+	AddCollider(collider);
 }
 
 void Player::Update()
@@ -81,5 +76,15 @@ float Player::CalculateDistanceEnemy(const XMFLOAT3& PlayPos, const XMFLOAT3& En
 	float distance = sqrt(dx * dx + dy * dy + dz * dz);
 	return distance;
 }
+
+//void Player::OnCollision(GameObject* pTarget)
+//{
+//	if (pTarget->GetObjectName() == "RedEnemy")
+//	{
+//		this->KillMe();
+//		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
+//		pSM->ChangeScene(SCENE_ID::SCENE_ID_TITLE);
+//	}
+//}
 
 
