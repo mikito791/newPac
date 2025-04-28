@@ -161,6 +161,7 @@
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
+    <ClCompile Include="Hp.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RedEnemy.cpp" />
     <ClCompile Include="RedWall.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="GameOverScene.h" />
+    <ClInclude Include="Hp.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RedEnemy.h" />
     <ClInclude Include="RedWall.h" />
