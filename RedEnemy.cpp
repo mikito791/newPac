@@ -28,7 +28,6 @@ void RedEnemy::Initialize()
 	hRedEnemy = Model::Load("Model//RedEnemy0.fbx");
 	
 	num = rand() % 4; // 0～3 のランダム値
-	DirState = num;
 	switch (num)
 	{
 	case 0: // 左から
@@ -115,9 +114,9 @@ void RedEnemy::OnCollision(GameObject* pTarget)
 	// プレイヤーとの衝突判定
 	if (pTarget->GetObjectName() == "Player")
 	{
-		pTarget->KillMe();
+		/*pTarget->KillMe();
 		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
+		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);*/
 	}
 	// 壁との衝突判定
 	if (pTarget->GetObjectName() == "RedWall")

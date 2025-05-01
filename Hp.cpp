@@ -1,6 +1,7 @@
 #include "Hp.h"
 
-Hp::Hp(GameObject* parent)
+Hp::Hp(GameObject* parent) 
+	: GameObject(parent, "Hp")
 {
 }
 

@@ -6,6 +6,7 @@
 #include"Engine/Camera.h"
 #include"RedWall.h"
 #include"RedEnemy.h"
+#include"Hp.h"
 
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player"), hModel(-1)
@@ -77,14 +78,15 @@ float Player::CalculateDistanceEnemy(const XMFLOAT3& PlayPos, const XMFLOAT3& En
 	return distance;
 }
 
-//void Player::OnCollision(GameObject* pTarget)
-//{
-//	if (pTarget->GetObjectName() == "RedEnemy")
-//	{
-//		this->KillMe();
-//		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-//		pSM->ChangeScene(SCENE_ID::SCENE_ID_TITLE);
-//	}
-//}
+void Player::OnCollision(GameObject* pTarget)
+{
+	if (pTarget->GetObjectName() == "RedEnemy")
+	{
+		Hp* hp = (Hp*)FindObject("Hp");
+		this->KillMe();
+		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
+		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
+	}
+}
 
 
