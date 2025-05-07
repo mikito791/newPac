@@ -8,6 +8,8 @@
 #include"RedEnemy.h"
 #include"Hp.h"
 
+
+
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player"), hModel(-1)
 {
@@ -32,7 +34,9 @@ void Player::Initialize()
 
 void Player::Update()
 {
-	if (Input::IsKeyDown(DIK_LEFT))
+	Direction currentDirection = GetDirectionFromInput();
+	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
+	/*if (Input::IsKeyDown(DIK_LEFT))
 	{
 		transform_.rotate_.y = 270;
 	}
@@ -47,7 +51,7 @@ void Player::Update()
 	if (Input::IsKeyDown(DIK_DOWN))
 	{
 		transform_.rotate_.y = 180;
-	}
+	}*/
 	//ÉJÉÅÉâ
 	XMFLOAT3 camPos = transform_.position_;
 	camPos.y = transform_.position_.y + 8.0f;
@@ -89,4 +93,21 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 }
 
+Direction Player::GetDirectionFromInput()
+{
+	if (Input::IsKeyDown(DIK_LEFT))  return LEFT;
+	if (Input::IsKeyDown(DIK_RIGHT)) return RIGHT;
+	if (Input::IsKeyDown(DIK_UP))    return FRONT;
+	if (Input::IsKeyDown(DIK_DOWN))  return BACK;
+}
 
+int Player::GetRotationFromDirection(Direction dir)
+{
+	switch (dir)
+	{
+	case LEFT:  return 270;
+	case RIGHT: return 90;
+	case FRONT: return 0;
+	case BACK:  return 180;
+	}
+}

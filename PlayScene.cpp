@@ -4,6 +4,8 @@
 #include"RedEnemy.h"
 #include"Spawner.h"
 
+
+
 //コンストラクタ
 PlayScene::PlayScene(GameObject * parent)
 	: GameObject(parent, "PlayScene"),Left(-2, 0, 2),Right(10, 0, 2),Back(4, 0, 6),Front(4, 0, -4),
@@ -65,4 +67,12 @@ void PlayScene::Draw()
 //開放
 void PlayScene::Release()
 {
+}
+
+float PlayScene::GetDeltaTime()
+{
+	auto currentTime = std::chrono::steady_clock::now();
+	std::chrono::duration<float> deltaTime = currentTime - lastUpdateTime;
+	lastUpdateTime = currentTime;
+	return deltaTime.count();
 }

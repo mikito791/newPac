@@ -16,6 +16,7 @@ RedWall::~RedWall()
 void RedWall::Initialize()
 {
 	hRedWall = Model::Load("Model/PlayerWallred0.fbx");
+	assert(hRedWall >= 0);
 	XMFLOAT3 boxSize = { 0.2f,1.0f,1.0f };
 	SphereCollider* collision = new SphereCollider(transform_.position_, 0.01f);
 	//BoxCollider* collision2 = new BoxCollider(transform_.rotate_, boxSize);

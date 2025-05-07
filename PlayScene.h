@@ -15,6 +15,8 @@ class PlayScene : public GameObject
 	float spawnInterval; // スポーン間隔（秒）
 	float timeSinceLastSpawn; // 最後のスポーンからの経過時間
 	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
+
+	float GetDeltaTime();
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

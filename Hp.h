@@ -4,6 +4,8 @@ class Hp :
     public GameObject
 {
 	int hp;//体力　数値は5
+	int hHp;//体力ハンドル
+	int hHpFrame;//体力フレームハンドル
 public:
 	Hp(GameObject* parent);
 	~Hp();
