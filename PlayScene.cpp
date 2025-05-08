@@ -4,12 +4,21 @@
 #include"RedEnemy.h"
 #include"Spawner.h"
 
-
+namespace
+{
+	float enemySpawnTimer = 0.0f;
+	float spawnInterval = 60.0f; // 敵を60秒ごとに出現させる[1分]
+	const float minSpawnInterval = 20.0f;  // 最短の出現間隔（20秒）
+	float timeElapsed = 0.0f;  // 経過時間
+	XMFLOAT3 Left  (-2, 0, 2);
+	XMFLOAT3 Right (10, 0, 2);
+	XMFLOAT3 Back (4, 0, 6);
+	XMFLOAT3 Front(4, 0, -4);
+}
 
 //コンストラクタ
 PlayScene::PlayScene(GameObject * parent)
-	: GameObject(parent, "PlayScene"),Left(-2, 0, 2),Right(10, 0, 2),Back(4, 0, 6),Front(4, 0, -4),
-	speed(0.05f)
+	: GameObject(parent, "PlayScene"),	speed(0.05f)
 {
 }
 
@@ -25,10 +34,22 @@ void PlayScene::Initialize()
 //更新
 void PlayScene::Update()
 {
-	counter -= 1;
-	if (counter <= 0)
+	float deltaTime = GetDeltaTime();
+	enemySpawnTimer += deltaTime;
+	timeElapsed += deltaTime;
+	
+	// 出現間隔を時間経過に合わせて調整
+	if (timeElapsed >= 60.0f) // 60秒経過後
 	{
-		counter = 50;
+		// spawnIntervalを段階的に縮めていく
+		float timeFactor = (timeElapsed - 60.0f) / 60.0f;  // 60秒以降
+		spawnInterval = max(minSpawnInterval, 60.0f - timeFactor * 40.0f);  // 最大20秒になるように設定
+	}
+
+	if (enemySpawnTimer>=spawnInterval)
+	{
+		enemySpawnTimer = 0.0f; // タイマーをリセット
+
 		EnemyRandom = rand() % 4; // 0～3 のランダム値
 		RedEnemy* Renemy = nullptr;
 		switch (EnemyRandom)

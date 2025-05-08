@@ -30,6 +30,7 @@ void Player::Initialize()
 	//コライダー
 	SphereCollider* collider = new SphereCollider(XMFLOAT3(0,0,0), 0.3f);
 	AddCollider(collider);
+	Direction Front = FRONT;
 }
 
 void Player::Update()
@@ -95,10 +96,10 @@ void Player::OnCollision(GameObject* pTarget)
 
 Direction Player::GetDirectionFromInput()
 {
-	if (Input::IsKeyDown(DIK_LEFT))  return LEFT;
-	if (Input::IsKeyDown(DIK_RIGHT)) return RIGHT;
-	if (Input::IsKeyDown(DIK_UP))    return FRONT;
-	if (Input::IsKeyDown(DIK_DOWN))  return BACK;
+	if (Input::IsKey(DIK_LEFT))  return LEFT;
+	if (Input::IsKey(DIK_RIGHT)) return RIGHT;
+	if (Input::IsKey(DIK_UP))    return FRONT;
+	if (Input::IsKey(DIK_DOWN))  return BACK;
 }
 
 int Player::GetRotationFromDirection(Direction dir)

@@ -6,11 +6,7 @@
 class PlayScene : public GameObject
 {
 	int EnemyRandom;
-	int counter;
-	XMFLOAT3 Left;
-	XMFLOAT3 Right;
-	XMFLOAT3 Back;
-	XMFLOAT3 Front;
+	
 	float speed;
 	float spawnInterval; // スポーン間隔（秒）
 	float timeSinceLastSpawn; // 最後のスポーンからの経過時間
