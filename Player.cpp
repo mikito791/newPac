@@ -35,9 +35,9 @@ void Player::Initialize()
 
 void Player::Update()
 {
-	Direction currentDirection = GetDirectionFromInput();
-	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
-	/*if (Input::IsKeyDown(DIK_LEFT))
+	//Direction currentDirection = GetDirectionFromInput();
+	//transform_.rotate_.y = GetRotationFromDirection(currentDirection);
+	if (Input::IsKeyDown(DIK_LEFT))
 	{
 		transform_.rotate_.y = 270;
 	}
@@ -52,7 +52,7 @@ void Player::Update()
 	if (Input::IsKeyDown(DIK_DOWN))
 	{
 		transform_.rotate_.y = 180;
-	}*/
+	}
 	//ÉJÉÅÉâ
 	XMFLOAT3 camPos = transform_.position_;
 	camPos.y = transform_.position_.y + 8.0f;

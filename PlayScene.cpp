@@ -2,13 +2,14 @@
 #include"Player.h"
 #include"RedWall.h"
 #include"RedEnemy.h"
-#include"Spawner.h"
+#include"Hp.h"
 
 namespace
 {
 	float enemySpawnTimer = 0.0f;
 	float spawnInterval = 30.0f; // “G‚ğ60•b‚²‚Æ‚ÉoŒ»‚³‚¹‚é[1•ª]
-	const float minSpawnInterval = 20.0f;  // Å’Z‚ÌoŒ»ŠÔŠui20•bj
+	float maxSpawnInterval = 30.0f; // Å‘å‚ÌoŒ»ŠÔŠui30•bj
+	const float minSpawnInterval = 10.0f;  // Å’Z‚ÌoŒ»ŠÔŠui10•bj
 	float timeElapsed = 0.0f;  // Œo‰ßŠÔ
 	XMFLOAT3 Left  (-2, 0, 2);
 	XMFLOAT3 Right (10, 0, 2);
@@ -29,6 +30,7 @@ void PlayScene::Initialize()
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
 	//Instantiate<RedEnemy>(this);
+	//Instantiate<Hp>(this);
 }
 
 //XV
@@ -39,11 +41,11 @@ void PlayScene::Update()
 	timeElapsed += deltaTime;
 	
 	// oŒ»ŠÔŠu‚ğŠÔŒo‰ß‚É‡‚í‚¹‚Ä’²®
-	if (timeElapsed >= 30.0f) // 60•bŒo‰ßŒã
+	if (timeElapsed >= maxSpawnInterval) // 30•bŒo‰ßŒã
 	{
 		// spawnInterval‚ğ’iŠK“I‚Ék‚ß‚Ä‚¢‚­
-		float timeFactor = (timeElapsed - 30.0f) / 30.0f;  // 60•bˆÈ~
-		spawnInterval = max(minSpawnInterval, 30.0f - timeFactor * 10.0f);  // Å‘å20•b‚É‚È‚é‚æ‚¤‚Éİ’è
+		float timeFactor = (timeElapsed - maxSpawnInterval) / maxSpawnInterval;  // 30•bˆÈ~
+		spawnInterval = max(minSpawnInterval, maxSpawnInterval - timeFactor * 20.0f);  // Å‘å10•b‚É‚È‚é‚æ‚¤‚Éİ’è
 	}
 
 	if (enemySpawnTimer>=spawnInterval)
