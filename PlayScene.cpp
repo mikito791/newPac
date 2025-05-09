@@ -30,7 +30,7 @@ void PlayScene::Initialize()
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
 	//Instantiate<RedEnemy>(this);
-	//Instantiate<Hp>(this);
+	Instantiate<Hp>(this);
 }
 
 //XV
