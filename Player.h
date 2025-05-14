@@ -25,5 +25,6 @@ public:
 private:
 	Direction GetDirectionFromInput();
 	int GetRotationFromDirection(Direction dir);
+	void HpDown(int hp);
 };
 

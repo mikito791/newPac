@@ -3,6 +3,7 @@
 #include"RedWall.h"
 #include"RedEnemy.h"
 #include"Hp.h"
+#include"Engine/Debug.h"
 
 namespace
 {
@@ -50,8 +51,9 @@ void PlayScene::Update()
 
 	if (enemySpawnTimer>=spawnInterval)
 	{
+		Debug::Log(enemySpawnTimer,"\n");
 		enemySpawnTimer = 0.0f; // タイマーをリセット
-
+		Debug::Log("敵が現れた\n");
 		EnemyRandom = rand() % 4; // 0～3 のランダム値
 		RedEnemy* Renemy = nullptr;
 		switch (EnemyRandom)

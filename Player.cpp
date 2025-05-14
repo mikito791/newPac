@@ -8,7 +8,10 @@
 #include"RedEnemy.h"
 #include"Hp.h"
 
-
+namespace
+{
+	int HP = 3;
+}
 
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player"), hModel(-1)
@@ -87,10 +90,14 @@ void Player::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "RedEnemy")
 	{
-		Hp* hp = (Hp*)FindObject("Hp");
-		this->KillMe();
-		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
+		HpDown(1);
+		pTarget->KillMe();
+		if (HP == 0)
+		{
+			this->KillMe();
+			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
+			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
+		}
 	}
 }
 
@@ -111,4 +118,10 @@ int Player::GetRotationFromDirection(Direction dir)
 	case FRONT: return 0;
 	case BACK:  return 180;
 	}
+}
+
+void Player::HpDown(int hp)
+{
+	HP -= hp;
+
 }
