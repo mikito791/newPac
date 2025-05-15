@@ -6,8 +6,9 @@ class Player :
 {
 	int hModel;
 	XMVECTOR pos;
-
-	
+	bool isInvincible; // 無敵状態かどうか
+	float invincibilityTimer; // 無敵時間のカウント
+	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
 public:
 	Player(GameObject* parent);
 	~Player();
@@ -26,5 +27,6 @@ private:
 	Direction GetDirectionFromInput();
 	int GetRotationFromDirection(Direction dir);
 	void HpDown(int hp);
+	float GetDeltaTime();
 };
 

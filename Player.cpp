@@ -11,6 +11,7 @@
 namespace
 {
 	int HP = 3;
+	float invincibilityTime = 2.0f;
 }
 
 Player::Player(GameObject* parent)
@@ -56,6 +57,15 @@ void Player::Update()
 	{
 		transform_.rotate_.y = 180;
 	}
+	if (isInvincible)
+	{
+		invincibilityTimer -= GetDeltaTime();
+		if (invincibilityTimer <= 0.0f)
+		{
+			isInvincible = false;  // End invincibility
+			HpDown(1);
+		}
+	}
 	//ƒJƒƒ‰
 	XMFLOAT3 camPos = transform_.position_;
 	camPos.y = transform_.position_.y + 8.0f;
@@ -90,8 +100,9 @@ void Player::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "RedEnemy")
 	{
-		HpDown(1);
-		pTarget->KillMe();
+		
+		isInvincible = true;  // Activate invincibility
+		invincibilityTimer = invincibilityTime; //‚±‚±‚É–³“GŽžŠÔ‚ð“ü‚ê‚é
 		if (HP == 0)
 		{
 			this->KillMe();
@@ -123,5 +134,12 @@ int Player::GetRotationFromDirection(Direction dir)
 void Player::HpDown(int hp)
 {
 	HP -= hp;
+}
 
+float Player::GetDeltaTime()
+{
+	auto currentTime = std::chrono::steady_clock::now();
+	std::chrono::duration<float> deltaTime = currentTime - lastUpdateTime;
+	lastUpdateTime = currentTime;
+	return deltaTime.count();
 }

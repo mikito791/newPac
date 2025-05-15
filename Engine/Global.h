@@ -1,5 +1,6 @@
 #pragma once
 #include "Direct3D.h"
+#include <chrono>
 
 //安全にメモリを開放するためのマクロ
 #define SAFE_DELETE(p) {if ((p)!=nullptr) { delete (p); (p)=nullptr;}}
@@ -13,3 +14,4 @@ enum Direction
 	BACK,
 	FRONT,
 };
+
