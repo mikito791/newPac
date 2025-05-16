@@ -100,9 +100,8 @@ void Player::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "RedEnemy")
 	{
-		
-		isInvincible = true;  // Activate invincibility
-		invincibilityTimer = invincibilityTime; //‚±‚±‚É–³“GŽžŠÔ‚ð“ü‚ê‚é
+		HpDown(1);
+		pTarget->KillMe();
 		if (HP == 0)
 		{
 			this->KillMe();

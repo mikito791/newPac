@@ -10,7 +10,7 @@ namespace
 	float enemySpawnTimer = 0.0f;
 	float spawnInterval = 30.0f; // “G‚ð60•b‚²‚Æ‚ÉoŒ»‚³‚¹‚é[1•ª]
 	float maxSpawnInterval = 30.0f; // Å‘å‚ÌoŒ»ŠÔŠui30•bj
-	const float minSpawnInterval = 10.0f;  // Å’Z‚ÌoŒ»ŠÔŠui10•bj
+	const float minSpawnInterval = 3.0f;  // Å’Z‚ÌoŒ»ŠÔŠui10•bj
 	float timeElapsed = 0.0f;  // Œo‰ßŽžŠÔ
 	XMFLOAT3 Left  (-2, 0, 2);
 	XMFLOAT3 Right (10, 0, 2);
@@ -46,7 +46,7 @@ void PlayScene::Update()
 	{
 		// spawnInterval‚ð’iŠK“I‚Ék‚ß‚Ä‚¢‚­
 		float timeFactor = (timeElapsed - maxSpawnInterval) / maxSpawnInterval;  // 30•bˆÈ~
-		spawnInterval = max(minSpawnInterval, maxSpawnInterval - timeFactor * 20.0f);  // Å‘å10•b‚É‚È‚é‚æ‚¤‚ÉÝ’è
+		spawnInterval = max(minSpawnInterval, maxSpawnInterval - timeFactor * 27.0f);  // Å‘å5•b‚É‚È‚é‚æ‚¤‚ÉÝ’è
 	}
 
 	if (enemySpawnTimer>=spawnInterval)
