@@ -89,7 +89,7 @@ void PlayScene::Update()
 //•`‰æ
 void PlayScene::Draw()
 {
-	Image::Draw(hPlayScene);
+	//Image::Draw(hPlayScene);
 }
 
 //ŠJ•ú

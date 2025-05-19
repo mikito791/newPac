@@ -7,11 +7,16 @@
 #include"RedWall.h"
 #include"RedEnemy.h"
 #include"Hp.h"
+#include"Engine/Debug.h"
 
 namespace
 {
-	int HP = 3;
+	int HP = 50;
 	float invincibilityTime = 2.0f;
+	bool isInvincible = false;
+	float invincibilityTimer = 0.0f;
+	float blinkTimer = 0.0f;
+	bool isVisible = true;
 }
 
 Player::Player(GameObject* parent)
@@ -57,25 +62,42 @@ void Player::Update()
 	{
 		transform_.rotate_.y = 180;
 	}
-	if (isInvincible)
-	{
-		invincibilityTimer -= GetDeltaTime();
-		if (invincibilityTimer <= 0.0f)
-		{
-			isInvincible = false;  // End invincibility
-			HpDown(1);
-		}
-	}
+	
 	//カメラ
 	XMFLOAT3 camPos = transform_.position_;
 	camPos.y = transform_.position_.y + 8.0f;
 	camPos.z = transform_.position_.z - 5.0f;
 	Camera::SetPosition(camPos);
 	Camera::SetTarget(transform_.position_);
+
+	//無敵処理
+	if (isInvincible)
+	{
+		invincibilityTimer -= GetDeltaTime();
+		blinkTimer -= GetDeltaTime();
+
+		// 点滅制御：0.1秒ごとに表示・非表示を切り替える
+		if (blinkTimer <= 0.0f)
+		{
+			isVisible = !isVisible;
+			blinkTimer = 0.1f; // 点滅間隔
+		}
+
+		if (invincibilityTimer <= 0.0f)
+		{
+			isInvincible = false;
+			isVisible = true; // 最終的に表示に戻す
+		}
+	}
+	else
+	{
+		isVisible = true; // 無敵でなければ常に表示
+	}
 }
 
 void Player::Draw()
 {
+	if (!isVisible) return; // 非表示状態なら描画スキップ
 	Model::SetTransform(hModel, transform_);
 	Model::Draw(hModel);
 }
@@ -101,6 +123,10 @@ void Player::OnCollision(GameObject* pTarget)
 	if (pTarget->GetObjectName() == "RedEnemy")
 	{
 		HpDown(1);
+		Debug::Log(HP);
+		isInvincible = true;
+		invincibilityTimer = invincibilityTime;
+		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
 		if (HP == 0)
 		{
 			this->KillMe();

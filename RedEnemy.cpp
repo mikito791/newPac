@@ -62,12 +62,6 @@ void RedEnemy::Update()
 	transform_.rotate_.y += 3.0f;
 	// プレイヤーとの距離を計算
 	float distancePlayer = CalculateDistancePlayer(transform_.position_, player->GetPos());
-	if (distancePlayer < distance)
-	{
-		player->KillMe();
-		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
-	}
 	// 壁との距離を計算
 	float distanceWall = CalculateDistanceWall(transform_.position_,redwall->GetPos());
 	if (distanceWall < distance)
