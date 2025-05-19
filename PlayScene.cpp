@@ -4,6 +4,7 @@
 #include"RedEnemy.h"
 #include"Hp.h"
 #include"Engine/Debug.h"
+#include"Engine/Image.h"
 
 namespace
 {
@@ -27,11 +28,12 @@ PlayScene::PlayScene(GameObject * parent)
 //初期化
 void PlayScene::Initialize()
 {
+	hPlayScene = Image::Load("Model//playScene.png");
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
 	//Instantiate<RedEnemy>(this);
-	Instantiate<Hp>(this);
+	//Instantiate<Hp>(this);
 }
 
 //更新
@@ -87,6 +89,7 @@ void PlayScene::Update()
 //描画
 void PlayScene::Draw()
 {
+	Image::Draw(hPlayScene);
 }
 
 //開放

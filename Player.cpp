@@ -101,7 +101,6 @@ void Player::OnCollision(GameObject* pTarget)
 	if (pTarget->GetObjectName() == "RedEnemy")
 	{
 		HpDown(1);
-		pTarget->KillMe();
 		if (HP == 0)
 		{
 			this->KillMe();

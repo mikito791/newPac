@@ -59,6 +59,7 @@ void RedEnemy::Update()
 	RedWall* redwall = (RedWall*)FindObject("RedWall");
 	transform_.position_.x += moveDirection.x;
 	transform_.position_.z += moveDirection.z;
+	transform_.rotate_.y += 3.0f;
 	// プレイヤーとの距離を計算
 	float distancePlayer = CalculateDistancePlayer(transform_.position_, player->GetPos());
 	if (distancePlayer < distance)
