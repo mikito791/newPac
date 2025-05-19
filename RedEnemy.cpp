@@ -25,7 +25,7 @@ RedEnemy::~RedEnemy()
 
 void RedEnemy::Initialize()
 {
-	hRedEnemy = Model::Load("Model//RedEnemy0.fbx");
+	hRedEnemy = Model::Load("Model//Enemy.fbx");
 	assert(hRedEnemy >= 0);
 	num = rand() % 4; // 0`3 ‚Ìƒ‰ƒ“ƒ_ƒ€’l
 	switch (num)
