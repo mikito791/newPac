@@ -40,6 +40,7 @@ void Player::Initialize()
 	SphereCollider* collider = new SphereCollider(XMFLOAT3(0,0,0), 0.3f);
 	AddCollider(collider);
 	Direction Front = FRONT;
+	prevSpaceKey = false;
 }
 
 void Player::Update()
@@ -92,6 +93,28 @@ void Player::Update()
 	else
 	{
 		isVisible = true; // 無敵でなければ常に表示
+	}
+	//プレイヤーのジャンプ//仮　盾で防げない敵用
+	if (Input::IsKey(DIK_SPACE))//ジャンプで上に飛ぶ//上限必要
+	{
+		if (prevSpaceKey == false)
+		{
+			//ジャンプ処理
+			transform_.position_.y += 10.0f;
+		}
+		if (transform_.position_.y > 0)
+		{
+			prevSpaceKey = true;
+		}
+	}
+	else//定位置に止めるtransform_.position_.y = 0にする
+	{
+		transform_.position_.y -= 0.1f;
+		if (transform_.position_.y < 0)
+		{
+			transform_.position_.y = 0;
+			prevSpaceKey = false;
+		}
 	}
 }
 

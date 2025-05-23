@@ -9,6 +9,8 @@ class Player :
 	bool isInvincible; // 無敵状態かどうか
 	float invincibilityTimer; // 無敵時間のカウント
 	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
+	bool prevSpaceKey;
+	float jumpSpeed;
 public:
 	Player(GameObject* parent);
 	~Player();
