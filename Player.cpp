@@ -109,12 +109,13 @@ void Player::Update()
 	}
 	else//’èˆÊ’u‚ÉŽ~‚ß‚étransform_.position_.y = 0‚É‚·‚é
 	{
-		transform_.position_.y -= 0.1f;
-		if (transform_.position_.y < 0)
-		{
-			transform_.position_.y = 0;
-			prevSpaceKey = false;
-		}
+		
+		prevSpaceKey = false;
+	}
+	transform_.position_.y -= 0.1f;
+	if (transform_.position_.y < 0)
+	{
+		transform_.position_.y = 0;
 	}
 }
 

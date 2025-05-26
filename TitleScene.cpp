@@ -19,7 +19,7 @@ void TitleScene::Initialize()
 
 void TitleScene::Update()
 {
-	if (Input::IsKey(DIK_SPACE))
+	if (Input::IsKey(DIK_LSHIFT))
 	{
 		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
 		pSM->ChangeScene(SCENE_ID::SCENE_ID_PLAY);
