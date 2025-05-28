@@ -7,6 +7,7 @@ class AllyBall :
 	XMFLOAT3 moveDirection; // 移動方向
 	float speed; // 移動速度
 	float distance; // 衝突判定の距離
+	int num; // ランダム値
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
@@ -23,6 +24,8 @@ public:
 
 	//開放
 	void Release() override;
-
+	void SetPos(XMFLOAT3 pos) { transform_.position_ = pos; }
+	void SetMove(XMFLOAT3 move) { moveDirection = move; }
+	void OnCollision(GameObject* pTarget) override;
 };
 

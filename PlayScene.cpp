@@ -3,12 +3,13 @@
 #include"RedWall.h"
 #include"RedEnemy.h"
 #include"Hp.h"
+#include"AllyBall.h"
 #include"Engine/Debug.h"
 #include"Engine/Image.h"
 
 namespace
 {
-	float enemySpawnTimer = 0.0f;
+	float SpawnTimer = 0.0f;
 	float spawnInterval = 30.0f; // 敵を60秒ごとに出現させる[1分]
 	float maxSpawnInterval = 30.0f; // 最大の出現間隔（30秒）
 	const float minSpawnInterval = 3.0f;  // 最短の出現間隔（10秒）
@@ -34,13 +35,14 @@ void PlayScene::Initialize()
 	Instantiate<RedWall>(this);
 	//Instantiate<RedEnemy>(this);
 	//Instantiate<Hp>(this);
+	//Instantiate<AllyBall>(this);
 }
 
 //更新
 void PlayScene::Update()
 {
 	float deltaTime = GetDeltaTime();
-	enemySpawnTimer += deltaTime;
+	SpawnTimer += deltaTime;
 	timeElapsed += deltaTime;
 	
 	// 出現間隔を時間経過に合わせて調整
@@ -51,13 +53,13 @@ void PlayScene::Update()
 		spawnInterval = max(minSpawnInterval, maxSpawnInterval - timeFactor * 27.0f);  // 最大5秒になるように設定
 	}
 
-	if (enemySpawnTimer>=spawnInterval)
+	if (SpawnTimer>=spawnInterval)
 	{
-		Debug::Log(enemySpawnTimer,"\n");
-		enemySpawnTimer = 0.0f; // タイマーをリセット
-		Debug::Log("敵が現れた\n");
+		SpawnTimer = 0.0f; // タイマーをリセット
 		EnemyRandom = rand() % 4; // 0～3 のランダム値
-		RedEnemy* Renemy = nullptr;
+		AllyRandom = rand() % 4; // 0～3 のランダム値
+		RedEnemy* Renemy = nullptr; // RedEnemyのポインタ
+		AllyBall* Aenemy = nullptr; // AllyBallのポインタ
 		switch (EnemyRandom)
 		{
 		case 0: // 左から
@@ -79,6 +81,31 @@ void PlayScene::Update()
 			Renemy = Instantiate<RedEnemy>(this);
 			Renemy->SetPos(Front);
 			Renemy->SetMove(XMFLOAT3(0, 0, speed));
+			break;
+		default:
+			break;
+		}
+		switch (AllyRandom)
+		{
+		case 0: // 左から
+			Aenemy = Instantiate<AllyBall>(this);
+			Aenemy->SetPos(Left);
+			Aenemy->SetMove(XMFLOAT3(speed, 0, 0));
+			break;
+		case 1: // 右から
+			Aenemy = Instantiate<AllyBall>(this);
+			Aenemy->SetPos(Right);
+			Aenemy->SetMove(XMFLOAT3(-speed, 0, 0));
+			break;
+		case 2: // 奥から
+			Aenemy = Instantiate<AllyBall>(this);
+			Aenemy->SetPos(Back);
+			Aenemy->SetMove(XMFLOAT3(0, 0, -speed));
+			break;
+		case 3: // 手前から
+			Aenemy = Instantiate<AllyBall>(this);
+			Aenemy->SetPos(Front);
+			Aenemy->SetMove(XMFLOAT3(0, 0, speed));
 			break;
 		default:
 			break;

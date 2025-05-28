@@ -30,5 +30,6 @@ private:
 	int GetRotationFromDirection(Direction dir);
 	void HpDown(int hp);
 	float GetDeltaTime();
+	void PointUp(int pt);
 };
 

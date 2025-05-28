@@ -8,6 +8,7 @@
 #include"RedEnemy.h"
 #include"Hp.h"
 #include"Engine/Debug.h"
+#include"AllyBall.h"
 
 namespace
 {
@@ -17,6 +18,7 @@ namespace
 	float invincibilityTimer = 0.0f;
 	float blinkTimer = 0.0f;
 	bool isVisible = true;
+	int Point = 0;
 }
 
 Player::Player(GameObject* parent)
@@ -37,7 +39,7 @@ void Player::Initialize()
 	transform_.position_ = XMFLOAT3(4, 0, 2);
 	transform_.rotate_ = XMFLOAT3(0, 0, 0);
 	//コライダー
-	SphereCollider* collider = new SphereCollider(XMFLOAT3(0,0,0), 0.3f);
+	SphereCollider* collider = new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f);
 	AddCollider(collider);
 	Direction Front = FRONT;
 	prevSpaceKey = false;
@@ -94,29 +96,6 @@ void Player::Update()
 	{
 		isVisible = true; // 無敵でなければ常に表示
 	}
-	//プレイヤーのジャンプ//仮　盾で防げない敵用
-	if (Input::IsKey(DIK_SPACE))//ジャンプで上に飛ぶ//上限必要
-	{
-		if (prevSpaceKey == false)
-		{
-			//ジャンプ処理
-			transform_.position_.y += 10.0f;
-		}
-		if (transform_.position_.y > 0)
-		{
-			prevSpaceKey = true;
-		}
-	}
-	else//定位置に止めるtransform_.position_.y = 0にする
-	{
-		
-		prevSpaceKey = false;
-	}
-	transform_.position_.y -= 0.1f;
-	if (transform_.position_.y < 0)
-	{
-		transform_.position_.y = 0;
-	}
 }
 
 void Player::Draw()
@@ -147,37 +126,47 @@ void Player::OnCollision(GameObject* pTarget)
 	if (pTarget->GetObjectName() == "RedEnemy")
 	{
 		HpDown(1);
-		Debug::Log(HP);
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
-		if (HP == 0)
+		if (HP <= 0)
 		{
 			this->KillMe();
 			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
 			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
 		}
 	}
-}
-
-Direction Player::GetDirectionFromInput()
-{
-	if (Input::IsKey(DIK_LEFT))  return LEFT;
-	if (Input::IsKey(DIK_RIGHT)) return RIGHT;
-	if (Input::IsKey(DIK_UP))    return FRONT;
-	if (Input::IsKey(DIK_DOWN))  return BACK;
-}
-
-int Player::GetRotationFromDirection(Direction dir)
-{
-	switch (dir)
+	if (pTarget->GetObjectName() == "AllyBall")
 	{
-	case LEFT:  return 270;
-	case RIGHT: return 90;
-	case FRONT: return 0;
-	case BACK:  return 180;
+		PointUp(1);
+		pTarget->KillMe();
+		Debug::Log(Point);
+		if (Point >= 1)
+		{
+			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
+			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMECLEAR);
+		}
 	}
 }
+
+//Direction Player::GetDirectionFromInput()
+//{
+//	if (Input::IsKey(DIK_LEFT))  return LEFT;
+//	if (Input::IsKey(DIK_RIGHT)) return RIGHT;
+//	if (Input::IsKey(DIK_UP))    return FRONT;
+//	if (Input::IsKey(DIK_DOWN))  return BACK;
+//}
+//
+//int Player::GetRotationFromDirection(Direction dir)
+//{
+//	switch (dir)
+//	{
+//	case LEFT:  return 270;
+//	case RIGHT: return 90;
+//	case FRONT: return 0;
+//	case BACK:  return 180;
+//	}
+//}
 
 void Player::HpDown(int hp)
 {
@@ -190,4 +179,9 @@ float Player::GetDeltaTime()
 	std::chrono::duration<float> deltaTime = currentTime - lastUpdateTime;
 	lastUpdateTime = currentTime;
 	return deltaTime.count();
+}
+
+void Player::PointUp(int pt)
+{
+	Point += pt;
 }
