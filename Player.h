@@ -11,6 +11,8 @@ class Player :
 	std::chrono::steady_clock::time_point lastUpdateTime; // ÅŒã‚ÌXVŠÔ
 	bool prevSpaceKey;
 	float jumpSpeed;
+	int HP;
+	int Point;
 public:
 	Player(GameObject* parent);
 	~Player();

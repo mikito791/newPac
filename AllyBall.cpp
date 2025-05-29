@@ -68,7 +68,7 @@ void AllyBall::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "RedWall")
 	{
-		moveDirection.x *= -1; // •Ç‚ÉÕ“Ë‚µ‚½‚ç”½“]
-		moveDirection.z *= -1; // •Ç‚ÉÕ“Ë‚µ‚½‚ç”½“]	
+		moveDirection.x = -moveDirection.x; // •Ç‚ÉÕ“Ë‚µ‚½‚ç”½“]
+		moveDirection.z = -moveDirection.z; // •Ç‚ÉÕ“Ë‚µ‚½‚ç”½“]	
 	}
 }

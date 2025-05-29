@@ -12,13 +12,11 @@
 
 namespace
 {
-	int HP = 50;
 	float invincibilityTime = 2.0f;
 	bool isInvincible = false;
 	float invincibilityTimer = 0.0f;
 	float blinkTimer = 0.0f;
 	bool isVisible = true;
-	int Point = 0;
 }
 
 Player::Player(GameObject* parent)
@@ -43,13 +41,15 @@ void Player::Initialize()
 	AddCollider(collider);
 	Direction Front = FRONT;
 	prevSpaceKey = false;
+	HP = 50;
+	Point = 0;
 }
 
 void Player::Update()
 {
-	//Direction currentDirection = GetDirectionFromInput();
-	//transform_.rotate_.y = GetRotationFromDirection(currentDirection);
-	if (Input::IsKeyDown(DIK_LEFT))
+	Direction currentDirection = GetDirectionFromInput();
+	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
+	/*if (Input::IsKeyDown(DIK_LEFT))
 	{
 		transform_.rotate_.y = 270;
 	}
@@ -64,7 +64,7 @@ void Player::Update()
 	if (Input::IsKeyDown(DIK_DOWN))
 	{
 		transform_.rotate_.y = 180;
-	}
+	}*/
 	
 	//ƒJƒƒ‰
 	XMFLOAT3 camPos = transform_.position_;
@@ -140,8 +140,7 @@ void Player::OnCollision(GameObject* pTarget)
 	{
 		PointUp(1);
 		pTarget->KillMe();
-		Debug::Log(Point);
-		if (Point >= 1)
+		if (Point >= 5)
 		{
 			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
 			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMECLEAR);
@@ -149,24 +148,38 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 }
 
-//Direction Player::GetDirectionFromInput()
-//{
-//	if (Input::IsKey(DIK_LEFT))  return LEFT;
-//	if (Input::IsKey(DIK_RIGHT)) return RIGHT;
-//	if (Input::IsKey(DIK_UP))    return FRONT;
-//	if (Input::IsKey(DIK_DOWN))  return BACK;
-//}
-//
-//int Player::GetRotationFromDirection(Direction dir)
-//{
-//	switch (dir)
-//	{
-//	case LEFT:  return 270;
-//	case RIGHT: return 90;
-//	case FRONT: return 0;
-//	case BACK:  return 180;
-//	}
-//}
+Direction Player::GetDirectionFromInput()
+{
+	static Direction lastDirection = FRONT;
+
+	if (Input::IsKeyDown(DIK_LEFT))  lastDirection = LEFT;
+	if (Input::IsKeyDown(DIK_RIGHT)) lastDirection = RIGHT;
+	if (Input::IsKeyDown(DIK_UP))    lastDirection = FRONT;
+	if (Input::IsKeyDown(DIK_DOWN))  lastDirection = BACK;
+
+	return lastDirection;
+}
+
+int Player::GetRotationFromDirection(Direction dir)
+{
+	switch (dir)
+	{
+	case LEFT:  
+		return 270;
+		break;
+	case RIGHT:
+		return 90;
+		break;
+	case FRONT:
+		return 0;
+		break;
+	case BACK: 
+		return 180;
+		break;
+	default:
+		break;
+	}
+}
 
 void Player::HpDown(int hp)
 {
