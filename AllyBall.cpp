@@ -17,6 +17,10 @@ AllyBall::AllyBall(GameObject* parent)
 	speed = 0.05f; // 移動速度
 }
 
+AllyBall::~AllyBall()
+{
+}
+
 void AllyBall::Initialize()
 {
 	hAllyBall = Model::Load("Model/blueEnemy0.fbx");
@@ -55,7 +59,6 @@ void AllyBall::Update()
 
 void AllyBall::Draw()
 {
-	//if (hAllyBall < 0) return; // モデルがロードされていない場合は描画しない
 	Model::SetTransform(hAllyBall, transform_);
 	Model::Draw(hAllyBall);
 }
@@ -68,7 +71,6 @@ void AllyBall::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "RedWall")
 	{
-		moveDirection.x = -moveDirection.x; // 壁に衝突したら反転
-		moveDirection.z = -moveDirection.z; // 壁に衝突したら反転	
+		this->KillMe(); // 壁に衝突したら自分を削除
 	}
 }

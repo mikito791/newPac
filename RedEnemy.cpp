@@ -116,7 +116,8 @@ void RedEnemy::OnCollision(GameObject* pTarget)
 	// •Ç‚Æ‚ÌÕ“Ë”»’è
 	if (pTarget->GetObjectName() == "RedWall")
 	{
-		this->KillMe();
+		moveDirection.x = -moveDirection.x; // •Ç‚ÉÕ“Ë‚µ‚½‚ç”½“]
+		moveDirection.z = -moveDirection.z; // •Ç‚ÉÕ“Ë‚µ‚½‚ç”½“]
 	}
 }
 

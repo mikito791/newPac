@@ -33,5 +33,7 @@ private:
 	void HpDown(int hp);
 	float GetDeltaTime();
 	void PointUp(int pt);
+	
+
 };
 

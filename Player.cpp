@@ -17,6 +17,7 @@ namespace
 	float invincibilityTimer = 0.0f;
 	float blinkTimer = 0.0f;
 	bool isVisible = true;
+	Direction Front = FRONT;
 }
 
 Player::Player(GameObject* parent)
@@ -39,7 +40,7 @@ void Player::Initialize()
 	//コライダー
 	SphereCollider* collider = new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f);
 	AddCollider(collider);
-	Direction Front = FRONT;
+	transform_.rotate_.y = GetRotationFromDirection(Front); // 初期方向を前に設定
 	prevSpaceKey = false;
 	HP = 50;
 	Point = 0;
@@ -47,6 +48,7 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	//入力処理
 	Direction currentDirection = GetDirectionFromInput();
 	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
 	/*if (Input::IsKeyDown(DIK_LEFT))

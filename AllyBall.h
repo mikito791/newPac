@@ -9,10 +9,9 @@ class AllyBall :
 	float distance; // 衝突判定の距離
 	int num; // ランダム値
 public:
-	//コンストラクタ
-	//引数：parent  親オブジェクト（SceneManager）
+	
 	AllyBall(GameObject* parent);
-
+	~AllyBall();
 	//初期化
 	void Initialize() override;
 

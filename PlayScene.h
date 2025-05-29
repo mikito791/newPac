@@ -30,4 +30,6 @@ public:
 
 	//ŠJ•ú
 	void Release() override;
+private:
+	void Update_Spawn();
 };

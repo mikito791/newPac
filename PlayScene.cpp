@@ -18,6 +18,11 @@ namespace
 	XMFLOAT3 Right (10, 0, 2);
 	XMFLOAT3 Back (4, 0, 6);
 	XMFLOAT3 Front(4, 0, -4);
+	// speedを時間経過で増加させる（最大速度を設定）
+	const float maxSpeed = 0.2f;          // 最大速度の例
+	const float speedIncrement = 0.005f; // 1秒あたり増加する速度の例
+	int frameCount = 0;           // フレームカウント用
+	const int framesPerBoost = 300; // 何フレームごとに速度を上げるか（例：300フレーム = 5秒間60fps前提）
 }
 
 //コンストラクタ
@@ -44,7 +49,17 @@ void PlayScene::Update()
 	float deltaTime = GetDeltaTime();
 	SpawnTimer += deltaTime;
 	timeElapsed += deltaTime;
-	
+	frameCount++;
+
+	// speedをフレームごとに増加
+	if (frameCount % framesPerBoost == 0 && speed < maxSpeed)
+	{
+		speed += speedIncrement;
+		if (speed > maxSpeed) speed = maxSpeed;
+	}
+
+	// スポーン間隔を時間（フレーム）経過に応じて縮める
+
 	// 出現間隔を時間経過に合わせて調整
 	if (timeElapsed >= maxSpawnInterval) // 30秒経過後
 	{
@@ -53,63 +68,11 @@ void PlayScene::Update()
 		spawnInterval = max(minSpawnInterval, maxSpawnInterval - timeFactor * 27.0f);  // 最大5秒になるように設定
 	}
 
-	if (SpawnTimer>=spawnInterval)
+	if (SpawnTimer >= spawnInterval)
 	{
+		
 		SpawnTimer = 0.0f; // タイマーをリセット
-		EnemyRandom = rand() % 4; // 0～3 のランダム値
-		AllyRandom = rand() % 4; // 0～3 のランダム値
-		RedEnemy* Renemy = nullptr; // RedEnemyのポインタ
-		AllyBall* Aenemy = nullptr; // AllyBallのポインタ
-		switch (EnemyRandom)
-		{
-		case 0: // 左から
-			Renemy = Instantiate<RedEnemy>(this);
-			Renemy->SetPos(Left);
-			Renemy->SetMove(XMFLOAT3(speed, 0, 0));
-			break;
-		case 1: // 右から
-			Renemy = Instantiate<RedEnemy>(this);
-			Renemy->SetPos(Right);
-			Renemy->SetMove(XMFLOAT3(-speed, 0, 0));
-			break;
-		case 2: // 奥から
-			Renemy = Instantiate<RedEnemy>(this);
-			Renemy->SetPos(Back);
-			Renemy->SetMove(XMFLOAT3(0, 0, -speed));
-			break;
-		case 3: // 手前から
-			Renemy = Instantiate<RedEnemy>(this);
-			Renemy->SetPos(Front);
-			Renemy->SetMove(XMFLOAT3(0, 0, speed));
-			break;
-		default:
-			break;
-		}
-		switch (AllyRandom)
-		{
-		case 0: // 左から
-			Aenemy = Instantiate<AllyBall>(this);
-			Aenemy->SetPos(Left);
-			Aenemy->SetMove(XMFLOAT3(speed, 0, 0));
-			break;
-		case 1: // 右から
-			Aenemy = Instantiate<AllyBall>(this);
-			Aenemy->SetPos(Right);
-			Aenemy->SetMove(XMFLOAT3(-speed, 0, 0));
-			break;
-		case 2: // 奥から
-			Aenemy = Instantiate<AllyBall>(this);
-			Aenemy->SetPos(Back);
-			Aenemy->SetMove(XMFLOAT3(0, 0, -speed));
-			break;
-		case 3: // 手前から
-			Aenemy = Instantiate<AllyBall>(this);
-			Aenemy->SetPos(Front);
-			Aenemy->SetMove(XMFLOAT3(0, 0, speed));
-			break;
-		default:
-			break;
-		}
+		Update_Spawn();
 	}
 }
 
@@ -122,6 +85,64 @@ void PlayScene::Draw()
 //開放
 void PlayScene::Release()
 {
+}
+
+void PlayScene::Update_Spawn()
+{
+	EnemyRandom = rand() % 4; // 0～3 のランダム値
+	AllyRandom = rand() % 4; // 0～3 のランダム値
+	RedEnemy* Renemy = nullptr; // RedEnemyのポインタ
+	AllyBall* Aenemy = nullptr; // AllyBallのポインタ
+	switch (EnemyRandom)
+	{
+	case 0: // 左から
+		Renemy = Instantiate<RedEnemy>(this);
+		Renemy->SetPos(Left);
+		Renemy->SetMove(XMFLOAT3(speed, 0, 0));
+		break;
+	case 1: // 右から
+		Renemy = Instantiate<RedEnemy>(this);
+		Renemy->SetPos(Right);
+		Renemy->SetMove(XMFLOAT3(-speed, 0, 0));
+		break;
+	case 2: // 奥から
+		Renemy = Instantiate<RedEnemy>(this);
+		Renemy->SetPos(Back);
+		Renemy->SetMove(XMFLOAT3(0, 0, -speed));
+		break;
+	case 3: // 手前から
+		Renemy = Instantiate<RedEnemy>(this);
+		Renemy->SetPos(Front);
+		Renemy->SetMove(XMFLOAT3(0, 0, speed));
+		break;
+	default:
+		break;
+	}
+	switch (AllyRandom)
+	{
+	case 0: // 左から
+		Aenemy = Instantiate<AllyBall>(this);
+		Aenemy->SetPos(Left);
+		Aenemy->SetMove(XMFLOAT3(speed, 0, 0));
+		break;
+	case 1: // 右から
+		Aenemy = Instantiate<AllyBall>(this);
+		Aenemy->SetPos(Right);
+		Aenemy->SetMove(XMFLOAT3(-speed, 0, 0));
+		break;
+	case 2: // 奥から
+		Aenemy = Instantiate<AllyBall>(this);
+		Aenemy->SetPos(Back);
+		Aenemy->SetMove(XMFLOAT3(0, 0, -speed));
+		break;
+	case 3: // 手前から
+		Aenemy = Instantiate<AllyBall>(this);
+		Aenemy->SetPos(Front);
+		Aenemy->SetMove(XMFLOAT3(0, 0, speed));
+		break;
+	default:
+		break;
+	}
 }
 
 float PlayScene::GetDeltaTime()
