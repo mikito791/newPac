@@ -4,6 +4,8 @@ class RedWall :
     public GameObject
 {
 	int hRedWall;
+	int hBlueWall;
+	bool keyPush;
 public:
 	RedWall(GameObject* parent);
 	~RedWall();

@@ -17,37 +17,48 @@ void RedWall::Initialize()
 {
 	hRedWall = Model::Load("Model/PlayerWallred0.fbx");
 	assert(hRedWall >= 0);
-	XMFLOAT3 boxSize = { 0.2f,1.0f,1.0f };
+	hBlueWall = Model::Load("Model/PlayerWallblue0.fbx");
+	assert(hBlueWall >= 0);
 	SphereCollider* collision = new SphereCollider(transform_.position_, 0.01f);
 	//BoxCollider* collision2 = new BoxCollider(transform_.rotate_, boxSize);
 	AddCollider(collision);
 	//AddCollider(collision2);
 	transform_.position_ = XMFLOAT3(4, 0, 3);
 	transform_.rotate_= XMFLOAT3(0, 0, 0);
+	keyPush = false;
 }
 
 void RedWall::Update()
 {
 	
-	if(Input::IsKeyDown(DIK_LEFT))
+	if(Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A))
 	{
 		transform_.rotate_.y = 270;
 		transform_.position_ = XMFLOAT3(3, 0, 2);
 	}
-	if (Input::IsKeyDown(DIK_RIGHT))
+	if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D))
 	{
 		transform_.rotate_.y = 90;
 		transform_.position_ = XMFLOAT3(5, 0, 2);
 	}
-	if (Input::IsKeyDown(DIK_UP))
+	if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W))
 	{
 		transform_.rotate_.y = 0;
 		transform_.position_ = XMFLOAT3(4, 0, 3);
 	}
-	if (Input::IsKeyDown(DIK_DOWN))
+	if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S))
 	{
 		transform_.rotate_.y = 180;
 		transform_.position_ = XMFLOAT3(4, 0, 1);
+	}
+
+	if (Input::IsKeyDown(DIK_SPACE))
+	{
+		keyPush = true;
+	}
+	else if (Input::IsKeyUp(DIK_SPACE))
+	{
+		keyPush = false;
 	}
 	/*if (Input::IsKeyDown(DIK_W))
 	{
@@ -145,8 +156,16 @@ void RedWall::Update()
 
 void RedWall::Draw()
 {
-	Model::SetTransform(hRedWall, transform_);
-	Model::Draw(hRedWall);
+	if (keyPush)
+	{
+		Model::SetTransform(hBlueWall, transform_);
+		Model::Draw(hBlueWall);
+	}
+	else
+	{
+		Model::SetTransform(hRedWall, transform_);
+		Model::Draw(hRedWall);
+	}
 }
 
 void RedWall::Release()

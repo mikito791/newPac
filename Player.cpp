@@ -98,6 +98,23 @@ void Player::Update()
 	{
 		isVisible = true; // –³“G‚Å‚È‚¯‚ê‚Îí‚É•\Ž¦
 	}
+	if (Input::IsKeyDown(DIK_X))
+	{
+		transform_.position_.y -= 0.001f;
+		if (transform_.position_.y >= -1)
+		{
+			transform_.position_.y = -1;
+		}
+	}
+	else if (Input::IsKeyUp(DIK_X))
+	{
+		transform_.position_.y += 0.001f;
+		if (transform_.position_.y <= 0)
+		{
+			transform_.position_.y = 0;
+		}
+	}
+
 }
 
 void Player::Draw()
@@ -154,10 +171,10 @@ Direction Player::GetDirectionFromInput()
 {
 	static Direction lastDirection = FRONT;
 
-	if (Input::IsKeyDown(DIK_LEFT))  lastDirection = LEFT;
-	if (Input::IsKeyDown(DIK_RIGHT)) lastDirection = RIGHT;
-	if (Input::IsKeyDown(DIK_UP))    lastDirection = FRONT;
-	if (Input::IsKeyDown(DIK_DOWN))  lastDirection = BACK;
+	if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = LEFT;
+	if (Input::IsKeyDown(DIK_RIGHT)|| Input::IsKeyDown(DIK_D)) lastDirection = RIGHT;
+	if (Input::IsKeyDown(DIK_UP)   || Input::IsKeyDown(DIK_W)) lastDirection = FRONT;
+	if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = BACK;
 
 	return lastDirection;
 }

@@ -19,7 +19,7 @@ void GameOverScene::Initialize()
 
 void GameOverScene::Update()
 {
-	if (Input::IsKey(DIK_RSHIFT))
+	if (Input::IsKey(DIK_LSHIFT))
 	{
 		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
 		pSM->ChangeScene(SCENE_ID::SCENE_ID_TITLE);
