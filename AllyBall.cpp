@@ -55,6 +55,11 @@ void AllyBall::Update()
 {
 	transform_.position_.x += moveDirection.x;
 	transform_.position_.z += moveDirection.z;
+	if (transform_.position_.x < -10 || transform_.position_.x > 10 ||
+		transform_.position_.z < -10 || transform_.position_.z > 10)
+	{
+		this->KillMe(); // ‰æ–ÊŠO‚Éo‚½‚ç©•ª‚ğíœ
+	}
 }
 
 void AllyBall::Draw()

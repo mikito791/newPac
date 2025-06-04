@@ -9,8 +9,9 @@ class Player :
 	bool isInvincible; // 無敵状態かどうか
 	float invincibilityTimer; // 無敵時間のカウント
 	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
-	bool prevSpaceKey;
-	float jumpSpeed;
+	bool prevSpaceKey;// 前回のスペースキーの状態
+	float jumpPower; // ジャンプの力
+	bool onGround; // 地面にいるかどうか（地面ないけど）
 	int HP;
 	int Point;
 public:
@@ -33,7 +34,7 @@ private:
 	void HpDown(int hp);
 	float GetDeltaTime();
 	void PointUp(int pt);
-	
-
+	void Jump();
+	void Invincible();
 };
 

@@ -18,12 +18,17 @@ namespace
 	float blinkTimer = 0.0f;
 	bool isVisible = true;
 	Direction Front = FRONT;
+	float JumpHeight = 0.1f; // ジャンプの高さ
+	float Gravity = 9.8f/60.0f; // 重力の強さ
+	float MaxGravity = 6.0f; // 最大重力の強さ
 }
 
 Player::Player(GameObject* parent)
-	:GameObject(parent, "Player"), hModel(-1)
+	:GameObject(parent, "Player")
 {
-	
+	hModel = -1;
+	jumpPower = 0.0f; // ジャンプの力
+
 }
 
 Player::~Player()
@@ -51,22 +56,6 @@ void Player::Update()
 	//入力処理
 	Direction currentDirection = GetDirectionFromInput();
 	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
-	/*if (Input::IsKeyDown(DIK_LEFT))
-	{
-		transform_.rotate_.y = 270;
-	}
-	if (Input::IsKeyDown(DIK_RIGHT))
-	{
-		transform_.rotate_.y = 90;
-	}
-	if (Input::IsKeyDown(DIK_UP))
-	{
-		transform_.rotate_.y = 0;
-	}
-	if (Input::IsKeyDown(DIK_DOWN))
-	{
-		transform_.rotate_.y = 180;
-	}*/
 	
 	//カメラ
 	XMFLOAT3 camPos = transform_.position_;
@@ -76,45 +65,36 @@ void Player::Update()
 	Camera::SetTarget(transform_.position_);
 
 	//無敵処理
-	if (isInvincible)
+	Invincible();
+	//ジャンプ作る
+	if (Input::IsKeyDown(DIK_SPACE))
 	{
-		invincibilityTimer -= GetDeltaTime();
-		blinkTimer -= GetDeltaTime();
-
-		// 点滅制御：0.1秒ごとに表示・非表示を切り替える
-		if (blinkTimer <= 0.0f)
+		if (prevSpaceKey == false)
 		{
-			isVisible = !isVisible;
-			blinkTimer = 0.1f; // 点滅間隔
+			if (onGround)
+			{
+				Jump();
+			}
 		}
-
-		if (invincibilityTimer <= 0.0f)
-		{
-			isInvincible = false;
-			isVisible = true; // 最終的に表示に戻す
-		}
+		prevSpaceKey = true; 
 	}
 	else
 	{
-		isVisible = true; // 無敵でなければ常に表示
+		prevSpaceKey = false; // スペースキーが離されたらフラグをリセット
 	}
-	if (Input::IsKeyDown(DIK_X))
+	jumpPower += Gravity; // 重力を適用
+	if (jumpPower > MaxGravity)
 	{
-		transform_.position_.y -= 0.001f;
-		if (transform_.position_.y >= -1)
-		{
-			transform_.position_.y = -1;
-		}
+		jumpPower = MaxGravity; // 最大重力を超えないように制限
 	}
-	else if (Input::IsKeyUp(DIK_X))
+	transform_.position_.y += jumpPower; // ジャンプの高さを更新
+	if (transform_.position_.y <= 0.0f) // 地面に着地したら
 	{
-		transform_.position_.y += 0.001f;
-		if (transform_.position_.y <= 0)
-		{
-			transform_.position_.y = 0;
-		}
+		transform_.position_.y = 0.0f; // 地面の高さに合わせる
+		onGround = true; // 地面にいる状態にする
+		jumpPower = 0.0f; // ジャンプ力をリセット
 	}
-
+	
 }
 
 void Player::Draw()
@@ -216,4 +196,37 @@ float Player::GetDeltaTime()
 void Player::PointUp(int pt)
 {
 	Point += pt;
+}
+
+void Player::Jump()
+{
+	jumpPower = -sqrt(2.0f * JumpHeight * Gravity); // ジャンプの初速を計算
+	onGround = false; // ジャンプ中は地面にいないとする
+}
+
+void Player::Invincible()
+{
+	//無敵処理
+	if (isInvincible)
+	{
+		invincibilityTimer -= GetDeltaTime();
+		blinkTimer -= GetDeltaTime();
+
+		// 点滅制御：0.1秒ごとに表示・非表示を切り替える
+		if (blinkTimer <= 0.0f)
+		{
+			isVisible = !isVisible;
+			blinkTimer = 0.1f; // 点滅間隔
+		}
+
+		if (invincibilityTimer <= 0.0f)
+		{
+			isInvincible = false;
+			isVisible = true; // 最終的に表示に戻す
+		}
+	}
+	else
+	{
+		isVisible = true; // 無敵でなければ常に表示
+	}
 }

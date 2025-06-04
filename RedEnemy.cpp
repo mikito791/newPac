@@ -8,6 +8,7 @@
 #include"Engine/Debug.h"
 #include"Engine/SceneManager.h"
 #include"Engine/SphereCollider.h"
+#include"Engine/Input.h"
 
 
 
@@ -59,15 +60,14 @@ void RedEnemy::Update()
 	RedWall* redwall = (RedWall*)FindObject("RedWall");
 	transform_.position_.x += moveDirection.x;
 	transform_.position_.z += moveDirection.z;
-	transform_.rotate_.y += 3.0f;
-	// プレイヤーとの距離を計算
-	float distancePlayer = CalculateDistancePlayer(transform_.position_, player->GetPos());
-	// 壁との距離を計算
-	float distanceWall = CalculateDistanceWall(transform_.position_,redwall->GetPos());
-	if (distanceWall < distance)
+	if (transform_.position_.x < -10 || transform_.position_.x > 10 ||
+		transform_.position_.z < -10 || transform_.position_.z > 10)
 	{
-		this->KillMe();
+		this->KillMe(); // 画面外に出たら自分を削除
 	}
+	transform_.rotate_.y += 3.0f;
+	//ジャンプ
+
 }
 
 void RedEnemy::Draw()

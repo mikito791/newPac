@@ -60,6 +60,8 @@ void RedWall::Update()
 	{
 		keyPush = false;
 	}
+	//ƒWƒƒƒ“ƒvì‚é
+	
 	/*if (Input::IsKeyDown(DIK_W))
 	{
 		transform_.rotate_= XMFLOAT3(270, 0, 0);
