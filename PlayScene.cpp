@@ -6,6 +6,7 @@
 #include"AllyBall.h"
 #include"Engine/Debug.h"
 #include"Engine/Image.h"
+#include"Stage.h"
 
 namespace
 {
@@ -38,9 +39,8 @@ void PlayScene::Initialize()
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
-	//Instantiate<RedEnemy>(this);
 	//Instantiate<Hp>(this);
-	//Instantiate<AllyBall>(this);
+	Instantiate<Stage>(this);
 }
 
 //更新

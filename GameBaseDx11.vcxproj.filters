@@ -121,6 +121,7 @@
     <ClCompile Include="AllyBall.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -215,6 +216,7 @@
     <ClInclude Include="AllyBall.h">
       <Filter>Player</Filter>
     </ClInclude>
+    <ClInclude Include="Stage.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
