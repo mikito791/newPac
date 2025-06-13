@@ -19,9 +19,11 @@ namespace
 	float blinkTimer = 0.0f;
 	bool isVisible = true;
 	Direction Front = FRONT;
-	float JumpHeight = 0.1f; // ジャンプの高さ
+	float JumpHeight = 5.0f; // ジャンプの高さ
 	float Gravity = 9.8f/60.0f; // 重力の強さ
 	float MaxGravity = 6.0f; // 最大重力の強さ
+	float gravityVelocity = 0.0f; // 落下加速度
+	float gravityIncrease = 0.2f; // 毎フレーム増加する重力の量
 }
 
 Player::Player(GameObject* parent)
@@ -71,45 +73,49 @@ void Player::Update()
 	Stage* pStage = (Stage*)FindObject("Stage");    //ステージオブジェクトを探す
 	int hGroundModel = pStage->GetModelHandle();    //モデル番号を取得
 
-	
+	RayCastData data;
+	data.start = transform_.position_;   //レイの発射位置
+	data.dir = XMFLOAT3(0, -1, 0);       //レイの方向
+	Model::RayCast(hGroundModel, &data); //レイを発射
+	onGround = false;//空中がデフォルト
+	//レイが当たったら
+	if (data.hit)
+	{
+		//その分位置を下げる
+		transform_.position_.y -= data.dist;
+		onGround = true; // 地面にいる状態にする
+		jumpPower = 0.0f; // ジャンプ力をリセット
+	}
 	//ジャンプ作る
 	if (Input::IsKeyDown(DIK_SPACE))
 	{
-		if (prevSpaceKey == false)
+		if (prevSpaceKey == false &&onGround)
 		{
-			if (onGround)
-			{
-				Jump();
-			}
+			Jump();
 		}
 		prevSpaceKey = true; 
 	}
 	else
 	{
 		prevSpaceKey = false; // スペースキーが離されたらフラグをリセット
+		
 	}
-	jumpPower += Gravity; // 重力を適用
-	if (jumpPower > MaxGravity)
+	if (onGround)
 	{
-		jumpPower = MaxGravity; // 最大重力を超えないように制限
+		gravityVelocity = 0.0f; // 地面にいる場合は重力をリセット
+		jumpPower = 0.0f; // 地面にいる場合はジャンプ力をリセット
 	}
-	transform_.position_.y += jumpPower; // ジャンプの高さを更新
-	if (transform_.position_.y <= 0.0f) // 地面に着地したら
+	else
 	{
-		transform_.position_.y = 0.0f; // 地面の高さに合わせる
-		onGround = true; // 地面にいる状態にする
-		jumpPower = 0.0f; // ジャンプ力をリセット
+		gravityVelocity += gravityIncrease; // 空中にいる場合は重力を増加
+		if (gravityVelocity > MaxGravity)
+		{
+			gravityVelocity = MaxGravity; // 最大重力を超えないように制限
+		}
+		jumpPower += gravityVelocity; // 重力を適用
+		transform_.position_.y += jumpPower; // ジャンプの高さを更新
 	}
-	RayCastData data;
-	data.start = transform_.position_;   //レイの発射位置
-	data.dir = XMFLOAT3(0, -1, 0);       //レイの方向
-	Model::RayCast(hGroundModel, &data); //レイを発射
-	//レイが当たったら
-	if (data.hit)
-	{
-		//その分位置を下げる
-		transform_.position_.y -= data.dist;
-	}
+	
 }
 
 void Player::Draw()
