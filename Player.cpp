@@ -85,6 +85,7 @@ void Player::Update()
 		transform_.position_.y -= data.dist;
 		onGround = true; // 地面にいる状態にする
 		jumpPower = 0.0f; // ジャンプ力をリセット
+		//Debug::Log("Player is on the ground", true);
 	}
 	//ジャンプ作る
 	if (Input::IsKeyDown(DIK_SPACE))
