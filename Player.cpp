@@ -22,8 +22,8 @@ namespace
 	float JumpHeight = 48.0 * 4.0f; // ジャンプの高さ
 	float Gravity = 9.8f/60.0f; // 重力の強さ
 	float MaxGravity = 6.0f; // 最大重力の強さ
-	float gravityVelocity = 0.0f; // 落下加速度
-	float gravityIncrease = 0.2f; // 毎フレーム増加する重力の量
+	//float gravityVelocity = 0.0f; // 落下加速度
+	//float gravityIncrease = 0.2f; // 毎フレーム増加する重力の量
 }
 
 Player::Player(GameObject* parent)
@@ -85,6 +85,7 @@ void Player::Update()
 		transform_.position_.y -= data.dist;
 		onGround = true; // 地面にいる状態にする
 		jumpPower = 0.0f; // ジャンプ力をリセット
+		//gravityVelocity = 0.0f; // 重力の速度をリセット
 		//Debug::Log("Player is on the ground", true);
 	}
 	//ジャンプ作る
@@ -101,20 +102,14 @@ void Player::Update()
 		prevSpaceKey = false; // スペースキーが離されたらフラグをリセット
 		
 	}
-	if (onGround)
+	if (!onGround)
 	{
-		gravityVelocity = 0.0f; // 地面にいる場合は重力をリセット
-		jumpPower = 0.0f; // 地面にいる場合はジャンプ力をリセット
-	}
-	else
-	{
-		gravityVelocity += gravityIncrease; // 空中にいる場合は重力を増加
+		//gravityVelocity += gravityIncrease; // 空中にいる場合は重力を増加
 		//Debug::Log(gravityVelocity);
-		jumpPower += gravityVelocity; // 重力を適用
+		jumpPower += Gravity; // 重力を適用
 		transform_.position_.y += jumpPower; // ジャンプの高さを更新
 		Debug::Log(transform_.position_.y,false);
 	}
-	
 }
 
 void Player::Draw()
