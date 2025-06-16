@@ -19,7 +19,7 @@ namespace
 	float blinkTimer = 0.0f;
 	bool isVisible = true;
 	Direction Front = FRONT;
-	float JumpHeight = 5.0f; // ジャンプの高さ
+	float JumpHeight = 48.0 * 4.0f; // ジャンプの高さ
 	float Gravity = 9.8f/60.0f; // 重力の強さ
 	float MaxGravity = 6.0f; // 最大重力の強さ
 	float gravityVelocity = 0.0f; // 落下加速度
@@ -109,12 +109,10 @@ void Player::Update()
 	else
 	{
 		gravityVelocity += gravityIncrease; // 空中にいる場合は重力を増加
-		if (gravityVelocity > MaxGravity)
-		{
-			gravityVelocity = MaxGravity; // 最大重力を超えないように制限
-		}
+		//Debug::Log(gravityVelocity);
 		jumpPower += gravityVelocity; // 重力を適用
 		transform_.position_.y += jumpPower; // ジャンプの高さを更新
+		Debug::Log(transform_.position_.y,false);
 	}
 	
 }
