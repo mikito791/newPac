@@ -19,8 +19,8 @@ namespace
 	float blinkTimer = 0.0f;
 	bool isVisible = true;
 	Direction Front = FRONT;
-	float JumpHeight = 48.0 * 4.0f; // ジャンプの高さ
-	float Gravity = 9.8f/60.0f; // 重力の強さ
+	float JumpHeight = 5.0f; // ジャンプの高さ
+	float Gravity = 4.8f/60.0f; // 重力の強さ
 	float MaxGravity = 6.0f; // 最大重力の強さ
 	//float gravityVelocity = 0.0f; // 落下加速度
 	//float gravityIncrease = 0.2f; // 毎フレーム増加する重力の量
@@ -30,8 +30,6 @@ Player::Player(GameObject* parent)
 	:GameObject(parent, "Player")
 {
 	hModel = -1;
-	jumpPower = 0.0f; // ジャンプの力
-
 }
 
 Player::~Player()
@@ -71,25 +69,24 @@ void Player::Update()
 	Invincible();
 	//
 	Stage* pStage = (Stage*)FindObject("Stage");    //ステージオブジェクトを探す
-	int hGroundModel = pStage->GetModelHandle();    //モデル番号を取得
-
-	RayCastData data;
-	data.start = transform_.position_;   //レイの発射位置
-	data.dir = XMFLOAT3(0, -1, 0);       //レイの方向
-	Model::RayCast(hGroundModel, &data); //レイを発射
-	onGround = false;//空中がデフォルト
-	//レイが当たったら
-	if (data.hit)
+	//レイキャストが使えないから別なの用意
+	XMFLOAT3 stagePos = pStage->GetPos();
+	float stageDis = CalculateDistance(transform_.position_, stagePos);
+	if (stageDis < 0.05f) // プレイヤーとステージの距離が0.5以下なら地面にいると判断
 	{
-		//その分位置を下げる
-		transform_.position_.y -= data.dist;
 		onGround = true; // 地面にいる状態にする
-		jumpPower = 0.0f; // ジャンプ力をリセット
-		//gravityVelocity = 0.0f; // 重力の速度をリセット
-		//Debug::Log("Player is on the ground", true);
+		jumpPower = 0.0f; // ジャンプの力をリセット
+		//Debug::Log("onGround = true","\n"); // デバッグログ出力
+		//この下に地面に着地させるのを作る
+		
 	}
+	else 
+	{
+		onGround = false; // 地面にいない状態にする
+	}
+
 	//ジャンプ作る
-	if (Input::IsKeyDown(DIK_SPACE))
+	if (Input::IsKeyDown(DIK_J))
 	{
 		if (prevSpaceKey == false &&onGround)
 		{
@@ -102,14 +99,31 @@ void Player::Update()
 		prevSpaceKey = false; // スペースキーが離されたらフラグをリセット
 		
 	}
+	
+	
+	
 	if (!onGround)
 	{
-		//gravityVelocity += gravityIncrease; // 空中にいる場合は重力を増加
-		//Debug::Log(gravityVelocity);
+		// 空中にいる場合は重力を適用
 		jumpPower += Gravity; // 重力を適用
+		if (jumpPower > MaxGravity) // 最大重力を超えないように制限
+		{
+			jumpPower = MaxGravity;
+		}
 		transform_.position_.y += jumpPower; // ジャンプの高さを更新
-		Debug::Log(transform_.position_.y,false);
 	}
+	else
+	{
+		jumpPower = 0.0f; // 地面にいる場合はジャンプの力をリセット
+		onGround = true; // 地面にいる状態にする
+	}
+	
+	//Debug::Log(transform_.position_.y,"\n"); 
+	//if (Input::IsKey(DIK_J))
+	//{
+	//	transform_.position_.y += 0.1f; // Jキーで上昇
+	//}
+	
 }
 
 void Player::Draw()
@@ -123,12 +137,12 @@ void Player::Release()
 {
 }
 
-float Player::CalculateDistanceEnemy(const XMFLOAT3& PlayPos, const XMFLOAT3& EnemyPos)
+float Player::CalculateDistance(const XMFLOAT3& PlayPos, const XMFLOAT3& Pos)
 {
 	//2点間の距離を計算
-	float dx = PlayPos.x - EnemyPos.x;
-	float dy = PlayPos.y - EnemyPos.y;
-	float dz = PlayPos.z - EnemyPos.z;
+	float dx = PlayPos.x - Pos.x;
+	float dy = PlayPos.y - Pos.y;
+	float dz = PlayPos.z - Pos.z;
 
 	//距離を返す(計算)
 	float distance = sqrt(dx * dx + dy * dy + dz * dz);
@@ -215,7 +229,7 @@ void Player::PointUp(int pt)
 
 void Player::Jump()
 {
-	jumpPower = -sqrt(2.0f * JumpHeight * Gravity); // ジャンプの初速を計算
+	jumpPower = sqrt(2.0f * JumpHeight * Gravity); // ジャンプの初速を計算
 	onGround = false; // ジャンプ中は地面にいないとする
 }
 

@@ -27,6 +27,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{e6c795b7-bcec-4abf-b73b-3f7e6475b38a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\BoxCollider.cpp">
@@ -98,7 +101,6 @@
     <ClCompile Include="Engine\VFX.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="RedEnemy.cpp" />
     <ClCompile Include="Hp.cpp" />
     <ClCompile Include="GameClearScene.cpp">
       <Filter>Scene</Filter>
@@ -122,6 +124,12 @@
       <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="RedEnemy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -193,7 +201,6 @@
     <ClInclude Include="Engine\VFX.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="RedEnemy.h" />
     <ClInclude Include="Hp.h" />
     <ClInclude Include="GameClearScene.h">
       <Filter>Scene</Filter>
@@ -217,6 +224,12 @@
       <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="Ghost.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="RedEnemy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

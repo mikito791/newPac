@@ -26,7 +26,7 @@ public:
 
 	void Release() override;
 	XMFLOAT3 GetPos() const { return transform_.position_; }
-	float CalculateDistanceEnemy(const XMFLOAT3& PlayPos, const XMFLOAT3& EnemyPos);
+	float CalculateDistance(const XMFLOAT3& PlayPos, const XMFLOAT3& Pos);
 	void OnCollision(GameObject* pTarget) override;
 private:
 	Direction GetDirectionFromInput();

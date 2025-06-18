@@ -15,6 +15,6 @@ public:
     void Draw() override;
     void Release() override;
     int GetModelHandle() { return hStage; }
-    XMFLOAT3 GetPosition(XMFLOAT3 pos) { return position=pos; }
+    XMFLOAT3 GetPos() const { return transform_.position_; }
 };
 
