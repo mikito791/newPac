@@ -19,9 +19,10 @@ namespace
 	float blinkTimer = 0.0f;
 	bool isVisible = true;
 	Direction Front = FRONT;
-	float JumpHeight = 48.0 * 4.0f; // ジャンプの高さ
-	float Gravity = 9.8f/60.0f; // 重力の強さ
+	float JumpHeight = 50.0f; // ジャンプの高さ
+	float Gravity = 3.0f/60.0f; // 重力の強さ
 	float MaxGravity = 6.0f; // 最大重力の強さ
+	float correctionSpeed = 5.0f; // 補正の速さ（調整可能）
 	//float gravityVelocity = 0.0f; // 落下加速度
 	//float gravityIncrease = 0.2f; // 毎フレーム増加する重力の量
 }
@@ -72,7 +73,7 @@ void Player::Update()
 	//
 	Stage* pStage = (Stage*)FindObject("Stage");    //ステージオブジェクトを探す
 	int hGroundModel = pStage->GetModelHandle();    //モデル番号を取得
-
+	
 	RayCastData data;
 	data.start = transform_.position_;   //レイの発射位置
 	data.dir = XMFLOAT3(0, -1, 0);       //レイの方向
@@ -81,15 +82,20 @@ void Player::Update()
 	//レイが当たったら
 	if (data.hit)
 	{
+		float deltataTime = GetDeltaTime(); // デルタタイムを取得
+		float correction = data.dist * correctionSpeed * deltataTime; // 補正値を計算
 		//その分位置を下げる
-		transform_.position_.y -= data.dist;
+		if (correction > data.dist)
+		{
+			correction = data.dist; // 補正値が距離を超えないように制限
+		}
+		transform_.position_.y -=correction;
 		onGround = true; // 地面にいる状態にする
 		jumpPower = 0.0f; // ジャンプ力をリセット
-		//gravityVelocity = 0.0f; // 重力の速度をリセット
-		//Debug::Log("Player is on the ground", true);
+		
 	}
 	//ジャンプ作る
-	if (Input::IsKeyDown(DIK_SPACE))
+	if (Input::IsKeyDown(DIK_J))
 	{
 		if (prevSpaceKey == false &&onGround)
 		{
@@ -215,7 +221,7 @@ void Player::PointUp(int pt)
 
 void Player::Jump()
 {
-	jumpPower = -sqrt(2.0f * JumpHeight * Gravity); // ジャンプの初速を計算
+	jumpPower = sqrt(2.0f * JumpHeight * Gravity); // ジャンプの初速を計算
 	onGround = false; // ジャンプ中は地面にいないとする
 }
 
