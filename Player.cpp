@@ -19,9 +19,10 @@ namespace
 	float blinkTimer = 0.0f;
 	bool isVisible = true;
 	Direction Front = FRONT;
-	float JumpHeight = 5.0f; // ジャンプの高さ
-	float Gravity = 4.8f/60.0f; // 重力の強さ
+	float JumpHeight = 50.0f; // ジャンプの高さ
+	float Gravity = 3.0f/60.0f; // 重力の強さ
 	float MaxGravity = 6.0f; // 最大重力の強さ
+	float correctionSpeed = 5.0f; // 補正の速さ（調整可能）
 	//float gravityVelocity = 0.0f; // 落下加速度
 	//float gravityIncrease = 0.2f; // 毎フレーム増加する重力の量
 }
@@ -69,15 +70,26 @@ void Player::Update()
 	Invincible();
 	//
 	Stage* pStage = (Stage*)FindObject("Stage");    //ステージオブジェクトを探す
-	//レイキャストが使えないから別なの用意
-	XMFLOAT3 stagePos = pStage->GetPos();
-	float stageDis = CalculateDistance(transform_.position_, stagePos);
-	if (stageDis < 0.05f) // プレイヤーとステージの距離が0.5以下なら地面にいると判断
+	int hGroundModel = pStage->GetModelHandle();    //モデル番号を取得
+	
+	RayCastData data;
+	data.start = transform_.position_;   //レイの発射位置
+	data.dir = XMFLOAT3(0, -1, 0);       //レイの方向
+	Model::RayCast(hGroundModel, &data); //レイを発射
+	onGround = false;//空中がデフォルト
+	//レイが当たったら
+	if (data.hit)
 	{
+		float deltataTime = GetDeltaTime(); // デルタタイムを取得
+		float correction = data.dist * correctionSpeed * deltataTime; // 補正値を計算
+		//その分位置を下げる
+		if (correction > data.dist)
+		{
+			correction = data.dist; // 補正値が距離を超えないように制限
+		}
+		transform_.position_.y -=correction;
 		onGround = true; // 地面にいる状態にする
-		jumpPower = 0.0f; // ジャンプの力をリセット
-		//Debug::Log("onGround = true","\n"); // デバッグログ出力
-		//この下に地面に着地させるのを作る
+		jumpPower = 0.0f; // ジャンプ力をリセット
 		
 	}
 	else 
