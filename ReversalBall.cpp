@@ -80,7 +80,7 @@ void ReversalBall::OnCollision(GameObject* pTarget)
 	}
 }
 
-Direction ReversalBall::GetDirectionFromInput()
+Direction ReversalBall::GetReveralDirectionFromInput()
 {
 	//ëÄçÏÇîΩì]Ç≥ÇπÇÈ
 	static Direction lastDirection = FRONT;
@@ -93,7 +93,7 @@ Direction ReversalBall::GetDirectionFromInput()
 	return lastDirection;
 }
 
-int ReversalBall::GetRotationFromDirection(Direction dir)
+int ReversalBall::GetRotationFromReveralDirection(Direction dir)
 {
 	switch (dir)
 	{
@@ -108,6 +108,27 @@ int ReversalBall::GetRotationFromDirection(Direction dir)
 		break;
 	case BACK:
 		return 180;
+		break;
+	default:
+		break;
+	}
+}
+
+XMFLOAT3 ReversalBall::GetPositionFromReveralDirection(Direction dir)
+{
+	switch (dir)
+	{
+	case LEFT:
+		return XMFLOAT3(3, 0, 2);
+		break;
+	case RIGHT:
+		return XMFLOAT3(5, 0, 2);
+		break;
+	case FRONT:
+		return XMFLOAT3(4, 0, 3);
+		break;
+	case BACK:
+		return XMFLOAT3(4, 0, 1);
 		break;
 	default:
 		break;

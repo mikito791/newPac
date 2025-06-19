@@ -74,7 +74,11 @@ void PlayScene::Update()
 	{
 		
 		SpawnTimer = 0.0f; // タイマーをリセット
-		Update_Spawn();
+		//Update_SpawnEnemy();// 敵のスポーン処理
+		//if (rand() % 2 == 0) // 50%の確率で味方をスポーン
+		//{
+		//	Update_SpawnAlly(); // 味方のスポーン処理
+		//}
 	}
 }
 
@@ -89,12 +93,10 @@ void PlayScene::Release()
 {
 }
 
-void PlayScene::Update_Spawn()
+void PlayScene::Update_SpawnEnemy()
 {
 	EnemyRandom = rand() % 4; // 0～3 のランダム値
-	AllyRandom = rand() % 4; // 0～3 のランダム値
 	RedEnemy* Renemy = nullptr; // RedEnemyのポインタ
-	AllyBall* Aenemy = nullptr; // AllyBallのポインタ
 	switch (EnemyRandom)
 	{
 	case 0: // 左から
@@ -120,6 +122,12 @@ void PlayScene::Update_Spawn()
 	default:
 		break;
 	}
+}
+
+void PlayScene::Update_SpawnAlly()
+{
+	AllyRandom = rand() % 4; // 0～3 のランダム値
+	AllyBall* Aenemy = nullptr; // AllyBallのポインタ
 	switch (AllyRandom)
 	{
 	case 0: // 左から

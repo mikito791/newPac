@@ -16,7 +16,8 @@ public:
 	void Draw() override;
 	void Release() override;
 	void OnCollision(GameObject* pTarget) override;
-	Direction GetDirectionFromInput();
-	int GetRotationFromDirection(Direction dir);
+	Direction GetReveralDirectionFromInput();
+	int GetRotationFromReveralDirection(Direction dir);
+	XMFLOAT3 GetPositionFromReveralDirection(Direction dir);
 };
 

@@ -31,5 +31,6 @@ public:
 	//ŠJ•ú
 	void Release() override;
 private:
-	void Update_Spawn();
+	void Update_SpawnEnemy();
+	void Update_SpawnAlly();
 };

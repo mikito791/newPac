@@ -20,46 +20,20 @@ void RedWall::Initialize()
 	hBlueWall = Model::Load("Model/PlayerWallblue0.fbx");
 	assert(hBlueWall >= 0);
 	SphereCollider* collision = new SphereCollider(transform_.position_, 0.01f);
-	//BoxCollider* collision2 = new BoxCollider(transform_.rotate_, boxSize);
 	AddCollider(collision);
-	//AddCollider(collision2);
-	transform_.position_ = XMFLOAT3(4, 0, 3);
-	transform_.rotate_= XMFLOAT3(0, 0, 0);
-	keyPush = false;
+	transform_.position_ = GetPositionFromDirection(FRONT);
+	transform_.rotate_ = XMFLOAT3(0, 0, 0);
+	transform_.rotate_.y = GetRotationFromDirection(FRONT); // 初期方向を前に設定
 }
 
 void RedWall::Update()
 {
+	//入力処理
+	Direction currentDirection = GetDirectionFromInput();
+	transform_.rotate_.y = GetRotationFromDirection(currentDirection); // 向きを更新
+	//位置を更新
+	transform_.position_ = GetPositionFromDirection(currentDirection); // 位置を更新
 	
-	if(Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A))
-	{
-		transform_.rotate_.y = 270;
-		transform_.position_ = XMFLOAT3(3, 0, 2);
-	}
-	if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D))
-	{
-		transform_.rotate_.y = 90;
-		transform_.position_ = XMFLOAT3(5, 0, 2);
-	}
-	if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W))
-	{
-		transform_.rotate_.y = 0;
-		transform_.position_ = XMFLOAT3(4, 0, 3);
-	}
-	if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S))
-	{
-		transform_.rotate_.y = 180;
-		transform_.position_ = XMFLOAT3(4, 0, 1);
-	}
-
-	if (Input::IsKeyDown(DIK_SPACE))
-	{
-		keyPush = true;
-	}
-	else if (Input::IsKeyUp(DIK_SPACE))
-	{
-		keyPush = false;
-	}
 	//ジャンプ作る
 	
 	/*if (Input::IsKeyDown(DIK_W))
@@ -74,7 +48,6 @@ void RedWall::Update()
 	}*/
 	//残骸
 	//↓ 
-	
 	//if (Input::IsKeyDown(DIK_UP))//前向く
 	//{
 	//	//向き
@@ -158,18 +131,66 @@ void RedWall::Update()
 
 void RedWall::Draw()
 {
-	if (keyPush)
-	{
-		Model::SetTransform(hBlueWall, transform_);
-		Model::Draw(hBlueWall);
-	}
-	else
-	{
-		Model::SetTransform(hRedWall, transform_);
-		Model::Draw(hRedWall);
-	}
+	Model::SetTransform(hRedWall, transform_);
+	Model::Draw(hRedWall);
 }
 
 void RedWall::Release()
 {
 }
+
+Direction RedWall::GetDirectionFromInput()
+{
+	static Direction lastDirection = FRONT;
+
+	if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = LEFT;
+	if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D)) lastDirection = RIGHT;
+	if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W)) lastDirection = FRONT;
+	if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = BACK;
+
+	return lastDirection;
+}
+
+int RedWall::GetRotationFromDirection(Direction dir)
+{
+	switch (dir)
+	{
+	case LEFT:
+		return 270;
+		break;
+	case RIGHT:
+		return 90;
+		break;
+	case FRONT:
+		return 0;
+		break;
+	case BACK:
+		return 180;
+		break;
+	default:
+		break;
+	}
+}
+
+XMFLOAT3 RedWall::GetPositionFromDirection(Direction dir)
+{
+	switch (dir)
+	{
+	case LEFT:
+		return XMFLOAT3(3, 0, 2);
+		break;
+	case RIGHT:
+		return XMFLOAT3(5, 0, 2);
+		break;
+	case FRONT:
+		return XMFLOAT3(4, 0, 3);
+		break;
+	case BACK:
+		return XMFLOAT3(4, 0, 1);
+		break;
+	default:
+		break;
+	}
+}
+
+

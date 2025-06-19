@@ -191,8 +191,15 @@ void Player::OnCollision(GameObject* pTarget)
 	{
 		// ReversalBall‚É“–‚½‚Á‚½‚ç‘€ì‚ð”½“]‚³‚¹‚é
 		ReversalBall* pReversalBall = (ReversalBall*)pTarget;
-		Direction reversedDirection = pReversalBall->GetDirectionFromInput();
-		transform_.rotate_.y = pReversalBall->GetRotationFromDirection(reversedDirection);
+		Direction reversedDirection = pReversalBall->GetReveralDirectionFromInput();
+		transform_.rotate_.y = pReversalBall->GetRotationFromReveralDirection(reversedDirection);
+		//•Ç‚ÌŒü‚«‚ÆˆÊ’u‚à”½“]‚³‚¹‚é
+		RedWall* pRedWall = (RedWall*)FindObject("RedWall");
+		if (pRedWall)
+		{
+			pRedWall->SetDirection(reversedDirection);
+			pRedWall->SetPosition(pReversalBall->GetPositionFromReveralDirection(reversedDirection));
+		}
 	}
 }
 
