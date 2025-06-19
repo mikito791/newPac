@@ -13,6 +13,7 @@ ReversalBall::ReversalBall(GameObject* parent)
 	moveDirection(XMFLOAT3(0, 0, 0)),
 	speed(0.05f) // ˆÚ“®‘¬“x
 {
+	std::srand(static_cast<unsigned int>(std::time(nullptr))); // —”‰Šú‰»i–ˆ‰ñˆá‚¤Œ‹‰Ê‚É‚·‚éj
 }
 
 ReversalBall::~ReversalBall()

@@ -19,5 +19,7 @@ public:
 	Direction GetReveralDirectionFromInput();
 	int GetRotationFromReveralDirection(Direction dir);
 	XMFLOAT3 GetPositionFromReveralDirection(Direction dir);
+	void SetPos(XMFLOAT3 pos) { transform_.position_ = pos; }
+	void SetMove(XMFLOAT3 move) { moveDirection = move; }
 };
 

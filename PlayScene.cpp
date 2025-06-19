@@ -79,6 +79,7 @@ void PlayScene::Update()
 		//{
 		//	Update_SpawnAlly(); // –¡•û‚ÌƒXƒ|[ƒ“ˆ—
 		//}
+		
 	}
 }
 
