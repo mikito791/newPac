@@ -30,6 +30,12 @@
     <Filter Include="Enemy">
       <UniqueIdentifier>{e6c795b7-bcec-4abf-b73b-3f7e6475b38a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Gimmick">
+      <UniqueIdentifier>{d9f9eb71-c698-4327-b72d-4813d13bbfe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{377d4fb4-0448-49f1-8ce2-9b226511d855}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\BoxCollider.cpp">
@@ -101,7 +107,6 @@
     <ClCompile Include="Engine\VFX.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="Hp.cpp" />
     <ClCompile Include="GameClearScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -123,12 +128,20 @@
     <ClCompile Include="AllyBall.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Ghost.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="RedEnemy.cpp">
       <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="Hp.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ReversalBall.cpp">
+      <Filter>Gimmick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,7 +214,6 @@
     <ClInclude Include="Engine\VFX.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Hp.h" />
     <ClInclude Include="GameClearScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -223,12 +235,20 @@
     <ClInclude Include="AllyBall.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Stage.h" />
     <ClInclude Include="Ghost.h">
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="RedEnemy.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="Hp.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ReversalBall.h">
+      <Filter>Gimmick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

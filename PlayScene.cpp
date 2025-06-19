@@ -7,6 +7,7 @@
 #include"Engine/Debug.h"
 #include"Engine/Image.h"
 #include"Stage.h"
+#include"ReversalBall.h"
 
 namespace
 {
@@ -41,6 +42,7 @@ void PlayScene::Initialize()
 	Instantiate<RedWall>(this);
 	//Instantiate<Hp>(this);
 	Instantiate<Stage>(this);
+	Instantiate<ReversalBall>(this);
 }
 
 //XV

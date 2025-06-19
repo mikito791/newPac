@@ -56,8 +56,6 @@ void RedEnemy::Initialize()
 
 void RedEnemy::Update()
 {
-	Player* player = (Player*)FindObject("Player");
-	RedWall* redwall = (RedWall*)FindObject("RedWall");
 	transform_.position_.x += moveDirection.x;
 	transform_.position_.z += moveDirection.z;
 	if (transform_.position_.x < -10 || transform_.position_.x > 10 ||
@@ -66,8 +64,6 @@ void RedEnemy::Update()
 		this->KillMe(); // 画面外に出たら自分を削除
 	}
 	transform_.rotate_.y += 3.0f;
-	//ジャンプ
-
 }
 
 void RedEnemy::Draw()

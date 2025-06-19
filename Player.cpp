@@ -10,6 +10,8 @@
 #include"Engine/Debug.h"
 #include"AllyBall.h"
 #include"Stage.h"
+#include"ReversalBall.h"
+
 
 namespace
 {
@@ -23,8 +25,7 @@ namespace
 	float Gravity = 3.0f/60.0f; // 重力の強さ
 	float MaxGravity = 6.0f; // 最大重力の強さ
 	float correctionSpeed = 5.0f; // 補正の速さ（調整可能）
-	//float gravityVelocity = 0.0f; // 落下加速度
-	//float gravityIncrease = 0.2f; // 毎フレーム増加する重力の量
+	
 }
 
 Player::Player(GameObject* parent)
@@ -55,6 +56,7 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	float deltataTime = GetDeltaTime(); // デルタタイムを取得
 	//入力処理
 	Direction currentDirection = GetDirectionFromInput();
 	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
@@ -79,8 +81,7 @@ void Player::Update()
 	onGround = false;//空中がデフォルト
 	//レイが当たったら
 	if (data.hit)
-	{
-		float deltataTime = GetDeltaTime(); // デルタタイムを取得
+	{	
 		float correction = data.dist * correctionSpeed * deltataTime; // 補正値を計算
 		//その分位置を下げる
 		if (correction > data.dist)
@@ -185,6 +186,13 @@ void Player::OnCollision(GameObject* pTarget)
 			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
 			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMECLEAR);
 		}
+	}
+	if (pTarget->GetObjectName() == "ReversalBall")
+	{
+		// ReversalBallに当たったら操作を反転させる
+		ReversalBall* pReversalBall = (ReversalBall*)pTarget;
+		Direction reversedDirection = pReversalBall->GetDirectionFromInput();
+		transform_.rotate_.y = pReversalBall->GetRotationFromDirection(reversedDirection);
 	}
 }
 
