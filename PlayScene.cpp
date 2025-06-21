@@ -42,7 +42,7 @@ void PlayScene::Initialize()
 	Instantiate<RedWall>(this);
 	//Instantiate<Hp>(this);
 	Instantiate<Stage>(this);
-	Instantiate<ReversalBall>(this);
+	//Instantiate<ReversalBall>(this);
 }
 
 //更新
@@ -79,6 +79,10 @@ void PlayScene::Update()
 		//{
 		//	Update_SpawnAlly(); // 味方のスポーン処理
 		//}
+		ReversalBall* rBall = nullptr;
+		rBall = Instantiate<ReversalBall>(this);
+		rBall->SetPos(Left);
+		rBall->SetMove(XMFLOAT3(speed, 0, 0));
 		
 	}
 }

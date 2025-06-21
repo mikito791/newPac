@@ -79,6 +79,10 @@ void ReversalBall::OnCollision(GameObject* pTarget)
 	{
 		this->KillMe(); // •Ç‚ÉÕ“Ë‚µ‚½‚çŽ©•ª‚ðíœ
 	}
+	if (pTarget->GetObjectName() == "Player")
+	{
+		this->KillMe();
+	}
 }
 
 Direction ReversalBall::GetReveralDirectionFromInput()
