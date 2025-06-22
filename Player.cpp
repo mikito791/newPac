@@ -52,15 +52,33 @@ void Player::Initialize()
 	prevSpaceKey = false;
 	HP = 50;
 	Point = 0;
+	OnReversal = false;
 }
 
 void Player::Update()
 {
 	float deltataTime = GetDeltaTime(); // ƒfƒ‹ƒ^ƒ^ƒCƒ€‚ðŽæ“¾
+	// ReversalBall‚É“–‚½‚Á‚½‚ç‘€ì‚ð”½“]‚³‚¹‚é
+	ReversalBall* pReversalBall = (ReversalBall*)FindObject("ReversalBall");
+	RedWall* pRedWall = (RedWall*)FindObject("RedWall");
 	//“ü—Íˆ—
-	Direction currentDirection = GetDirectionFromInput();
-	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
-	
+	if (OnReversal==false) 
+	{
+		Direction currentDirection = GetDirectionFromInput();
+		transform_.rotate_.y = GetRotationFromDirection(currentDirection);
+	}
+	else
+	{
+		Direction reversedDirection = pReversalBall->GetReveralDirectionFromInput();
+		transform_.rotate_.y = pReversalBall->GetRotationFromReveralDirection(reversedDirection);
+		//•Ç‚ÌŒü‚«‚ÆˆÊ’u‚à”½“]‚³‚¹‚é
+		if (pRedWall)
+		{
+			pRedWall->SetDirection(reversedDirection);
+			pRedWall->SetPosition(pReversalBall->GetPositionFromReveralDirection(reversedDirection));
+		}
+	}
+
 	//ƒJƒƒ‰
 	XMFLOAT3 camPos = transform_.position_;
 	camPos.y = transform_.position_.y + 8.0f;
@@ -189,16 +207,14 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 	if (pTarget->GetObjectName() == "ReversalBall")
 	{
-		// ReversalBall‚É“–‚½‚Á‚½‚ç‘€ì‚ð”½“]‚³‚¹‚é
-		ReversalBall* pReversalBall = (ReversalBall*)pTarget;
-		Direction reversedDirection = pReversalBall->GetReveralDirectionFromInput();
-		transform_.rotate_.y = pReversalBall->GetRotationFromReveralDirection(reversedDirection);
-		//•Ç‚ÌŒü‚«‚ÆˆÊ’u‚à”½“]‚³‚¹‚é
-		RedWall* pRedWall = (RedWall*)FindObject("RedWall");
-		if (pRedWall)
+		if (OnReversal == false)
 		{
-			pRedWall->SetDirection(reversedDirection);
-			pRedWall->SetPosition(pReversalBall->GetPositionFromReveralDirection(reversedDirection));
+			OnReversal = true;
+			Debug::Log(OnReversal, "\n");
+		}
+		else
+		{
+			OnReversal = false;
 		}
 	}
 }

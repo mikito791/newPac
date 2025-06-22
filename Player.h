@@ -14,6 +14,7 @@ class Player :
 	bool onGround; // 地面にいるかどうか（地面ないけど）
 	int HP;
 	int Point;
+	bool OnReversal;
 public:
 	Player(GameObject* parent);
 	~Player();
