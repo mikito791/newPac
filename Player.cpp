@@ -5,7 +5,7 @@
 #include"Engine/SceneManager.h"
 #include"Engine/Camera.h"
 #include"RedWall.h"
-#include"RedEnemy.h"
+#include"NeedleBall.h"
 #include"Hp.h"
 #include"Engine/Debug.h"
 #include"AllyBall.h"
@@ -176,7 +176,7 @@ float Player::CalculateDistance(const XMFLOAT3& PlayPos, const XMFLOAT3& Pos)
 
 void Player::OnCollision(GameObject* pTarget)
 {
-	if (pTarget->GetObjectName() == "RedEnemy")
+	if (pTarget->GetObjectName() == "NeedleBall")
 	{
 		HpDown(1);
 		isInvincible = true;
@@ -209,6 +209,19 @@ void Player::OnCollision(GameObject* pTarget)
 		else
 		{
 			OnReversal = false;
+		}
+	}
+	if (pTarget->GetObjectName() == "Bomb")
+	{
+		HpDown(20);
+		isInvincible = true;
+		invincibilityTimer = invincibilityTime;
+		blinkTimer = 0.0f; // ‰Šú‰»‚µ‚Ä‚·‚®“_–ÅŠJn
+		if (HP <= 0)
+		{
+			this->KillMe();
+			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
+			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
 		}
 	}
 }

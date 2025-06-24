@@ -131,7 +131,7 @@
     <ClCompile Include="Ghost.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="RedEnemy.cpp">
+    <ClCompile Include="NeedleBall.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
@@ -142,6 +142,9 @@
     </ClCompile>
     <ClCompile Include="ReversalBall.cpp">
       <Filter>Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,7 +241,7 @@
     <ClInclude Include="Ghost.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="RedEnemy.h">
+    <ClInclude Include="NeedleBall.h">
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Stage.h">
@@ -249,6 +252,9 @@
     </ClInclude>
     <ClInclude Include="ReversalBall.h">
       <Filter>Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

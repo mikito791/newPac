@@ -1,9 +1,10 @@
 #include "PlayScene.h"
 #include"Player.h"
 #include"RedWall.h"
-#include"RedEnemy.h"
+#include"NeedleBall.h"
 #include"Hp.h"
 #include"AllyBall.h"
+#include"Bomb.h"
 #include"Engine/Debug.h"
 #include"Engine/Image.h"
 #include"Stage.h"
@@ -79,11 +80,11 @@ void PlayScene::Update()
 		//{
 		//	Update_SpawnAlly(); // 味方のスポーン処理
 		//}
-		ReversalBall* rBall = nullptr;
+		/*ReversalBall* rBall = nullptr;
 		rBall = Instantiate<ReversalBall>(this);
 		rBall->SetPos(Left);
-		rBall->SetMove(XMFLOAT3(speed, 0, 0));
-		
+		rBall->SetMove(XMFLOAT3(speed, 0, 0));*/
+		Update_SpawnBomb();
 	}
 }
 
@@ -100,29 +101,29 @@ void PlayScene::Release()
 
 void PlayScene::Update_SpawnEnemy()
 {
-	EnemyRandom = rand() % 4; // 0～3 のランダム値
-	RedEnemy* Renemy = nullptr; // RedEnemyのポインタ
-	switch (EnemyRandom)
+	NeedleRandom = rand() % 4; // 0～3 のランダム値
+	NeedleBall* nBall = nullptr; // NeedleBallのポインタ
+	switch (NeedleRandom)
 	{
 	case 0: // 左から
-		Renemy = Instantiate<RedEnemy>(this);
-		Renemy->SetPos(Left);
-		Renemy->SetMove(XMFLOAT3(speed, 0, 0));
+		nBall = Instantiate<NeedleBall>(this);
+		nBall->SetPos(Left);
+		nBall->SetMove(XMFLOAT3(speed, 0, 0));
 		break;
 	case 1: // 右から
-		Renemy = Instantiate<RedEnemy>(this);
-		Renemy->SetPos(Right);
-		Renemy->SetMove(XMFLOAT3(-speed, 0, 0));
+		nBall = Instantiate<NeedleBall>(this);
+		nBall->SetPos(Right);
+		nBall->SetMove(XMFLOAT3(-speed, 0, 0));
 		break;
 	case 2: // 奥から
-		Renemy = Instantiate<RedEnemy>(this);
-		Renemy->SetPos(Back);
-		Renemy->SetMove(XMFLOAT3(0, 0, -speed));
+		nBall = Instantiate<NeedleBall>(this);
+		nBall->SetPos(Back);
+		nBall->SetMove(XMFLOAT3(0, 0, -speed));
 		break;
 	case 3: // 手前から
-		Renemy = Instantiate<RedEnemy>(this);
-		Renemy->SetPos(Front);
-		Renemy->SetMove(XMFLOAT3(0, 0, speed));
+		nBall = Instantiate<NeedleBall>(this);
+		nBall->SetPos(Front);
+		nBall->SetMove(XMFLOAT3(0, 0, speed));
 		break;
 	default:
 		break;
@@ -154,6 +155,37 @@ void PlayScene::Update_SpawnAlly()
 		Aenemy = Instantiate<AllyBall>(this);
 		Aenemy->SetPos(Front);
 		Aenemy->SetMove(XMFLOAT3(0, 0, speed));
+		break;
+	default:
+		break;
+	}
+}
+
+void PlayScene::Update_SpawnBomb()
+{
+	BombRandom = rand() % 4; // 0～3 のランダム値
+	Bomb* bomb = nullptr; // Bombのポインタ
+	switch (BombRandom)
+	{
+	case 0: // 左から
+		bomb = Instantiate<Bomb>(this);
+		bomb->SetPos(Left);
+		bomb->SetMove(XMFLOAT3(speed, 0, 0));
+		break;
+	case 1: // 右から
+		bomb = Instantiate<Bomb>(this);
+		bomb->SetPos(Right);
+		bomb->SetMove(XMFLOAT3(-speed, 0, 0));
+		break;
+	case 2: // 奥から
+		bomb = Instantiate<Bomb>(this);
+		bomb->SetPos(Back);
+		bomb->SetMove(XMFLOAT3(0, 0, -speed));
+		break;
+	case 3: // 手前から
+		bomb = Instantiate<Bomb>(this);
+		bomb->SetPos(Front);
+		bomb->SetMove(XMFLOAT3(0, 0, speed));
 		break;
 	default:
 		break;

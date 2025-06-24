@@ -1,9 +1,9 @@
 #pragma once
 #include "Engine/GameObject.h"
-class RedEnemy :
+class NeedleBall :
     public GameObject
 {
-    int hRedEnemy;
+    int hNeedleBall;
 	XMFLOAT3 moveDirection;
 	int num;
 	float speed; // ˆÚ“®‘¬“x
@@ -11,8 +11,8 @@ class RedEnemy :
 	int DirState;
 public:
 	
-	RedEnemy(GameObject* parent);
-	~RedEnemy();
+	NeedleBall(GameObject* parent);
+	~NeedleBall();
 
 	void Initialize() override;
 

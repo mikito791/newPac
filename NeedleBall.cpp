@@ -1,4 +1,4 @@
-#include "RedEnemy.h"
+#include "NeedleBall.h"
 #include"Engine/Model.h"
 #include"Player.h"
 #include"RedWall.h"
@@ -10,24 +10,23 @@
 #include"Engine/SphereCollider.h"
 #include"Engine/Input.h"
 
-
-
-RedEnemy::RedEnemy(GameObject* parent)
-	: GameObject(parent, "RedEnemy")
+NeedleBall::NeedleBall(GameObject* parent)
+	: GameObject(parent, "NeedleBall")
 {
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	speed = 0.05f; // 移動速度
 	distance = 0.001f; // 衝突判定の距離
 }
 
-RedEnemy::~RedEnemy()
+NeedleBall::~NeedleBall()
 {
+	
 }
 
-void RedEnemy::Initialize()
+void NeedleBall::Initialize()
 {
-	hRedEnemy = Model::Load("Model//Enemy.fbx");
-	assert(hRedEnemy >= 0);
+	hNeedleBall = Model::Load("Model//Enemy.fbx");
+	assert(hNeedleBall >= 0);
 	num = rand() % 4; // 0～3 のランダム値
 	switch (num)
 	{
@@ -50,11 +49,12 @@ void RedEnemy::Initialize()
 	default:
 		break;
 	}
-	SphereCollider* collider = new SphereCollider(XMFLOAT3(0,0,0), 0.3f);
+	SphereCollider* collider = new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f);
 	AddCollider(collider);
+
 }
 
-void RedEnemy::Update()
+void NeedleBall::Update()
 {
 	transform_.position_.x += moveDirection.x;
 	transform_.position_.z += moveDirection.z;
@@ -66,18 +66,17 @@ void RedEnemy::Update()
 	transform_.rotate_.y += 3.0f;
 }
 
-void RedEnemy::Draw()
+void NeedleBall::Draw()
 {
-	
-	Model::SetTransform(hRedEnemy,transform_);
-	Model::Draw(hRedEnemy);
+	Model::SetTransform(hNeedleBall, transform_);
+	Model::Draw(hNeedleBall);
 }
 
-void RedEnemy::Release()
+void NeedleBall::Release()
 {
 }
 
-float RedEnemy::CalculateDistancePlayer(const XMFLOAT3& EnemyPos, const XMFLOAT3& Playerpos)
+float NeedleBall::CalculateDistancePlayer(const XMFLOAT3& EnemyPos, const XMFLOAT3& Playerpos)
 {
 	//2点間の距離を計算
 	float dx = EnemyPos.x - Playerpos.x;
@@ -89,7 +88,7 @@ float RedEnemy::CalculateDistancePlayer(const XMFLOAT3& EnemyPos, const XMFLOAT3
 	return distance;
 }
 
-float RedEnemy::CalculateDistanceWall(const XMFLOAT3& EnemyPos, const XMFLOAT3& Wallpos)
+float NeedleBall::CalculateDistanceWall(const XMFLOAT3& EnemyPos, const XMFLOAT3& Wallpos)
 {
 	//2点間の距離を計算
 	float dx = EnemyPos.x - Wallpos.x;
@@ -100,7 +99,7 @@ float RedEnemy::CalculateDistanceWall(const XMFLOAT3& EnemyPos, const XMFLOAT3& 
 	return distance;
 }
 
-void RedEnemy::OnCollision(GameObject* pTarget)
+void NeedleBall::OnCollision(GameObject* pTarget)
 {
 	// プレイヤーとの衝突判定
 	if (pTarget->GetObjectName() == "Player")
@@ -116,5 +115,3 @@ void RedEnemy::OnCollision(GameObject* pTarget)
 		moveDirection.z = -moveDirection.z; // 壁に衝突したら反転
 	}
 }
-
-

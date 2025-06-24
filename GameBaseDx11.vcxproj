@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AllyBall.cpp" />
+    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Engine\Audio.cpp" />
     <ClCompile Include="Engine\BillBoard.cpp" />
     <ClCompile Include="Engine\BoxCollider.cpp" />
@@ -167,7 +168,7 @@
     <ClCompile Include="Hp.cpp" />
     <ClCompile Include="ReversalBall.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="RedEnemy.cpp" />
+    <ClCompile Include="NeedleBall.cpp" />
     <ClCompile Include="RedWall.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Stage.cpp" />
@@ -175,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllyBall.h" />
+    <ClInclude Include="Bomb.h" />
     <ClInclude Include="Engine\Audio.h" />
     <ClInclude Include="Engine\BillBoard.h" />
     <ClInclude Include="Engine\BoxCollider.h" />
@@ -204,7 +206,7 @@
     <ClInclude Include="Hp.h" />
     <ClInclude Include="ReversalBall.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="RedEnemy.h" />
+    <ClInclude Include="NeedleBall.h" />
     <ClInclude Include="RedWall.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Stage.h" />
