@@ -80,11 +80,11 @@ void PlayScene::Update()
 		//{
 		//	Update_SpawnAlly(); // –¡•û‚ÌƒXƒ|[ƒ“ˆ—
 		//}
-		/*ReversalBall* rBall = nullptr;
+		ReversalBall* rBall = nullptr;
 		rBall = Instantiate<ReversalBall>(this);
 		rBall->SetPos(Left);
-		rBall->SetMove(XMFLOAT3(speed, 0, 0));*/
-		Update_SpawnBomb();
+		rBall->SetMove(XMFLOAT3(speed, 0, 0));
+		//Update_SpawnBomb();
 	}
 }
 

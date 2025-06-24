@@ -85,18 +85,18 @@ void ReversalBall::OnCollision(GameObject* pTarget)
 	}
 }
 
-//Direction ReversalBall::GetReveralDirectionFromInput()
-//{
-//	//操作を反転させる
-//	static Direction lastDirection = FRONT;
-//
-//	if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = RIGHT;//左入力をすると右を向く
-//	if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D)) lastDirection = LEFT;//右入力をすると左を向く
-//	if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W)) lastDirection = BACK;   //上入力をすると後ろを向く
-//	if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = FRONT;//下入力をすると前を向く
-//
-//	return lastDirection;
-//}
+Direction ReversalBall::GetReveralDirectionFromInput()
+{
+	//操作を反転させる
+	static Direction lastDirection;
+
+	if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = RIGHT;//左入力をすると右を向く
+	if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D)) lastDirection = LEFT;//右入力をすると左を向く
+	if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W)) lastDirection = BACK;   //上入力をすると後ろを向く
+	if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = FRONT;//下入力をすると前を向く
+
+	return lastDirection;
+}
 
 int ReversalBall::GetRotationFromReveralDirection(Direction dir)
 {

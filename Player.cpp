@@ -59,7 +59,7 @@ void Player::Update()
 {
 	float deltataTime = GetDeltaTime(); // デルタタイムを取得
 	// ReversalBallに当たったら操作を反転させる
-	ReversalBall* pReversalBall = (ReversalBall*)FindObject("ReversalBall");
+	
 	RedWall* pRedWall = (RedWall*)FindObject("RedWall");
 	//入力処理
 	Direction currentDirection = GetDirectionFromInput();
@@ -124,9 +124,7 @@ void Player::Update()
 		prevSpaceKey = false; // スペースキーが離されたらフラグをリセット
 		
 	}
-	
-	
-	
+		
 	if (!onGround)
 	{
 		// 空中にいる場合は重力を適用
@@ -201,14 +199,15 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 	if (pTarget->GetObjectName() == "ReversalBall")
 	{
-		if (OnReversal == false)
+		RedWall* pRedWall = (RedWall*)FindObject("RedWall");
+		ReversalBall* pReversalBall = (ReversalBall*)FindObject("ReversalBall");
+		Direction reversalDirection = pReversalBall->GetReveralDirectionFromInput();
+		transform_.rotate_.y = pReversalBall->GetRotationFromReveralDirection(reversalDirection);
+		//壁の向きと位置も反転させる
+		if (pRedWall)
 		{
-			OnReversal = true;
-			
-		}
-		else
-		{
-			OnReversal = false;
+			pRedWall->SetDirection(reversalDirection);
+			pRedWall->SetPosition(pReversalBall->GetPositionFromReveralDirection(reversalDirection));
 		}
 	}
 	if (pTarget->GetObjectName() == "Bomb")
@@ -230,19 +229,23 @@ Direction Player::GetDirectionFromInput()
 {
 	static Direction lastDirection = FRONT;
 
-	if (OnReversal == false) {
+	if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = LEFT;
+	if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D)) lastDirection = RIGHT;
+	if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W)) lastDirection = FRONT;
+	if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = BACK;
+	/*if (OnReversal == false) {
 		if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = LEFT;
 		if (Input::IsKeyDown(DIK_RIGHT)|| Input::IsKeyDown(DIK_D)) lastDirection = RIGHT;
 		if (Input::IsKeyDown(DIK_UP)   || Input::IsKeyDown(DIK_W)) lastDirection = FRONT;
 		if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = BACK;
-	}
-	else // 操作を反転させる
-	{
-		if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = RIGHT; // 左入力をすると右を向く
-		if (Input::IsKeyDown(DIK_RIGHT)|| Input::IsKeyDown(DIK_D)) lastDirection = LEFT;  // 右入力をすると左を向く
-		if (Input::IsKeyDown(DIK_UP)   || Input::IsKeyDown(DIK_W)) lastDirection = BACK;  // 上入力をすると後ろを向く
-		if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = FRONT; // 下入力をすると前を向く
-	}
+	}*/
+	//else // 操作を反転させる
+	//{
+	//	if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = RIGHT; // 左入力をすると右を向く
+	//	if (Input::IsKeyDown(DIK_RIGHT)|| Input::IsKeyDown(DIK_D)) lastDirection = LEFT;  // 右入力をすると左を向く
+	//	if (Input::IsKeyDown(DIK_UP)   || Input::IsKeyDown(DIK_W)) lastDirection = BACK;  // 上入力をすると後ろを向く
+	//	if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = FRONT; // 下入力をすると前を向く
+	//}
 	return lastDirection;
 }
 
