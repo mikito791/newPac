@@ -12,7 +12,8 @@ class Player :
 	bool prevSpaceKey;// 前回のスペースキーの状態
 	float jumpPower; // ジャンプの力
 	bool onGround; // 地面にいるかどうか（地面ないけど）
-	int HP;
+	int HP; // 現在のHP
+	int MaxHP; // 最大HP
 	int Point;
 	bool OnReversal;
 public:

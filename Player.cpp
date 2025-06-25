@@ -32,6 +32,11 @@ Player::Player(GameObject* parent)
 	:GameObject(parent, "Player")
 {
 	hModel = -1;
+	prevSpaceKey = false;
+	HP = 50; // 初期HP
+	MaxHP = 50;
+	Point = 0;
+	OnReversal = false;
 }
 
 Player::~Player()
@@ -49,10 +54,7 @@ void Player::Initialize()
 	SphereCollider* collider = new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f);
 	AddCollider(collider);
 	transform_.rotate_.y = GetRotationFromDirection(Front); // 初期方向を前に設定
-	prevSpaceKey = false;
-	HP = 50;
-	Point = 0;
-	OnReversal = false;
+	
 }
 
 void Player::Update()
@@ -212,7 +214,7 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 	if (pTarget->GetObjectName() == "Bomb")
 	{
-		HpDown(20);
+		HpDown(15);
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
@@ -272,7 +274,13 @@ int Player::GetRotationFromDirection(Direction dir)
 
 void Player::HpDown(int hp)
 {
+	Hp* pHp = (Hp*)(FindObject("Hp"));
+	pHp->SetHpVal(HP, MaxHP); // HPの更新
 	HP -= hp;
+	if (HP <= 0)
+	{
+		HP = 0; // HPが0未満にならないように制限
+	}
 }
 
 float Player::GetDeltaTime()

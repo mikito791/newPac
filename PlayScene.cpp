@@ -37,13 +37,14 @@ PlayScene::PlayScene(GameObject * parent)
 //初期化
 void PlayScene::Initialize()
 {
-	hPlayScene = Image::Load("Model//playScene.png");
+	//hPlayScene = Image::Load("Model//playScene.png");
+	
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
-	//Instantiate<Hp>(this);
 	Instantiate<Stage>(this);
 	//Instantiate<ReversalBall>(this);
+	Instantiate<Hp>(this);
 }
 
 //更新
@@ -80,11 +81,11 @@ void PlayScene::Update()
 		//{
 		//	Update_SpawnAlly(); // 味方のスポーン処理
 		//}
-		ReversalBall* rBall = nullptr;
+		/*ReversalBall* rBall = nullptr;
 		rBall = Instantiate<ReversalBall>(this);
 		rBall->SetPos(Left);
-		rBall->SetMove(XMFLOAT3(speed, 0, 0));
-		//Update_SpawnBomb();
+		rBall->SetMove(XMFLOAT3(speed, 0, 0));*/
+		Update_SpawnBomb();
 	}
 }
 

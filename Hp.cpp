@@ -4,6 +4,10 @@
 Hp::Hp(GameObject* parent) 
 	: GameObject(parent, "Hp")
 {
+	hHp = -1;
+	hHpFrame = -1;
+	hpMaxVal_ = 100; // Å‘å’l‚Ì‰Šú‰»
+	hpCrrVal_ = 100; // Œ»Ý’l‚Ì‰Šú‰»
 }
 
 Hp::~Hp()
@@ -12,25 +16,27 @@ Hp::~Hp()
 
 void Hp::Initialize()
 {
-	hp = 3;
+	
 	hHp = Image::Load("Model//HP.png");
 	assert(hHp >= 0);
 	hHpFrame = Image::Load("Model//HPFrame.png");
 	assert(hHpFrame >= 0);
-	hpPos = XMFLOAT3(0.5, 0.5, 0);
+	transform_.position_.x = -1.0f;
+	transform_.position_.y = 0.9f;
+	
 }
 
 void Hp::Update()
 {
-	transform_.position_ = hpPos;
-	//hpFramePos = XMFLOAT3(hpPos.x - 0.5f, hpPos.y - 0.5f, hpPos.z);
 }
 
 void Hp::Draw()
 {
+	Transform tr = transform_;
+	tr.scale_.x = (float)hpCrrVal_ / (float)hpMaxVal_;
 	Image::SetTransform(hHpFrame, transform_);
 	Image::Draw(hHpFrame);
-	Image::SetTransform(hHp, transform_);
+	Image::SetTransform(hHp, tr);
 	Image::Draw(hHp);
 	
 }

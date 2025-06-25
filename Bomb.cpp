@@ -20,7 +20,7 @@ Bomb::~Bomb()
 
 void Bomb::Initialize()
 {
-	hBomb = Model::Load("Model/Enemy.fbx");
+	hBomb = Model::Load("Model/Bomb.fbx");
 	assert(hBomb >= 0);
 	num = rand() % 4; // 0`3 ‚Ìƒ‰ƒ“ƒ_ƒ€’l
 	switch (num)

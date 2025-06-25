@@ -3,13 +3,10 @@
 class Hp :
     public GameObject
 {
-	int hp;//体力　数値は5
 	int hHp;//体力ハンドル
 	int hHpFrame;//体力フレームハンドル
-	XMFLOAT3 hpPos;//体力の位置
-	XMFLOAT3 hpFramePos;//体力フレームの位置
-	Transform hpFrameTransform;//体力フレームのTransform
-	Transform hpTransform;//体力のTransform
+	int hpMaxVal_;//ゲージの最大値
+	int hpCrrVal_;//カレントの値（現在の値） crrunt value
 public:
 	Hp(GameObject* parent);
 	~Hp();
@@ -17,5 +14,11 @@ public:
 	void Update() override;
 	void Draw() override;
 	void Release() override;
+	void SetHpVal(int crr, int max)
+	{
+		hpCrrVal_ = crr;
+		hpMaxVal_ = max;
+	} // 体力の値を設定
+
 };
 
