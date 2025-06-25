@@ -144,11 +144,22 @@ void Player::Update()
 	}
 	
 	//Debug::Log(transform_.position_.y,"\n"); 
-	//if (Input::IsKey(DIK_J))
+	//if (Input::IsKey(DIK_K))
 	//{
-	//	transform_.position_.y += 0.1f; // Jキーで上昇
+	//	transform_.position_.x += 0.1f; // Jキーで上昇
 	//}
-	
+	//if (Input::IsKey(DIK_L))
+	//{
+	//	transform_.position_.x -= 0.1f; // Kキーで下降
+	//}
+	//if (Input::IsKey(DIK_I))
+	//{
+	//	transform_.position_.z += 0.1f; // Jキーで上昇
+	//}
+	//if (Input::IsKey(DIK_O))
+	//{
+	//	transform_.position_.z -= 0.1f; // Kキーで下降
+	//}
 }
 
 void Player::Draw()
@@ -274,13 +285,14 @@ int Player::GetRotationFromDirection(Direction dir)
 
 void Player::HpDown(int hp)
 {
-	Hp* pHp = (Hp*)(FindObject("Hp"));
-	pHp->SetHpVal(HP, MaxHP); // HPの更新
 	HP -= hp;
 	if (HP <= 0)
 	{
 		HP = 0; // HPが0未満にならないように制限
 	}
+	Hp* pHp = (Hp*)(FindObject("Hp"));
+	pHp->SetHpVal(HP, MaxHP); // HPの更新
+	
 }
 
 float Player::GetDeltaTime()

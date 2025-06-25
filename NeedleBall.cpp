@@ -25,7 +25,7 @@ NeedleBall::~NeedleBall()
 
 void NeedleBall::Initialize()
 {
-	hNeedleBall = Model::Load("Model//Enemy.fbx");
+	hNeedleBall = Model::Load("Model//Needle.fbx");
 	assert(hNeedleBall >= 0);
 	num = rand() % 4; // 0`3 ‚Ìƒ‰ƒ“ƒ_ƒ€’l
 	switch (num)

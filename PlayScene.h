@@ -32,7 +32,7 @@ public:
 	//ŠJ•ú
 	void Release() override;
 private:
-	void Update_SpawnEnemy();
+	void Update_SpawnNeedle();
 	void Update_SpawnAlly();
 	void Update_SpawnBomb();
 };

@@ -9,6 +9,7 @@
 #include"Engine/Image.h"
 #include"Stage.h"
 #include"ReversalBall.h"
+#include"CannonEnemy.h"
 
 namespace
 {
@@ -45,6 +46,7 @@ void PlayScene::Initialize()
 	Instantiate<Stage>(this);
 	//Instantiate<ReversalBall>(this);
 	Instantiate<Hp>(this);
+	Instantiate<CannonEnemy>(this);
 }
 
 //更新
@@ -76,7 +78,7 @@ void PlayScene::Update()
 	{
 		
 		SpawnTimer = 0.0f; // タイマーをリセット
-		//Update_SpawnEnemy();// 敵のスポーン処理
+		//Update_SpawnNeedle();// 棘ボールのスポーン処理
 		//if (rand() % 2 == 0) // 50%の確率で味方をスポーン
 		//{
 		//	Update_SpawnAlly(); // 味方のスポーン処理
@@ -85,7 +87,7 @@ void PlayScene::Update()
 		rBall = Instantiate<ReversalBall>(this);
 		rBall->SetPos(Left);
 		rBall->SetMove(XMFLOAT3(speed, 0, 0));*/
-		Update_SpawnBomb();
+		//Update_SpawnBomb();
 	}
 }
 
@@ -100,7 +102,7 @@ void PlayScene::Release()
 {
 }
 
-void PlayScene::Update_SpawnEnemy()
+void PlayScene::Update_SpawnNeedle()
 {
 	NeedleRandom = rand() % 4; // 0～3 のランダム値
 	NeedleBall* nBall = nullptr; // NeedleBallのポインタ

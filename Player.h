@@ -16,6 +16,8 @@ class Player :
 	int MaxHP; // Å‘åHP
 	int Point;
 	bool OnReversal;
+	bool HitIsNeedleBall; // NeedleBall‚É“–‚½‚Á‚½‚©‚Ç‚¤‚©
+	bool HitIsBomb; // Bomb‚É“–‚½‚Á‚½‚©‚Ç‚¤‚©
 public:
 	Player(GameObject* parent);
 	~Player();
