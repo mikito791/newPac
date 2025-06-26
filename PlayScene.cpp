@@ -74,7 +74,7 @@ void PlayScene::Update()
 	// スポーン間隔を時間（フレーム）経過に応じて縮める
 
 	// 出現間隔を時間経過に合わせて調整
-	if (timeElapsed >= maxSpawnInterval) // 30秒経過後
+	if (timeElapsed >= maxSpawnInterval) 
 	{
 		// spawnIntervalを段階的に縮めていく
 		float timeFactor = (timeElapsed - maxSpawnInterval) / maxSpawnInterval;  // 30秒以降

@@ -35,7 +35,6 @@ Player::Player(GameObject* parent)
 	prevSpaceKey = false;
 	HP = 50; // ‰ŠúHP
 	MaxHP = 50;
-	Point = 0;
 	OnReversal = false;
 }
 
