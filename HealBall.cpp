@@ -1,4 +1,4 @@
-#include "AllyBall.h"
+#include "HealBall.h"
 #include "Engine/Model.h"
 #include"Player.h"
 #include"RedWall.h"
@@ -9,22 +9,22 @@
 #include"Engine/SceneManager.h"
 #include"Engine/SphereCollider.h"
 
-AllyBall::AllyBall(GameObject* parent)
-	: GameObject(parent, "AllyBall")
+
+HealBall::HealBall(GameObject* parent)
+	: GameObject(parent, "HealBall")
 {
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
-	hAllyBall = -1;
+	hHealBall = -1;
 	speed = 0.05f; // 移動速度
 }
-
-AllyBall::~AllyBall()
+HealBall::~HealBall()
 {
 }
 
-void AllyBall::Initialize()
+void HealBall::Initialize()
 {
-	hAllyBall = Model::Load("Model/blueEnemy0.fbx");
-	assert(hAllyBall >= 0);
+	hHealBall = Model::Load("Model/HealBall.fbx");
+	assert(hHealBall >= 0);
 	num = rand() % 4; // 0～3 のランダム値
 	switch (num)
 	{
@@ -51,7 +51,7 @@ void AllyBall::Initialize()
 	AddCollider(collider);
 }
 
-void AllyBall::Update()
+void HealBall::Update()
 {
 	transform_.position_.x += moveDirection.x;
 	transform_.position_.z += moveDirection.z;
@@ -62,17 +62,17 @@ void AllyBall::Update()
 	}
 }
 
-void AllyBall::Draw()
+void HealBall::Draw()
 {
-	Model::SetTransform(hAllyBall, transform_);
-	Model::Draw(hAllyBall);
+	Model::SetTransform(hHealBall, transform_);
+	Model::Draw(hHealBall);
 }
 
-void AllyBall::Release()
+void HealBall::Release()
 {
 }
 
-void AllyBall::OnCollision(GameObject* pTarget)
+void HealBall::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "RedWall")
 	{

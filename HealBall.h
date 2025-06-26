@@ -1,17 +1,17 @@
 #pragma once
 #include "Engine/GameObject.h"
-class AllyBall :
+class HealBall :
     public GameObject
 {
-	int hAllyBall; // アリーのボールのモデルハンドル
+	int hHealBall; // アリーのボールのモデルハンドル
 	XMFLOAT3 moveDirection; // 移動方向
 	float speed; // 移動速度
 	float distance; // 衝突判定の距離
 	int num; // ランダム値
 public:
 	
-	AllyBall(GameObject* parent);
-	~AllyBall();
+	HealBall(GameObject* parent);
+	~HealBall();
 	//初期化
 	void Initialize() override;
 

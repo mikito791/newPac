@@ -10,6 +10,7 @@
 #include"Stage.h"
 #include"ReversalBall.h"
 #include"CannonEnemy.h"
+#include"Ghost.h"
 
 namespace
 {
@@ -79,15 +80,16 @@ void PlayScene::Update()
 		
 		SpawnTimer = 0.0f; // タイマーをリセット
 		//Update_SpawnNeedle();// 棘ボールのスポーン処理
-		//if (rand() % 2 == 0) // 50%の確率で味方をスポーン
-		//{
-		//	Update_SpawnAlly(); // 味方のスポーン処理
-		//}
+		if (rand() % 2 == 0) // 50%の確率で味方をスポーン
+		{
+			Update_SpawnAlly(); // 味方のスポーン処理
+		}
 		/*ReversalBall* rBall = nullptr;
 		rBall = Instantiate<ReversalBall>(this);
 		rBall->SetPos(Left);
 		rBall->SetMove(XMFLOAT3(speed, 0, 0));*/
 		//Update_SpawnBomb();
+		Update_SpawnGhost(); // ゴーストのスポーン処理
 	}
 }
 
@@ -189,6 +191,42 @@ void PlayScene::Update_SpawnBomb()
 		bomb = Instantiate<Bomb>(this);
 		bomb->SetPos(Front);
 		bomb->SetMove(XMFLOAT3(0, 0, speed));
+		break;
+	default:
+		break;
+	}
+}
+
+void PlayScene::Update_SpawnGhost()
+{
+	float GhostSpeed = 0.01f; // Ghostの移動速度
+	Ghost* ghost = nullptr; // Ghostのポインタ
+	GhostRandom = rand() % 4; // 0～3 のランダム値
+	switch (GhostRandom)
+	{
+	case 0: // 左から
+		ghost = Instantiate<Ghost>(this);
+		ghost->SetPos(Left);
+		ghost->SetMove(XMFLOAT3(GhostSpeed, 0, 0));
+		ghost->SetRot(XMFLOAT3(0, 90, 0)); // 左からの向き
+		break;
+	case 1: // 右から
+		ghost = Instantiate<Ghost>(this);
+		ghost->SetPos(Right);
+		ghost->SetMove(XMFLOAT3(-GhostSpeed, 0, 0));
+		ghost->SetRot(XMFLOAT3(0, 270, 0)); // 右からの向き
+		break;
+	case 2: // 奥から
+		ghost = Instantiate<Ghost>(this);
+		ghost->SetPos(Back);
+		ghost->SetMove(XMFLOAT3(0, 0, -GhostSpeed));
+		ghost->SetRot(XMFLOAT3(0, 180, 0)); // 奥からの向き
+		break;
+	case 3: // 手前から
+		ghost = Instantiate<Ghost>(this);
+		ghost->SetPos(Front);
+		ghost->SetMove(XMFLOAT3(0, 0, GhostSpeed));
+		ghost->SetRot(XMFLOAT3(0, 0, 0)); // 手前からの向き
 		break;
 	default:
 		break;

@@ -202,7 +202,7 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 	if (pTarget->GetObjectName() == "AllyBall")
 	{
-		PointUp(1);
+		HpUp(10);
 		pTarget->KillMe();
 		if (Point >= 5)
 		{
@@ -226,6 +226,19 @@ void Player::OnCollision(GameObject* pTarget)
 	if (pTarget->GetObjectName() == "Bomb")
 	{
 		HpDown(15);
+		isInvincible = true;
+		invincibilityTimer = invincibilityTime;
+		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
+		if (HP <= 0)
+		{
+			this->KillMe();
+			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
+			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
+		}
+	}
+	if (pTarget->GetObjectName() == "Ghost")
+	{
+		HpDown(0.05);
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
@@ -283,16 +296,15 @@ int Player::GetRotationFromDirection(Direction dir)
 	}
 }
 
-void Player::HpDown(int hp)
+void Player::HpDown(float hp)
 {
+	Hp* pHp = (Hp*)(FindObject("Hp"));
+	pHp->SetHpVal(HP, MaxHP); // HPの更新
 	HP -= hp;
 	if (HP <= 0)
 	{
 		HP = 0; // HPが0未満にならないように制限
 	}
-	Hp* pHp = (Hp*)(FindObject("Hp"));
-	pHp->SetHpVal(HP, MaxHP); // HPの更新
-	
 }
 
 float Player::GetDeltaTime()
@@ -303,9 +315,16 @@ float Player::GetDeltaTime()
 	return deltaTime.count();
 }
 
-void Player::PointUp(int pt)
+void Player::HpUp(int hp)
 {
-	Point += pt;
+	Hp* pHp = (Hp*)(FindObject("Hp"));
+	pHp->SetHpVal(HP, MaxHP); // HPの更新
+	HP += hp;
+	if (HP > MaxHP)
+	{
+		HP = MaxHP; // HPが最大値を超えないように制限
+	}
+	Point += 1;
 }
 
 void Player::Jump()

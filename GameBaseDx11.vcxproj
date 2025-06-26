@@ -137,7 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AllyBall.cpp" />
+    <ClCompile Include="HealBall.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="CannonEnemy.cpp" />
     <ClCompile Include="Engine\Audio.cpp" />
@@ -176,7 +176,7 @@
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AllyBall.h" />
+    <ClInclude Include="HealBall.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="CannonEnemy.h" />
     <ClInclude Include="Engine\Audio.h" />

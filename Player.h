@@ -12,8 +12,8 @@ class Player :
 	bool prevSpaceKey;// 前回のスペースキーの状態
 	float jumpPower; // ジャンプの力
 	bool onGround; // 地面にいるかどうか（地面ないけど）
-	int HP; // 現在のHP
-	int MaxHP; // 最大HP
+	float HP; // 現在のHP
+	float MaxHP; // 最大HP
 	int Point;
 	bool OnReversal;
 	bool HitIsNeedleBall; // NeedleBallに当たったかどうか
@@ -35,9 +35,9 @@ public:
 private:
 	Direction GetDirectionFromInput();
 	int GetRotationFromDirection(Direction dir);
-	void HpDown(int hp);
+	void HpDown(float hp);
 	float GetDeltaTime();
-	void PointUp(int pt);
+	void HpUp(int pt);
 	void Jump();
 	void Invincible();
 };

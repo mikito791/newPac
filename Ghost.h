@@ -4,6 +4,10 @@ class Ghost :
     public GameObject
 {
 	int hGhost;
+	XMFLOAT3 moveDirection;
+	float speed; // à⁄ìÆë¨ìx
+	int num;
+	float distance; // è’ìÀîªíËÇÃãóó£
 public:
 	Ghost(GameObject* parent);
 	~Ghost();
@@ -13,5 +17,8 @@ public:
 	void Release() override;
 	XMFLOAT3 GetPos() const { return transform_.position_; }
 	void OnCollision(GameObject* pTarget) override;
+	void SetPos(XMFLOAT3 pos) { transform_.position_ = pos; }
+	void SetMove(XMFLOAT3 move) { moveDirection = move; }
+	void SetRot(XMFLOAT3 rot) { transform_.rotate_ = rot; }
 };
 

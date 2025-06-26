@@ -5,9 +5,7 @@
 //プレイシーンを管理するクラス
 class PlayScene : public GameObject
 {
-	int NeedleRandom;
-	int AllyRandom;
-	int BombRandom;
+	
 	int hPlayScene;
 	float speed;
 	float spawnInterval; // スポーン間隔（秒）
@@ -35,4 +33,12 @@ private:
 	void Update_SpawnNeedle();
 	void Update_SpawnAlly();
 	void Update_SpawnBomb();
+	//void Update_SpawnReversalBall();
+	//void Update_SpawnCannonEnemy();
+	void Update_SpawnGhost();
+	int NeedleRandom;
+	int AllyRandom;
+	int BombRandom;
+	int GhostRandom;
+	
 };
