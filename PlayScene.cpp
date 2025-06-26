@@ -3,7 +3,7 @@
 #include"RedWall.h"
 #include"NeedleBall.h"
 #include"Hp.h"
-#include"AllyBall.h"
+#include"HealBall.h"
 #include"Bomb.h"
 #include"Engine/Debug.h"
 #include"Engine/Image.h"
@@ -32,7 +32,7 @@ namespace
 
 //コンストラクタ
 PlayScene::PlayScene(GameObject * parent)
-	: GameObject(parent, "PlayScene"),	speed(0.05f)
+	: GameObject(parent, "PlayScene"),	speed(0.03f)
 {
 }
 
@@ -82,7 +82,7 @@ void PlayScene::Update()
 		//Update_SpawnNeedle();// 棘ボールのスポーン処理
 		if (rand() % 2 == 0) // 50%の確率で味方をスポーン
 		{
-			Update_SpawnAlly(); // 味方のスポーン処理
+			Update_SpawnHeal(); // 味方のスポーン処理
 		}
 		/*ReversalBall* rBall = nullptr;
 		rBall = Instantiate<ReversalBall>(this);
@@ -135,31 +135,31 @@ void PlayScene::Update_SpawnNeedle()
 	}
 }
 
-void PlayScene::Update_SpawnAlly()
+void PlayScene::Update_SpawnHeal()
 {
-	AllyRandom = rand() % 4; // 0～3 のランダム値
-	AllyBall* Aenemy = nullptr; // AllyBallのポインタ
-	switch (AllyRandom)
+	HealBallRandom = rand() % 4; // 0～3 のランダム値
+	HealBall* hBall = nullptr; // AllyBallのポインタ
+	switch (HealBallRandom)
 	{
 	case 0: // 左から
-		Aenemy = Instantiate<AllyBall>(this);
-		Aenemy->SetPos(Left);
-		Aenemy->SetMove(XMFLOAT3(speed, 0, 0));
+		hBall = Instantiate<HealBall>(this);
+		hBall->SetPos(Left);
+		hBall->SetMove(XMFLOAT3(speed, 0, 0));
 		break;
 	case 1: // 右から
-		Aenemy = Instantiate<AllyBall>(this);
-		Aenemy->SetPos(Right);
-		Aenemy->SetMove(XMFLOAT3(-speed, 0, 0));
+		hBall = Instantiate<HealBall>(this);
+		hBall->SetPos(Right);
+		hBall->SetMove(XMFLOAT3(-speed, 0, 0));
 		break;
 	case 2: // 奥から
-		Aenemy = Instantiate<AllyBall>(this);
-		Aenemy->SetPos(Back);
-		Aenemy->SetMove(XMFLOAT3(0, 0, -speed));
+		hBall = Instantiate<HealBall>(this);
+		hBall->SetPos(Back);
+		hBall->SetMove(XMFLOAT3(0, 0, -speed));
 		break;
 	case 3: // 手前から
-		Aenemy = Instantiate<AllyBall>(this);
-		Aenemy->SetPos(Front);
-		Aenemy->SetMove(XMFLOAT3(0, 0, speed));
+		hBall = Instantiate<HealBall>(this);
+		hBall->SetPos(Front);
+		hBall->SetMove(XMFLOAT3(0, 0, speed));
 		break;
 	default:
 		break;

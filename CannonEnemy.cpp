@@ -1,5 +1,8 @@
 #include "CannonEnemy.h"
 #include "Engine/Model.h"
+#include "Engine/SphereCollider.h"
+#include "Engine/Debug.h"
+#include "Engine/SceneManager.h"
 
 enum EnemyID
 {
@@ -12,10 +15,6 @@ CannonEnemy::CannonEnemy(GameObject* parent)
 {
 	hCannonEnemy = -1; // モデルハンドルの初期化
 	EnemyHP = 3; // 敵のHPの初期値設定
-	EnemyId[0] = Left; // 敵のIDを設定
-	EnemyId[1] = Right;
-	EnemyId[2] = Back;
-	EnemyId[3] = Front;
 }
 
 CannonEnemy::~CannonEnemy()
@@ -81,7 +80,14 @@ void CannonEnemy::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "Needle")
 	{
+		HpDown(1); // Needleに当たったらHPを1減らす
 		pTarget->KillMe(); // Needleに当たったら自分を削除
+		if (EnemyHP <= 0)
+		{
+			this->KillMe(); // HPが0以下になったら自分を削除
+			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
+			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMECLEAR); // ゲームクリア画面に遷移
+		}
 	}
 }
 

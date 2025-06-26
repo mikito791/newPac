@@ -5,7 +5,6 @@ class CannonEnemy :
 {
 	int hCannonEnemy; // ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
 	int EnemyHP; // “G‚ÌHP]
-	int EnemyId[4]; // “G‚ÌID
 public:
 	CannonEnemy(GameObject* parent);
 	~CannonEnemy();

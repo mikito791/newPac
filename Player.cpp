@@ -8,7 +8,7 @@
 #include"NeedleBall.h"
 #include"Hp.h"
 #include"Engine/Debug.h"
-#include"AllyBall.h"
+#include"HealBall.h"
 #include"Stage.h"
 #include"ReversalBall.h"
 
@@ -200,7 +200,7 @@ void Player::OnCollision(GameObject* pTarget)
 			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
 		}
 	}
-	if (pTarget->GetObjectName() == "AllyBall")
+	if (pTarget->GetObjectName() == "HealBall")
 	{
 		HpUp(10);
 		pTarget->KillMe();

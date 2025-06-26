@@ -31,13 +31,13 @@ public:
 	void Release() override;
 private:
 	void Update_SpawnNeedle();
-	void Update_SpawnAlly();
+	void Update_SpawnHeal();
 	void Update_SpawnBomb();
 	//void Update_SpawnReversalBall();
 	//void Update_SpawnCannonEnemy();
 	void Update_SpawnGhost();
 	int NeedleRandom;
-	int AllyRandom;
+	int HealBallRandom;
 	int BombRandom;
 	int GhostRandom;
 	
