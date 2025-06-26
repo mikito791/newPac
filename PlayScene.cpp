@@ -11,6 +11,7 @@
 #include"ReversalBall.h"
 #include"CannonEnemy.h"
 #include"Ghost.h"
+#include"Engine/SceneManager.h"
 
 namespace
 {
@@ -28,6 +29,7 @@ namespace
 	const float speedIncrement = 0.005f; // 1秒あたり増加する速度の例
 	int frameCount = 0;           // フレームカウント用
 	const int framesPerBoost = 300; // 何フレームごとに速度を上げるか（例：300フレーム = 5秒間60fps前提）
+	const int maxEnemyCount = 4; // 最大敵数（例：10体まで出現可能）
 }
 
 //コンストラクタ
@@ -40,14 +42,18 @@ PlayScene::PlayScene(GameObject * parent)
 void PlayScene::Initialize()
 {
 	//hPlayScene = Image::Load("Model//playScene.png");
-	
+	EnemyNum = maxEnemyCount;
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
 	Instantiate<Stage>(this);
-	//Instantiate<ReversalBall>(this);
+	//Instantiate<NeedleBall>(this);
 	Instantiate<Hp>(this);
-	Instantiate<CannonEnemy>(this);
+	for (int i = 0; i < EnemyNum; i++)
+	{
+		Instantiate<CannonEnemy>(this);
+	}
+	
 }
 
 //更新
@@ -79,17 +85,18 @@ void PlayScene::Update()
 	{
 		
 		SpawnTimer = 0.0f; // タイマーをリセット
-		//Update_SpawnNeedle();// 棘ボールのスポーン処理
+		Update_SpawnNeedle();// 棘ボールのスポーン処理
 		if (rand() % 2 == 0) // 50%の確率で味方をスポーン
 		{
 			Update_SpawnHeal(); // 味方のスポーン処理
 		}
-		/*ReversalBall* rBall = nullptr;
-		rBall = Instantiate<ReversalBall>(this);
-		rBall->SetPos(Left);
-		rBall->SetMove(XMFLOAT3(speed, 0, 0));*/
 		//Update_SpawnBomb();
-		Update_SpawnGhost(); // ゴーストのスポーン処理
+		//Update_SpawnGhost(); // ゴーストのスポーン処理
+	}
+	if (FindObject("CannonEnemy") == nullptr)
+	{
+		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
+		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMECLEAR); 
 	}
 }
 

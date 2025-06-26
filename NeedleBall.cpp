@@ -101,13 +101,6 @@ float NeedleBall::CalculateDistanceWall(const XMFLOAT3& EnemyPos, const XMFLOAT3
 
 void NeedleBall::OnCollision(GameObject* pTarget)
 {
-	// ƒvƒŒƒCƒ„[‚Æ‚ÌÕ“Ë”»’è
-	if (pTarget->GetObjectName() == "Player")
-	{
-		/*pTarget->KillMe();
-		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);*/
-	}
 	// •Ç‚Æ‚ÌÕ“Ë”»’è
 	if (pTarget->GetObjectName() == "RedWall")
 	{

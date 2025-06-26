@@ -14,7 +14,6 @@ class Player :
 	bool onGround; // 地面にいるかどうか（地面ないけど）
 	float HP; // 現在のHP
 	float MaxHP; // 最大HP
-	int Point;
 	bool OnReversal;
 	bool HitIsNeedleBall; // NeedleBallに当たったかどうか
 	bool HitIsBomb; // Bombに当たったかどうか

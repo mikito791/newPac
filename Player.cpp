@@ -204,11 +204,6 @@ void Player::OnCollision(GameObject* pTarget)
 	{
 		HpUp(10);
 		pTarget->KillMe();
-		if (Point >= 5)
-		{
-			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMECLEAR);
-		}
 	}
 	if (pTarget->GetObjectName() == "ReversalBall")
 	{
@@ -324,7 +319,6 @@ void Player::HpUp(int hp)
 	{
 		HP = MaxHP; // HP‚ªÅ‘å’l‚ğ’´‚¦‚È‚¢‚æ‚¤‚É§ŒÀ
 	}
-	Point += 1;
 }
 
 void Player::Jump()
