@@ -40,5 +40,5 @@ private:
 	int HealBallRandom;
 	int BombRandom;
 	int GhostRandom;
-	
+	void Update_CannonEnemy();
 };

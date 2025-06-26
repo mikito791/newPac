@@ -188,7 +188,7 @@ void Player::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "NeedleBall")
 	{
-		HpDown(1);
+		HpDown(0.5);
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // ‰Šú‰»‚µ‚Ä‚·‚®“_–ÅŠJn
