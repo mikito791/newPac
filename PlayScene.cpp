@@ -22,11 +22,11 @@ namespace
 	const float minSpawnInterval = 3.0f;  // 最短の出現間隔（10秒）
 	float timeElapsed = 0.0f;  // 経過時間
 	//位置
-	XMFLOAT3 Left  (-2, 0, 2);
-	XMFLOAT3 Right (10, 0, 2);
-	XMFLOAT3 Back (4, 0, 6);
+	XMFLOAT3 Left(-2, 0, 2);
+	XMFLOAT3 Right(10, 0, 2);
+	XMFLOAT3 Back(4, 0, 6);
 	XMFLOAT3 Front(4, 0, -4);
-	
+
 	// speedを時間経過で増加させる（最大速度を設定）
 	const float maxSpeed = 0.2f;          // 最大速度の例
 	const float speedIncrement = 0.005f; // 1秒あたり増加する速度の例
@@ -45,8 +45,8 @@ namespace
 }
 
 //コンストラクタ
-PlayScene::PlayScene(GameObject * parent)
-	: GameObject(parent, "PlayScene"),	speed(0.03f)
+PlayScene::PlayScene(GameObject* parent)
+	: GameObject(parent, "PlayScene"), speed(0.03f)
 {
 }
 
@@ -54,15 +54,14 @@ PlayScene::PlayScene(GameObject * parent)
 void PlayScene::Initialize()
 {
 	//hPlayScene = Image::Load("Model//playScene.png");
-	
+
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
-	Instantiate<CannonEnemy>(this);
+	//Instantiate<CannonEnemy>(this);
 	Instantiate<Stage>(this);
 	Instantiate<Hp>(this);
-	
-	
+	Update_CannonEnemy();
 }
 
 //更新
@@ -73,6 +72,7 @@ void PlayScene::Update()
 	timeElapsed += deltaTime;
 	frameCount++;
 	
+
 	// speedをフレームごとに増加
 	if (frameCount % framesPerBoost == 0 && speed < maxSpeed)
 	{
@@ -83,7 +83,7 @@ void PlayScene::Update()
 	// スポーン間隔を時間（フレーム）経過に応じて縮める
 
 	// 出現間隔を時間経過に合わせて調整
-	if (timeElapsed >= maxSpawnInterval) 
+	if (timeElapsed >= maxSpawnInterval)
 	{
 		// spawnIntervalを段階的に縮めていく
 		float timeFactor = (timeElapsed - maxSpawnInterval) / maxSpawnInterval;  // 30秒以降
@@ -92,20 +92,26 @@ void PlayScene::Update()
 
 	if (SpawnTimer >= spawnInterval)
 	{
-		//Update_CannonEnemy();
+
 		SpawnTimer = 0.0f; // タイマーをリセット
-		Update_SpawnNeedle();// 棘ボールのスポーン処理
+		
 		if (rand() % 2 == 0) // 50%の確率で味方をスポーン
 		{
+			Update_SpawnBomb();
 			Update_SpawnHeal(); // 味方のスポーン処理
 		}
-		//Update_SpawnBomb();
-		//Update_SpawnGhost(); // ゴーストのスポーン処理
+		else
+		{
+			Update_SpawnNeedle();// 棘ボールのスポーン処理
+			Update_SpawnGhost(); // ゴーストのスポーン処理
+		}
+
+
 	}
 	if (FindObject("CannonEnemy") == nullptr)
 	{
 		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMECLEAR); 
+		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMECLEAR);
 	}
 }
 
@@ -214,7 +220,7 @@ void PlayScene::Update_SpawnBomb()
 
 void PlayScene::Update_SpawnGhost()
 {
-	float GhostSpeed = 0.01f; // Ghostの移動速度
+	float GhostSpeed = 0.02f; // Ghostの移動速度
 	Ghost* ghost = nullptr; // Ghostのポインタ
 	GhostRandom = rand() % 4; // 0～3 のランダム値
 	switch (GhostRandom)
@@ -223,25 +229,25 @@ void PlayScene::Update_SpawnGhost()
 		ghost = Instantiate<Ghost>(this);
 		ghost->SetPos(Left);
 		ghost->SetMove(XMFLOAT3(GhostSpeed, 0, 0));
-		ghost->SetRot(XMFLOAT3(0, 90, 0)); // 左からの向き
+		ghost->SetRot(rotLeft); // 左からの向き
 		break;
 	case 1: // 右から
 		ghost = Instantiate<Ghost>(this);
 		ghost->SetPos(Right);
 		ghost->SetMove(XMFLOAT3(-GhostSpeed, 0, 0));
-		ghost->SetRot(XMFLOAT3(0, 270, 0)); // 右からの向き
+		ghost->SetRot(rotRight); // 右からの向き
 		break;
 	case 2: // 奥から
 		ghost = Instantiate<Ghost>(this);
 		ghost->SetPos(Back);
 		ghost->SetMove(XMFLOAT3(0, 0, -GhostSpeed));
-		ghost->SetRot(XMFLOAT3(0, 180, 0)); // 奥からの向き
+		ghost->SetRot(rotBack); // 奥からの向き
 		break;
 	case 3: // 手前から
 		ghost = Instantiate<Ghost>(this);
 		ghost->SetPos(Front);
 		ghost->SetMove(XMFLOAT3(0, 0, GhostSpeed));
-		ghost->SetRot(XMFLOAT3(0, 0, 0)); // 手前からの向き
+		ghost->SetRot(rotFront); // 手前からの向き
 		break;
 	default:
 		break;
@@ -250,34 +256,14 @@ void PlayScene::Update_SpawnGhost()
 
 void PlayScene::Update_CannonEnemy()
 {
-	CannonEnemy* cEnemy = nullptr;
-	for (int i = 0; i < EnemyNum; i++)
+	XMFLOAT3 positions[] = { EnemyLeft, EnemyRight, EnemyBack, EnemyFront };
+	XMFLOAT3 rotations[] = { rotLeft, rotRight, rotBack, rotFront };
+
+	for (int i = 0; i < maxEnemyCount; ++i)
 	{
-		switch (i)
-		{
-		case 0: // 左から
-			Instantiate<CannonEnemy>(this);
-			cEnemy->SetPos(EnemyLeft);
-			cEnemy->SetRot(rotLeft);
-			break;
-		case 1: // 右から
-			Instantiate<CannonEnemy>(this);
-			cEnemy->SetPos(EnemyRight);
-			cEnemy->SetRot(rotRight);
-			break;
-		case 2: // 奥から
-			Instantiate<CannonEnemy>(this);
-			cEnemy->SetPos(EnemyBack);
-			cEnemy->SetRot(rotBack);
-			break;
-		case 3: // 手前から
-			Instantiate<CannonEnemy>(this);
-			cEnemy->SetPos(EnemyFront);
-			cEnemy->SetRot(rotFront);
-			break;
-		default:
-			break;
-		}
+		CannonEnemy* enemy = Instantiate<CannonEnemy>(this);
+		enemy->SetPos(positions[i]);
+		enemy->SetRot(rotations[i]);
 	}
 }
 

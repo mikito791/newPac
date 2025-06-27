@@ -22,10 +22,10 @@ namespace
 	bool isVisible = true;
 	Direction Front = FRONT;
 	float JumpHeight = 50.0f; // ジャンプの高さ
-	float Gravity = 3.0f/60.0f; // 重力の強さ
+	float Gravity = 3.0f / 60.0f; // 重力の強さ
 	float MaxGravity = 6.0f; // 最大重力の強さ
 	float correctionSpeed = 5.0f; // 補正の速さ（調整可能）
-	
+
 }
 
 Player::Player(GameObject* parent)
@@ -53,26 +53,26 @@ void Player::Initialize()
 	SphereCollider* collider = new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f);
 	AddCollider(collider);
 	transform_.rotate_.y = GetRotationFromDirection(Front); // 初期方向を前に設定
-	
+
 }
 
 void Player::Update()
 {
 	float deltataTime = GetDeltaTime(); // デルタタイムを取得
 	// ReversalBallに当たったら操作を反転させる
-	
+
 	RedWall* pRedWall = (RedWall*)FindObject("RedWall");
 	//入力処理
 	Direction currentDirection = GetDirectionFromInput();
 	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
-	
-		//壁の向きと位置も反転させる
-		/*if (pRedWall)
-		{
-			pRedWall->SetDirection(reversedDirection);
-			pRedWall->SetPosition(pReversalBall->GetPositionFromReveralDirection(reversedDirection));
-		}*/
-	
+
+	//壁の向きと位置も反転させる
+	/*if (pRedWall)
+	{
+		pRedWall->SetDirection(reversedDirection);
+		pRedWall->SetPosition(pReversalBall->GetPositionFromReveralDirection(reversedDirection));
+	}*/
+
 
 	//カメラ
 	XMFLOAT3 camPos = transform_.position_;
@@ -86,7 +86,7 @@ void Player::Update()
 	//
 	Stage* pStage = (Stage*)FindObject("Stage");    //ステージオブジェクトを探す
 	int hGroundModel = pStage->GetModelHandle();    //モデル番号を取得
-	
+
 	RayCastData data;
 	data.start = transform_.position_;   //レイの発射位置
 	data.dir = XMFLOAT3(0, -1, 0);       //レイの方向
@@ -94,38 +94,38 @@ void Player::Update()
 	onGround = false;//空中がデフォルト
 	//レイが当たったら
 	if (data.hit)
-	{	
+	{
 		float correction = data.dist * correctionSpeed * deltataTime; // 補正値を計算
 		//その分位置を下げる
 		if (correction > data.dist)
 		{
 			correction = data.dist; // 補正値が距離を超えないように制限
 		}
-		transform_.position_.y -=correction;
+		transform_.position_.y -= correction;
 		onGround = true; // 地面にいる状態にする
 		jumpPower = 0.0f; // ジャンプ力をリセット
-		
+
 	}
-	else 
+	else
 	{
 		onGround = false; // 地面にいない状態にする
 	}
 
 	//ジャンプ作る
-	if (Input::IsKeyDown(DIK_J))
+	if (Input::IsKeyDown(DIK_SPACE))
 	{
-		if (prevSpaceKey == false &&onGround)
+		if (prevSpaceKey == false && onGround)
 		{
 			Jump();
 		}
-		prevSpaceKey = true; 
+		prevSpaceKey = true;
 	}
 	else
 	{
 		prevSpaceKey = false; // スペースキーが離されたらフラグをリセット
-		
+
 	}
-		
+
 	if (!onGround)
 	{
 		// 空中にいる場合は重力を適用
@@ -141,7 +141,7 @@ void Player::Update()
 		jumpPower = 0.0f; // 地面にいる場合はジャンプの力をリセット
 		onGround = true; // 地面にいる状態にする
 	}
-	
+
 	//Debug::Log(transform_.position_.y,"\n"); 
 	//if (Input::IsKey(DIK_K))
 	//{
@@ -188,7 +188,7 @@ void Player::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "NeedleBall")
 	{
-		HpDown(0.5);
+		HpDown(0.2);
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
@@ -201,7 +201,7 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 	if (pTarget->GetObjectName() == "HealBall")
 	{
-		HpUp(10);
+		HpUp(5);
 		pTarget->KillMe();
 	}
 	if (pTarget->GetObjectName() == "ReversalBall")
@@ -219,7 +219,7 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 	if (pTarget->GetObjectName() == "Bomb")
 	{
-		HpDown(15);
+		HpDown(10);
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
@@ -273,7 +273,7 @@ int Player::GetRotationFromDirection(Direction dir)
 {
 	switch (dir)
 	{
-	case LEFT:  
+	case LEFT:
 		return 270;
 		break;
 	case RIGHT:
@@ -282,7 +282,7 @@ int Player::GetRotationFromDirection(Direction dir)
 	case FRONT:
 		return 0;
 		break;
-	case BACK: 
+	case BACK:
 		return 180;
 		break;
 	default:
@@ -292,13 +292,24 @@ int Player::GetRotationFromDirection(Direction dir)
 
 void Player::HpDown(float hp)
 {
-	Hp* pHp = (Hp*)(FindObject("Hp"));
-	pHp->SetHpVal(HP, MaxHP); // HPの更新
 	HP -= hp;
 	if (HP <= 0)
 	{
 		HP = 0; // HPが0未満にならないように制限
 	}
+	Hp* pHp = (Hp*)(FindObject("Hp"));
+	pHp->SetHpVal(HP, MaxHP); // HPの更新
+}
+
+void Player::HpUp(int hp)
+{
+	HP += hp;
+	if (HP > MaxHP)
+	{
+		HP = MaxHP; // HPが最大値を超えないように制限
+	}
+	Hp* pHp = (Hp*)(FindObject("Hp"));
+	pHp->SetHpVal(HP, MaxHP); // HPの更新
 }
 
 float Player::GetDeltaTime()
@@ -307,17 +318,6 @@ float Player::GetDeltaTime()
 	std::chrono::duration<float> deltaTime = currentTime - lastUpdateTime;
 	lastUpdateTime = currentTime;
 	return deltaTime.count();
-}
-
-void Player::HpUp(int hp)
-{
-	Hp* pHp = (Hp*)(FindObject("Hp"));
-	pHp->SetHpVal(HP, MaxHP); // HPの更新
-	HP += hp;
-	if (HP > MaxHP)
-	{
-		HP = MaxHP; // HPが最大値を超えないように制限
-	}
 }
 
 void Player::Jump()
