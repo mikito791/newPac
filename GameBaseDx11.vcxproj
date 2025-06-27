@@ -211,6 +211,7 @@
     <ClInclude Include="NeedleBall.h" />
     <ClInclude Include="RedWall.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="ShotBase.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>

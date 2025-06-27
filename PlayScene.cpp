@@ -58,7 +58,6 @@ void PlayScene::Initialize()
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // —”‰Šú‰»i–ˆ‰ñˆá‚¤Œ‹‰Ê‚É‚·‚éj
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
-	//Instantiate<CannonEnemy>(this);
 	Instantiate<Stage>(this);
 	Instantiate<Hp>(this);
 	Update_CannonEnemy();

@@ -4,6 +4,7 @@
 #include <cstdlib> // for rand()
 #include<ctime>
 #include<cmath>
+#include"ShotBase.h"
 
 Bomb::Bomb(GameObject* parent)
 	:GameObject(parent, "Bomb")

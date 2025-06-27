@@ -28,8 +28,7 @@ void CannonEnemy::Initialize()
 
 void CannonEnemy::Update()
 {
-	//transform_.position_ = XMFLOAT3(-2.5, 0, 2);
-	//transform_.rotate_.y = 90; // ¶‚©‚ç‚ÌŒü‚«	
+	//‚±‚±‚É™ƒ{[ƒ‹‚©”š’e‚ğ”­Ë‚·‚é‚Ì‚ğì‚é
 }
 
 void CannonEnemy::Draw()
