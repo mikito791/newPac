@@ -25,7 +25,7 @@ namespace
 	XMFLOAT3 Left(-2, 0, 2);
 	XMFLOAT3 Right(10, 0, 2);
 	XMFLOAT3 Back(4, 0, 6);
-	XMFLOAT3 Front(4, 0, -4);
+	XMFLOAT3 Front(4, 0, -1.8);
 
 	// speedを時間経過で増加させる（最大速度を設定）
 	const float maxSpeed = 0.2f;          // 最大速度の例

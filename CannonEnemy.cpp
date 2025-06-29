@@ -28,7 +28,6 @@ void CannonEnemy::Initialize()
 
 void CannonEnemy::Update()
 {
-	//‚±‚±‚É™ƒ{[ƒ‹‚©”š’e‚ğ”­Ë‚·‚é‚Ì‚ğì‚é
 }
 
 void CannonEnemy::Draw()

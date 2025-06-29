@@ -262,9 +262,6 @@
     <ClInclude Include="CannonEnemy.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="ShotBase.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
