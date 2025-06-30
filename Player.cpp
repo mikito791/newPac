@@ -11,6 +11,8 @@
 #include"HealBall.h"
 #include"Stage.h"
 #include"ReversalBall.h"
+#include"Engine/Audio.h"
+
 
 
 namespace
@@ -32,10 +34,12 @@ Player::Player(GameObject* parent)
 	:GameObject(parent, "Player")
 {
 	hModel = -1;
+	hDmageSound = -1;
+	hHealSound = -1;
+	hBombSound = -1;
 	prevSpaceKey = false;
 	HP = 50; // 初期HP
 	MaxHP = 50;
-	OnReversal = false;
 }
 
 Player::~Player()
@@ -52,8 +56,7 @@ void Player::Initialize()
 	//コライダー
 	SphereCollider* collider = new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f);
 	AddCollider(collider);
-	transform_.rotate_.y = GetRotationFromDirection(Front); // 初期方向を前に設定
-
+	csv.Load("CSV/variable.csv");
 }
 
 void Player::Update()
@@ -192,12 +195,6 @@ void Player::OnCollision(GameObject* pTarget)
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
-		if (HP <= 0)
-		{
-			this->KillMe();
-			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
-		}
 	}
 	if (pTarget->GetObjectName() == "HealBall")
 	{
@@ -223,12 +220,6 @@ void Player::OnCollision(GameObject* pTarget)
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
-		if (HP <= 0)
-		{
-			this->KillMe();
-			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
-		}
 	}
 	if (pTarget->GetObjectName() == "Ghost")
 	{
@@ -236,18 +227,12 @@ void Player::OnCollision(GameObject* pTarget)
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
-		if (HP <= 0)
-		{
-			this->KillMe();
-			SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
-			pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
-		}
 	}
 }
 
 Direction Player::GetDirectionFromInput()
 {
-	static Direction lastDirection = FRONT;
+	static Direction lastDirection;
 
 	if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = LEFT;
 	if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D)) lastDirection = RIGHT;
@@ -271,19 +256,24 @@ Direction Player::GetDirectionFromInput()
 
 int Player::GetRotationFromDirection(Direction dir)
 {
+	int Left, Right, Front, Back;
 	switch (dir)
 	{
 	case LEFT:
-		return 270;
+		return Left = csv.GetValue(1, 0);
+		//return 270;
 		break;
 	case RIGHT:
-		return 90;
+		return Right = csv.GetValue(2, 0);
+		//return 90;
 		break;
 	case FRONT:
-		return 0;
+		return Front = csv.GetValue(3, 0);
+		//return 0;
 		break;
 	case BACK:
-		return 180;
+		return Back = csv.GetValue(4, 0);
+		//return 180;
 		break;
 	default:
 		break;
@@ -296,6 +286,9 @@ void Player::HpDown(float hp)
 	if (HP <= 0)
 	{
 		HP = 0; // HPが0未満にならないように制限
+		this->KillMe();
+		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
+		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMEOVER);
 	}
 	Hp* pHp = (Hp*)(FindObject("Hp"));
 	pHp->SetHpVal(HP, MaxHP); // HPの更新

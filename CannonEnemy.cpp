@@ -11,7 +11,6 @@ CannonEnemy::CannonEnemy(GameObject* parent)
 {
 	hCannonEnemy = -1; // モデルハンドルの初期化
 	EnemyHP = 3; // 敵のHPの初期値設定
-	EnemyNum = 4;
 }
 
 CannonEnemy::~CannonEnemy()

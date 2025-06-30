@@ -22,7 +22,7 @@ ReversalBall::~ReversalBall()
 
 void ReversalBall::Initialize()
 {
-	hModel = Model::Load("Model/redEnemy0.fbx");
+	hModel = Model::Load("Model/ReversalBall.fbx");
 	assert(hModel >= 0);
 	randomNum = rand() % 4; // 0`3 ‚Ìƒ‰ƒ“ƒ_ƒ€’l
 	switch (randomNum)

@@ -25,7 +25,7 @@ namespace
 	XMFLOAT3 Left(-2, 0, 2);
 	XMFLOAT3 Right(10, 0, 2);
 	XMFLOAT3 Back(4, 0, 6);
-	XMFLOAT3 Front(4, 0, -1.8);
+	XMFLOAT3 Front(4, 0, -1.5);
 
 	// speedを時間経過で増加させる（最大速度を設定）
 	const float maxSpeed = 0.2f;          // 最大速度の例
@@ -46,21 +46,30 @@ namespace
 
 //コンストラクタ
 PlayScene::PlayScene(GameObject* parent)
-	: GameObject(parent, "PlayScene"), speed(0.03f)
+	: GameObject(parent, "PlayScene")
 {
+	
+	hPlayScene = -1; // モデルハンドルの初期化
+	speed = 0.03f; // 初期の移動速度を設定
+	SpawnTimer = 0.0f; // スポーンタイマーの初期化
+	spawnInterval = 30.0f; // 初期のスポーン間隔を30秒に設定
+	timeElapsed = 0.0f; // 経過時間の初期化
+	frameCount = 0; // フレームカウントの初期化
+	
 }
 
 //初期化
 void PlayScene::Initialize()
 {
 	//hPlayScene = Image::Load("Model//playScene.png");
-
+	csv.Load("CSV/variable.csv"); // CSVファイルの読み込み
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	Instantiate<Player>(this);
 	Instantiate<RedWall>(this);
 	Instantiate<Stage>(this);
 	Instantiate<Hp>(this);
 	Update_CannonEnemy();
+	//speed = csv.GetValue(1, 1); // speedの初期値をCSVから取得
 }
 
 //更新
@@ -71,7 +80,6 @@ void PlayScene::Update()
 	timeElapsed += deltaTime;
 	frameCount++;
 	
-
 	// speedをフレームごとに増加
 	if (frameCount % framesPerBoost == 0 && speed < maxSpeed)
 	{
@@ -96,7 +104,7 @@ void PlayScene::Update()
 		
 		if (rand() % 2 == 0) // 50%の確率で味方をスポーン
 		{
-			Update_SpawnBomb();
+			Update_SpawnBomb(); //爆弾のスポーン処理
 			Update_SpawnHeal(); // 味方のスポーン処理
 		}
 		else
@@ -126,7 +134,7 @@ void PlayScene::Release()
 
 void PlayScene::Update_SpawnNeedle()
 {
-	NeedleRandom = rand() % 4; // 0～3 のランダム値
+	int NeedleRandom = rand() % 4; // 0～3 のランダム値
 	NeedleBall* nBall = nullptr; // NeedleBallのポインタ
 	switch (NeedleRandom)
 	{
@@ -157,8 +165,8 @@ void PlayScene::Update_SpawnNeedle()
 
 void PlayScene::Update_SpawnHeal()
 {
-	HealBallRandom = rand() % 4; // 0～3 のランダム値
-	HealBall* hBall = nullptr; // AllyBallのポインタ
+	int HealBallRandom = rand() % 4; // 0～3 のランダム値
+	HealBall* hBall = nullptr; // HealBallのポインタ
 	switch (HealBallRandom)
 	{
 	case 0: // 左から
@@ -188,7 +196,7 @@ void PlayScene::Update_SpawnHeal()
 
 void PlayScene::Update_SpawnBomb()
 {
-	BombRandom = rand() % 4; // 0～3 のランダム値
+	int BombRandom = rand() % 4; // 0～3 のランダム値
 	Bomb* bomb = nullptr; // Bombのポインタ
 	switch (BombRandom)
 	{
@@ -221,7 +229,7 @@ void PlayScene::Update_SpawnGhost()
 {
 	float GhostSpeed = 0.02f; // Ghostの移動速度
 	Ghost* ghost = nullptr; // Ghostのポインタ
-	GhostRandom = rand() % 4; // 0～3 のランダム値
+	int GhostRandom = rand() % 4; // 0～3 のランダム値
 	switch (GhostRandom)
 	{
 	case 0: // 左から

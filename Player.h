@@ -1,11 +1,11 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include"Engine/Global.h"
+#include"Engine/CsvReader.h"
 class Player :
     public GameObject
 {
 	int hModel;
-	XMVECTOR pos;
 	bool isInvincible; // 無敵状態かどうか
 	float invincibilityTimer; // 無敵時間のカウント
 	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
@@ -14,9 +14,10 @@ class Player :
 	bool onGround; // 地面にいるかどうか（地面ないけど）
 	float HP; // 現在のHP
 	float MaxHP; // 最大HP
-	bool OnReversal;
-	bool HitIsNeedleBall; // NeedleBallに当たったかどうか
-	bool HitIsBomb; // Bombに当たったかどうか
+	CsvReader csv;
+	int hDmageSound; // ダメージ音のハンドル
+	int hHealSound; // 回復音のハンドル
+	int hBombSound; // 爆弾音のハンドル
 public:
 	Player(GameObject* parent);
 	~Player();

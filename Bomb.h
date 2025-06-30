@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
-#include"ShotBase.h"
+
 class Bomb :
     public GameObject
 {

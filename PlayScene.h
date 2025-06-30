@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include <chrono>
+#include"Engine/CsvReader.h"
 
 //プレイシーンを管理するクラス
 class PlayScene : public GameObject
@@ -9,10 +10,8 @@ class PlayScene : public GameObject
 	int hPlayScene;
 	float speed;
 	float spawnInterval; // スポーン間隔（秒）
-	float timeSinceLastSpawn; // 最後のスポーンからの経過時間
 	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
-	int EnemyNum;
-	float GetDeltaTime();
+	CsvReader csv; 
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
@@ -34,11 +33,7 @@ private:
 	void Update_SpawnHeal();
 	void Update_SpawnBomb();
 	//void Update_SpawnReversalBall();
-	//void Update_SpawnCannonEnemy();
 	void Update_SpawnGhost();
-	int NeedleRandom;
-	int HealBallRandom;
-	int BombRandom;
-	int GhostRandom;
 	void Update_CannonEnemy();
+	float GetDeltaTime();
 };

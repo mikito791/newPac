@@ -1,12 +1,12 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include "Engine/Global.h"
+#include"Engine/CsvReader.h"
 class RedWall :
     public GameObject
 {
 	int hRedWall;
-	int hBlueWall;
-	bool keyPush;
+	CsvReader csv;
 public:
 	RedWall(GameObject* parent);
 	~RedWall();
