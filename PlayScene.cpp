@@ -33,7 +33,7 @@ namespace
 	int frameCount = 0;           // フレームカウント用
 	const int framesPerBoost = 300; // 何フレームごとに速度を上げるか（例：300フレーム = 5秒間60fps前提）
 	//敵
-	const int maxEnemyCount = 4; // 最大敵数（例：10体まで出現可能）
+	const int maxEnemyCount = 3; // 最大敵数（例：10体まで出現可能）
 	XMFLOAT3 EnemyLeft(-2.5, 0, 2);
 	XMFLOAT3 EnemyRight(10.5, 0, 2);
 	XMFLOAT3 EnemyBack(4, 0, 7);
@@ -264,15 +264,15 @@ void PlayScene::Update_SpawnGhost()
 
 void PlayScene::Update_CannonEnemy()
 {
-	XMFLOAT3 positions[] = { EnemyLeft, EnemyRight, EnemyBack, EnemyFront };
-	XMFLOAT3 rotations[] = { rotLeft, rotRight, rotBack, rotFront };
+	XMFLOAT3 positions[] = { EnemyLeft, EnemyBack,EnemyFront,EnemyRight};
+	XMFLOAT3 rotations[] = { rotLeft, rotBack,rotFront,rotRight, };
 
-	//for (int i = 0; i < maxEnemyCount; ++i)
-	//{
+	for (int i = 0; i < maxEnemyCount; ++i)
+	{
 		CannonEnemy* enemy = Instantiate<CannonEnemy>(this);
-		enemy->SetPos(positions[0]);
-		enemy->SetRot(rotations[0]);
-	//}
+		enemy->SetPos(positions[i]);
+		enemy->SetRot(rotations[i]);
+	}
 }
 
 float PlayScene::GetDeltaTime()
