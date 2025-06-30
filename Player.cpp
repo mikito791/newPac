@@ -4,7 +4,7 @@
 #include"Engine/SphereCollider.h"
 #include"Engine/SceneManager.h"
 #include"Engine/Camera.h"
-#include"RedWall.h"
+#include"Shield.h"
 #include"NeedleBall.h"
 #include"Hp.h"
 #include"Engine/Debug.h"
@@ -64,7 +64,7 @@ void Player::Update()
 	float deltataTime = GetDeltaTime(); // デルタタイムを取得
 	// ReversalBallに当たったら操作を反転させる
 
-	RedWall* pRedWall = (RedWall*)FindObject("RedWall");
+	Shield* pShield = (Shield*)FindObject("Shield");
 	//入力処理
 	Direction currentDirection = GetDirectionFromInput();
 	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
@@ -203,16 +203,10 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 	if (pTarget->GetObjectName() == "ReversalBall")
 	{
-		RedWall* pRedWall = (RedWall*)FindObject("RedWall");
 		ReversalBall* pReversalBall = (ReversalBall*)FindObject("ReversalBall");
 		Direction reversalDirection = pReversalBall->GetReveralDirectionFromInput();
 		transform_.rotate_.y = pReversalBall->GetRotationFromReveralDirection(reversalDirection);
 		//壁の向きと位置も反転させる
-		if (pRedWall)
-		{
-			pRedWall->SetDirection(reversalDirection);
-			pRedWall->SetPosition(pReversalBall->GetPositionFromReveralDirection(reversalDirection));
-		}
 	}
 	if (pTarget->GetObjectName() == "Bomb")
 	{

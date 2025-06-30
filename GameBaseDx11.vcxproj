@@ -170,7 +170,7 @@
     <ClCompile Include="ReversalBall.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="NeedleBall.cpp" />
-    <ClCompile Include="RedWall.cpp" />
+    <ClCompile Include="Shield.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="TitleScene.cpp" />
@@ -209,7 +209,7 @@
     <ClInclude Include="ReversalBall.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="NeedleBall.h" />
-    <ClInclude Include="RedWall.h" />
+    <ClInclude Include="Shield.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="TitleScene.h" />

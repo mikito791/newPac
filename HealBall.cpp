@@ -1,7 +1,6 @@
 #include "HealBall.h"
 #include "Engine/Model.h"
 #include"Player.h"
-#include"RedWall.h"
 #include <cstdlib> // for rand()
 #include<ctime>
 #include<cmath>
@@ -74,7 +73,7 @@ void HealBall::Release()
 
 void HealBall::OnCollision(GameObject* pTarget)
 {
-	if (pTarget->GetObjectName() == "RedWall")
+	if (pTarget->GetObjectName() == "Shield")
 	{
 		this->KillMe(); // •Ç‚ÉÕ“Ë‚µ‚½‚ç©•ª‚ğíœ
 	}

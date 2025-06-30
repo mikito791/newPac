@@ -2,14 +2,14 @@
 #include "Engine/GameObject.h"
 #include "Engine/Global.h"
 #include"Engine/CsvReader.h"
-class RedWall :
+class Shield :
     public GameObject
 {
-	int hRedWall;
+	int hShield;
 	CsvReader csv;
 public:
-	RedWall(GameObject* parent);
-	~RedWall();
+	Shield(GameObject* parent);
+	~Shield();
 
 	void Initialize() override;
 

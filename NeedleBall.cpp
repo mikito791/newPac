@@ -1,7 +1,7 @@
 #include "NeedleBall.h"
 #include"Engine/Model.h"
 #include"Player.h"
-#include"RedWall.h"
+
 #include <cstdlib> // for rand()
 #include<ctime>
 #include<cmath>
@@ -102,7 +102,7 @@ float NeedleBall::CalculateDistanceWall(const XMFLOAT3& EnemyPos, const XMFLOAT3
 void NeedleBall::OnCollision(GameObject* pTarget)
 {
 	// ï«Ç∆ÇÃè’ìÀîªíË
-	if (pTarget->GetObjectName() == "RedWall")
+	if (pTarget->GetObjectName() == "Shield")
 	{
 		moveDirection.x = -moveDirection.x; // ï«Ç…è’ìÀÇµÇΩÇÁîΩì]
 		moveDirection.z = -moveDirection.z; // ï«Ç…è’ìÀÇµÇΩÇÁîΩì]

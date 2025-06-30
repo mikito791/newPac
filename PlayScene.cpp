@@ -1,6 +1,6 @@
 #include "PlayScene.h"
 #include"Player.h"
-#include"RedWall.h"
+#include"Shield.h"
 #include"NeedleBall.h"
 #include"Hp.h"
 #include"HealBall.h"
@@ -65,7 +65,7 @@ void PlayScene::Initialize()
 	csv.Load("CSV/variable.csv"); // CSVファイルの読み込み
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	Instantiate<Player>(this);
-	Instantiate<RedWall>(this);
+	Instantiate<Shield>(this);
 	Instantiate<Stage>(this);
 	Instantiate<Hp>(this);
 	Update_CannonEnemy();

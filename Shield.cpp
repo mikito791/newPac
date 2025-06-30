@@ -1,4 +1,4 @@
-#include "RedWall.h"
+#include "Shield.h"
 #include"Engine/Model.h"
 #include"Engine/SphereCollider.h"
 #include"Engine/Input.h"
@@ -10,20 +10,20 @@ namespace
 	XMFLOAT3 Front(4, 0, 3);
 }
 
-RedWall::RedWall(GameObject* parent): 
-	GameObject(parent, "RedWall"),hRedWall(-1)
+Shield::Shield(GameObject* parent): 
+	GameObject(parent, "Shield"),hShield(-1)
 {
 	
 }
 
-RedWall::~RedWall()
+Shield::~Shield()
 {
 }
 
-void RedWall::Initialize()
+void Shield::Initialize()
 {
-	hRedWall = Model::Load("Model/Shield.fbx");
-	assert(hRedWall >= 0);
+	hShield = Model::Load("Model/Shield.fbx");
+	assert(hShield >= 0);
 	
 	SphereCollider* collision = new SphereCollider(transform_.position_, 0.01f);
 	AddCollider(collision);
@@ -31,7 +31,7 @@ void RedWall::Initialize()
 	csv.Load("CSV/variable.csv");
 }
 
-void RedWall::Update()
+void Shield::Update()
 {
 	//ì¸óÕèàóù
 	Direction currentDirection = GetDirectionFromInput();
@@ -39,17 +39,17 @@ void RedWall::Update()
 	transform_.position_ = GetPositionFromDirection(currentDirection); // à íuÇçXêV
 }
 
-void RedWall::Draw()
+void Shield::Draw()
 {
-	Model::SetTransform(hRedWall, transform_);
-	Model::Draw(hRedWall);
+	Model::SetTransform(hShield, transform_);
+	Model::Draw(hShield);
 }
 
-void RedWall::Release()
+void Shield::Release()
 {
 }
 
-Direction RedWall::GetDirectionFromInput()
+Direction Shield::GetDirectionFromInput()
 {
 	static Direction lastDirection;
 
@@ -61,7 +61,7 @@ Direction RedWall::GetDirectionFromInput()
 	return lastDirection;
 }
 
-int RedWall::GetRotationFromDirection(Direction dir)
+int Shield::GetRotationFromDirection(Direction dir)
 {
 	int Left, Right, Front, Back;
 	switch (dir)
@@ -83,7 +83,7 @@ int RedWall::GetRotationFromDirection(Direction dir)
 	}
 }
 
-XMFLOAT3 RedWall::GetPositionFromDirection(Direction dir)
+XMFLOAT3 Shield::GetPositionFromDirection(Direction dir)
 {
 	switch (dir)
 	{

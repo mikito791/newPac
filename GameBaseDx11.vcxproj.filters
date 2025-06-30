@@ -122,7 +122,7 @@
     <ClCompile Include="Player.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="RedWall.cpp">
+    <ClCompile Include="Shield.cpp">
       <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="HealBall.cpp">
@@ -235,7 +235,7 @@
     <ClInclude Include="Player.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="RedWall.h">
+    <ClInclude Include="Shield.h">
       <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="HealBall.h">
