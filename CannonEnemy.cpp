@@ -47,6 +47,7 @@ void CannonEnemy::OnCollision(GameObject* pTarget)
 		pTarget->KillMe(); // Needle‚É“–‚½‚Á‚½‚ç©•ª‚ğíœ
 		if (EnemyHP <= 0)
 		{
+			EnemyHP = 0; // HP‚ª0–¢–‚É‚È‚ç‚È‚¢‚æ‚¤‚É§ŒÀ
 			this->KillMe(); // HP‚ª0ˆÈ‰º‚É‚È‚Á‚½‚ç©•ª‚ğíœ
 		}
 	}

@@ -69,6 +69,7 @@ void PlayScene::Initialize()
 	Instantiate<Stage>(this);
 	Instantiate<Hp>(this);
 	Update_CannonEnemy();
+	//Instantiate<CannonEnemy>(this);
 	//speed = csv.GetValue(1, 1); // speed‚Ì‰Šú’l‚ğCSV‚©‚çæ“¾
 }
 
@@ -266,12 +267,12 @@ void PlayScene::Update_CannonEnemy()
 	XMFLOAT3 positions[] = { EnemyLeft, EnemyRight, EnemyBack, EnemyFront };
 	XMFLOAT3 rotations[] = { rotLeft, rotRight, rotBack, rotFront };
 
-	for (int i = 0; i < maxEnemyCount; ++i)
-	{
+	//for (int i = 0; i < maxEnemyCount; ++i)
+	//{
 		CannonEnemy* enemy = Instantiate<CannonEnemy>(this);
-		enemy->SetPos(positions[i]);
-		enemy->SetRot(rotations[i]);
-	}
+		enemy->SetPos(positions[0]);
+		enemy->SetRot(rotations[0]);
+	//}
 }
 
 float PlayScene::GetDeltaTime()
