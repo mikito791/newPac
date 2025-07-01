@@ -75,7 +75,7 @@ void ReversalBall::Release()
 
 void ReversalBall::OnCollision(GameObject* pTarget)
 {
-	if (pTarget->GetObjectName() == "RedWall")
+	if (pTarget->GetObjectName() == "Shield")
 	{
 		this->KillMe(); // •Ç‚ÉÕ“Ë‚µ‚½‚ç©•ª‚ğíœ
 	}
