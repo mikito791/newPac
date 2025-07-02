@@ -4,6 +4,7 @@
 #include <cstdlib> // for rand()
 #include<ctime>
 #include<cmath>
+#include"Player.h"
 
 
 ReversalBall::ReversalBall(GameObject* parent)
@@ -81,6 +82,11 @@ void ReversalBall::OnCollision(GameObject* pTarget)
 	}
 	if (pTarget->GetObjectName() == "Player")
 	{
+		Player* pPlayer = dynamic_cast<Player*>(pTarget); // 型安全にキャスト
+		if (pPlayer)
+		{
+			pPlayer->StartReversal(); // 反転処理を開始する関数
+		}
 		this->KillMe();
 	}
 }

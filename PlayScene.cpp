@@ -71,6 +71,7 @@ void PlayScene::Initialize()
 	Update_CannonEnemy();
 	//Instantiate<CannonEnemy>(this);
 	//speed = csv.GetValue(1, 1); // speedの初期値をCSVから取得
+	Update_SpawnReversalBall();
 }
 
 //更新
@@ -103,18 +104,18 @@ void PlayScene::Update()
 
 		SpawnTimer = 0.0f; // タイマーをリセット
 		
-		if (rand() % 2 == 0) // 50%の確率で味方をスポーン
-		{
-			Update_SpawnBomb(); //爆弾のスポーン処理
-			Update_SpawnHeal(); // 味方のスポーン処理
-		}
-		else
-		{
-			Update_SpawnNeedle();// 棘ボールのスポーン処理
-			Update_SpawnGhost(); // ゴーストのスポーン処理
-		}
-
-
+		//if (rand() % 2 == 0) // 50%の確率で味方をスポーン
+		//{
+		//	Update_SpawnBomb(); //爆弾のスポーン処理
+		//	Update_SpawnHeal(); // 味方のスポーン処理
+		//}
+		//else
+		//{
+		//	Update_SpawnNeedle();// 棘ボールのスポーン処理
+		//	Update_SpawnGhost(); // ゴーストのスポーン処理
+		//}
+		
+		
 	}
 	if (FindObject("CannonEnemy") == nullptr)
 	{
@@ -220,6 +221,37 @@ void PlayScene::Update_SpawnBomb()
 		bomb = Instantiate<Bomb>(this);
 		bomb->SetPos(Front);
 		bomb->SetMove(XMFLOAT3(0, 0, speed));
+		break;
+	default:
+		break;
+	}
+}
+
+void PlayScene::Update_SpawnReversalBall()
+{
+	int ReversalBallRandom = rand() % 4; // 0～3 のランダム値
+	ReversalBall* rBall = nullptr; // ReversalBallのポインタ
+	switch (ReversalBallRandom)
+	{
+	case 0: // 左から
+		rBall = Instantiate<ReversalBall>(this);
+		rBall->SetPos(Left);
+		rBall->SetMove(XMFLOAT3(speed, 0, 0));
+		break;
+	case 1: // 右から
+		rBall = Instantiate<ReversalBall>(this);
+		rBall->SetPos(Right);
+		rBall->SetMove(XMFLOAT3(-speed, 0, 0));
+		break;
+	case 2: // 奥から
+		rBall = Instantiate<ReversalBall>(this);
+		rBall->SetPos(Back);
+		rBall->SetMove(XMFLOAT3(0, 0, -speed));
+		break;
+	case 3: // 手前から
+		rBall = Instantiate<ReversalBall>(this);
+		rBall->SetPos(Front);
+		rBall->SetMove(XMFLOAT3(0, 0, speed));
 		break;
 	default:
 		break;

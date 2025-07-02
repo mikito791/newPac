@@ -53,10 +53,24 @@ Direction Shield::GetDirectionFromInput()
 {
 	static Direction lastDirection;
 
-	if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = LEFT;
-	if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D)) lastDirection = RIGHT;
-	if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W)) lastDirection = FRONT;
-	if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = BACK;
+	if (!pPlayer) return lastDirection; // セーフガード
+
+	bool isReversed = pPlayer->IsOnReversal();
+
+	if (!isReversed) 
+	{
+		if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = LEFT;
+		if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D)) lastDirection = RIGHT;
+		if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W)) lastDirection = FRONT;
+		if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = BACK;
+	}
+	else 
+	{
+		if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = RIGHT;
+		if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D)) lastDirection = LEFT;
+		if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W)) lastDirection = BACK;
+		if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = FRONT;
+	}
 
 	return lastDirection;
 }
@@ -85,6 +99,8 @@ int Shield::GetRotationFromDirection(Direction dir)
 
 XMFLOAT3 Shield::GetPositionFromDirection(Direction dir)
 {
+	//csvで位置を取得できるようにする
+	float x, y, z;
 	switch (dir)
 	{
 	case LEFT:

@@ -15,9 +15,8 @@ class Player :
 	float HP; // 現在のHP
 	float MaxHP; // 最大HP
 	CsvReader csv;
-	int hDmageSound; // ダメージ音のハンドル
-	int hHealSound; // 回復音のハンドル
-	int hBombSound; // 爆弾音のハンドル
+	bool onReversal;
+	float reversalTimer;
 public:
 	Player(GameObject* parent);
 	~Player();
@@ -32,6 +31,12 @@ public:
 	XMFLOAT3 GetPos() const { return transform_.position_; }
 	float CalculateDistance(const XMFLOAT3& PlayPos, const XMFLOAT3& Pos);
 	void OnCollision(GameObject* pTarget) override;
+	void StartReversal()
+	{
+		onReversal = true;
+		reversalTimer = 0.0f;
+	}
+	bool IsOnReversal()const { return onReversal; }
 private:
 	Direction GetDirectionFromInput();
 	int GetRotationFromDirection(Direction dir);
@@ -40,5 +45,6 @@ private:
 	void HpUp(int pt);
 	void Jump();
 	void Invincible();
+	
 };
 

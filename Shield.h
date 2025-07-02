@@ -2,11 +2,13 @@
 #include "Engine/GameObject.h"
 #include "Engine/Global.h"
 #include"Engine/CsvReader.h"
+#include"Player.h"
 class Shield :
     public GameObject
 {
 	int hShield;
 	CsvReader csv;
+	Player* pPlayer; // プレイヤーオブジェクトへのポインタ
 public:
 	Shield(GameObject* parent);
 	~Shield();
@@ -21,6 +23,7 @@ public:
 	void SetPosition(XMFLOAT3 pos) { transform_.position_ = pos; }
 	void SetDirection(Direction dir) { transform_.rotate_.y = GetRotationFromDirection(dir); }
 	XMFLOAT3 GetPos() const { return transform_.position_; }
+	void SetPlayer(Player* player) { pPlayer = player; } // プレイヤーオブジェクトを設定
 private:
 	Direction GetDirectionFromInput();
 	int GetRotationFromDirection(Direction dir);

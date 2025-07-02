@@ -32,7 +32,7 @@ private:
 	void Update_SpawnNeedle();
 	void Update_SpawnHeal();
 	void Update_SpawnBomb();
-	//void Update_SpawnReversalBall();
+	void Update_SpawnReversalBall();
 	void Update_SpawnGhost();
 	void Update_CannonEnemy();
 	float GetDeltaTime();
