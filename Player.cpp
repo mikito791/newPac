@@ -147,14 +147,11 @@ void Player::Update()
 	//‘€ì”½“]
 	if (onReversal)
 	{
-		if (onReversal)
+		reversalTimer += deltaTime;
+		if (reversalTimer >= reversalDuration)
 		{
-			reversalTimer += deltaTime;
-			if (reversalTimer >= reversalDuration)
-			{
-				onReversal = false;
-				reversalTimer = 0.0f;
-			}
+			onReversal = false;
+			reversalTimer = 0.0f;
 		}
 	}
 
@@ -204,7 +201,7 @@ void Player::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "NeedleBall")
 	{
-		HpDown(0.2);
+		HpDown(0.5);
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // ‰Šú‰»‚µ‚Ä‚·‚®“_–ÅŠJn
