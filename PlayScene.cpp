@@ -71,7 +71,7 @@ void PlayScene::Initialize()
 	Update_CannonEnemy();
 	//Instantiate<CannonEnemy>(this);
 	//speed = csv.GetValue(1, 1); // speed‚Ì‰Šú’l‚ğCSV‚©‚çæ“¾
-	//Update_SpawnReversalBall();
+	Update_SpawnReversalBall();
 }
 
 //XV

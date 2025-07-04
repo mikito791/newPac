@@ -38,7 +38,7 @@ public:
 	}
 	bool IsOnReversal()const { return onReversal; }
 private:
-	Direction GetDirectionFromInput();
+	Direction GetDirectionFromInput() const;
 	int GetRotationFromDirection(Direction dir);
 	void HpDown(float hp);
 	float GetDeltaTime();

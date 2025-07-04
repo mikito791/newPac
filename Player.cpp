@@ -217,7 +217,15 @@ void Player::OnCollision(GameObject* pTarget)
 		ReversalBall* pReversalBall = (ReversalBall*)FindObject("ReversalBall");
 		Direction reversalDirection = pReversalBall->GetReveralDirectionFromInput();
 		transform_.rotate_.y = pReversalBall->GetRotationFromReveralDirection(reversalDirection);
-		//•Ç‚ÌŒü‚«‚ÆˆÊ’u‚à”½“]‚³‚¹‚é
+		//Shield‚Ì•ûŒüEˆÊ’u‚ð”½“]
+		Shield* pShield = (Shield*)FindObject("Shield");
+		if (pShield)
+		{
+			// ”½“]•ûŒü‚É‘Î‰ž‚µ‚½Šp“x‚ÆˆÊ’u‚ðƒZƒbƒg
+			int rot = pReversalBall->GetRotationFromReveralDirection(reversalDirection);
+			XMFLOAT3 pos = pReversalBall->GetPositionFromReveralDirection(reversalDirection);
+			pShield->SetTransform(pos, rot);
+		}
 		onReversal = true;
 		reversalTimer = 0.0f;
 		
@@ -238,7 +246,7 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 }
 
-Direction Player::GetDirectionFromInput()
+Direction Player::GetDirectionFromInput() const
 {
 	static Direction lastDirection;
 

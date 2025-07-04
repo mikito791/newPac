@@ -24,6 +24,11 @@ public:
 	void SetDirection(Direction dir) { transform_.rotate_.y = GetRotationFromDirection(dir); }
 	XMFLOAT3 GetPos() const { return transform_.position_; }
 	void SetPlayer(Player* player) { pPlayer = player; } // プレイヤーオブジェクトを設定
+	void SetTransform(const XMFLOAT3& pos, int rotY)
+	{
+		transform_.position_ = pos;
+		transform_.rotate_.y = rotY;
+	}
 private:
 	Direction GetDirectionFromInput();
 	int GetRotationFromDirection(Direction dir);

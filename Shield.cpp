@@ -120,7 +120,7 @@ XMFLOAT3 Shield::GetPositionFromDirection(Direction dir)
 		break;
 	default:
 		break;
-	}
+	} 
 }
 
 
