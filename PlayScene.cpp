@@ -62,7 +62,7 @@ PlayScene::PlayScene(GameObject* parent)
 void PlayScene::Initialize()
 {
 	//hPlayScene = Image::Load("Model//playScene.png");
-	csv.Load("CSV/variable.csv"); // CSVファイルの読み込み
+	//csv.Load("CSV/Player.csv"); // CSVファイルの読み込み
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	Instantiate<Player>(this);
 	Instantiate<Shield>(this);
@@ -231,7 +231,8 @@ void PlayScene::Update_SpawnReversalBall()
 {
 	int ReversalBallRandom = rand() % 4; // 0～3 のランダム値
 	ReversalBall* rBall = nullptr; // ReversalBallのポインタ
-	switch (ReversalBallRandom)
+	//switch (ReversalBallRandom)//本当はこっち
+	switch(3)//debug用
 	{
 	case 0: // 左から
 		rBall = Instantiate<ReversalBall>(this);

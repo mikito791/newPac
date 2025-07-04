@@ -2,13 +2,7 @@
 #include"Engine/Model.h"
 #include"Engine/SphereCollider.h"
 #include"Engine/Input.h"
-namespace
-{
-	XMFLOAT3 Left(3, 0, 2);
-	XMFLOAT3 Right(5, 0, 2);
-	XMFLOAT3 Back(4, 0, 1);
-	XMFLOAT3 Front(4, 0, 3);
-}
+
 
 Shield::Shield(GameObject* parent): 
 	GameObject(parent, "Shield"),hShield(-1)
@@ -28,7 +22,7 @@ void Shield::Initialize()
 	SphereCollider* collision = new SphereCollider(transform_.position_, 0.01f);
 	AddCollider(collision);
 	
-	csv.Load("CSV/variable.csv");
+	csv.Load("CSV/Player.csv");
 }
 
 void Shield::Update()
@@ -82,15 +76,19 @@ int Shield::GetRotationFromDirection(Direction dir)
 	{
 	case LEFT:
 		return Left = csv.GetValue(1, 0);
+		//return 270; // ç∂å¸Ç´
 		break;
 	case RIGHT:
 		return Right = csv.GetValue(2, 0);
+		//return 90; // âEå¸Ç´
 		break;
 	case FRONT:
 		return Front = csv.GetValue(3, 0);
+		//return 0; // ëOå¸Ç´
 		break;
 	case BACK:
 		return Back = csv.GetValue(4, 0);
+		//return 180;  //å„ÇÎå¸Ç´
 		break;
 	default:
 		break;
@@ -110,13 +108,22 @@ XMFLOAT3 Shield::GetPositionFromDirection(Direction dir)
 		return XMFLOAT3(x, y, z);
 		break;
 	case RIGHT:
-		return Right;
+		x = csv.GetValue(4, 1);
+		y = csv.GetValue(2, 1);
+		z = csv.GetValue(3, 1);
+		return XMFLOAT3(x, y, z);
 		break;
 	case FRONT:
-		return Front;
+		x = csv.GetValue(1, 2);
+		y = csv.GetValue(2, 2);
+		z = csv.GetValue(3, 2);
+		return XMFLOAT3(x, y, z);
 		break;
 	case BACK:
-		return Back;
+		x = csv.GetValue(1, 2);
+		y = csv.GetValue(2, 2);
+		z = csv.GetValue(4, 2);
+		return XMFLOAT3(x, y, z);
 		break;
 	default:
 		break;

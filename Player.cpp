@@ -53,7 +53,7 @@ void Player::Initialize()
 	//コライダー
 	SphereCollider* collider = new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f);
 	AddCollider(collider);
-	csv.Load("CSV/variable.csv");
+	csv.Load("CSV/Player.csv");
 	onReversal = false;
 	reversalTimer = 0.0f; // 反転タイマーの初期化
 	Shield* pShield = (Shield*)FindObject("Shield");
@@ -213,8 +213,9 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 	if (pTarget->GetObjectName() == "ReversalBall")
 	{
+		//1:ReversalBallに当たったら操作を反転させる
 		pTarget->KillMe(); // ReversalBallに当たったら自分を削除
-		ReversalBall* pReversalBall = (ReversalBall*)FindObject("ReversalBall");
+		ReversalBall* pReversalBall = dynamic_cast<ReversalBall*>(pTarget);
 		Direction reversalDirection = pReversalBall->GetReveralDirectionFromInput();
 		transform_.rotate_.y = pReversalBall->GetRotationFromReveralDirection(reversalDirection);
 		//Shieldの方向・位置を反転
