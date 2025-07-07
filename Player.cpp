@@ -223,6 +223,9 @@ void Player::OnCollision(GameObject* pTarget)
 		if (pShield)
 		{
 			// 反転方向に対応した角度と位置をセット
+			int rot = pReversalBall->GetRotationFromReveralDirection(reversalDirection);
+			XMFLOAT3 pos = pReversalBall->GetPositionFromReveralDirection(reversalDirection);
+			pShield->SetTransform(pos, rot); // 盾に反映
 		}
 		onReversal = true;
 		reversalTimer = 0.0f;

@@ -62,7 +62,7 @@ PlayScene::PlayScene(GameObject* parent)
 void PlayScene::Initialize()
 {
 	//hPlayScene = Image::Load("Model//playScene.png");
-	//csv.Load("CSV/Player.csv"); // CSVファイルの読み込み
+	csv.Load("CSV/Enemy.csv"); // CSVファイルの読み込み
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	Instantiate<Player>(this);
 	Instantiate<Shield>(this);
@@ -261,12 +261,16 @@ void PlayScene::Update_SpawnReversalBall()
 
 void PlayScene::Update_SpawnGhost()
 {
+	float PosX, PosY, PosZ,RotX,RotY,RotZ;
+	XMFLOAT3 Left, Right, Back, Front;
+	// CSVから位置と回転を取得
 	float GhostSpeed = 0.02f; // Ghostの移動速度
 	Ghost* ghost = nullptr; // Ghostのポインタ
 	int GhostRandom = rand() % 4; // 0～3 のランダム値
 	switch (GhostRandom)
 	{
 	case 0: // 左から
+		
 		ghost = Instantiate<Ghost>(this);
 		ghost->SetPos(Left);
 		ghost->SetMove(XMFLOAT3(GhostSpeed, 0, 0));
