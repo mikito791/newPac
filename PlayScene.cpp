@@ -69,7 +69,6 @@ void PlayScene::Initialize()
 	Instantiate<Stage>(this);
 	Instantiate<Hp>(this);
 	Update_CannonEnemy();
-	Update_SpawnReversalBall();
 }
 
 //更新
@@ -232,8 +231,7 @@ void PlayScene::Update_SpawnReversalBall()
 {
 	int ReversalBallRandom = rand() % 4; // 0～3 のランダム値
 	ReversalBall* rBall = nullptr; // ReversalBallのポインタ
-	//switch (ReversalBallRandom)//本当はこっち
-	switch(3)//debug用
+	switch (ReversalBallRandom)
 	{
 	case 0: // 左から
 		rBall = Instantiate<ReversalBall>(this);

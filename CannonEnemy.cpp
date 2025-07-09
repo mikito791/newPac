@@ -27,6 +27,7 @@ void CannonEnemy::Initialize()
 
 void CannonEnemy::Update()
 {
+
 }
 
 void CannonEnemy::Draw()
