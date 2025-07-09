@@ -4,6 +4,9 @@ class TitleScene :
     public GameObject
 {
 	int hTitle;
+	int alpha;
+	int hBackground;
+	bool isFadeOut; // フェードアウト状態を管理するフラグ
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

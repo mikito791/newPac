@@ -17,6 +17,8 @@ class Player :
 	CsvReader csv;
 	bool onReversal;
 	float reversalTimer;
+	int hHealSound;
+	int hDamageSound;
 public:
 	Player(GameObject* parent);
 	~Player();

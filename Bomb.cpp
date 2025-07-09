@@ -4,7 +4,7 @@
 #include <cstdlib> // for rand()
 #include<ctime>
 #include<cmath>
-
+#include"Engine/Audio.h"
 
 Bomb::Bomb(GameObject* parent)
 	:GameObject(parent, "Bomb")
@@ -13,6 +13,7 @@ Bomb::Bomb(GameObject* parent)
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // —”‰Šú‰»i–ˆ‰ñˆá‚¤Œ‹‰Ê‚É‚·‚éj
 	speed = 0.05f; // ˆÚ“®‘¬“x
 	distance = 0.001f; // Õ“Ë”»’è‚Ì‹——£
+	hBombSound = -1;
 }
 
 Bomb::~Bomb()
@@ -23,6 +24,8 @@ void Bomb::Initialize()
 {
 	hBomb = Model::Load("Model/Bomb.fbx");
 	assert(hBomb >= 0);
+	hBombSound = Audio::Load("Sound/Bomb.wav"); // ”š’e‰¹‚Ì“Ç‚İ‚İ
+	assert(hBombSound >= 0);
 	num = rand() % 4; // 0`3 ‚Ìƒ‰ƒ“ƒ_ƒ€’l
 	switch (num)
 	{
@@ -76,9 +79,11 @@ void Bomb::OnCollision(GameObject* pTarget)
 	if (pTarget->GetObjectName() == "Shield")
 	{
 		this->KillMe(); // •Ç‚ÉÕ“Ë‚µ‚½‚ç©•ª‚ğíœ
+		Audio::Play(hBombSound); // ”š’e‰¹‚ğÄ¶
 	}
 	if (pTarget->GetObjectName() == "Player")
 	{
 		this->KillMe();
+		Audio::Play(hBombSound); // ”š’e‰¹‚ğÄ¶
 	}
 }

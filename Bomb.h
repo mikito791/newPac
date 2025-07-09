@@ -9,6 +9,7 @@ class Bomb :
 	int num;
 	float speed; // ˆÚ“®‘¬“x
 	float distance; // Õ“Ë”»’è‚Ì‹——£
+	int hBombSound;
 public:
     Bomb(GameObject* parent);
     ~Bomb();

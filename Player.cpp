@@ -37,6 +37,8 @@ Player::Player(GameObject* parent)
 	prevSpaceKey = false;
 	HP = 50; // 初期HP
 	MaxHP = 50;
+	hHealSound = -1; // ヒール音のハンドル
+	hDamageSound = -1; // ダメージ音のハンドル
 }
 
 Player::~Player()
@@ -47,6 +49,11 @@ void Player::Initialize()
 {
 	hPlayer = Model::Load("Model/Player.fbx");
 	assert(hPlayer >= 0);
+	hHealSound = Audio::Load("Sound/Heal.wav"); // ヒール音の読み込み
+	assert(hHealSound >= 0);
+	
+	hDamageSound = Audio::Load("Sound/Damage.wav"); // ダメージ音の読み込み
+	assert(hDamageSound >= 0);
 	//transform_.position_.y = 10;
 	transform_.position_ = XMFLOAT3(4, 0, 2);
 	transform_.rotate_ = XMFLOAT3(0, 0, 0);
@@ -197,6 +204,7 @@ void Player::OnCollision(GameObject* pTarget)
 	if (pTarget->GetObjectName() == "NeedleBall")
 	{
 		HpDown(0.5);
+		Audio::Play(hDamageSound); // ダメージ音を再生
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
@@ -205,6 +213,7 @@ void Player::OnCollision(GameObject* pTarget)
 	{
 		HpUp(5);
 		pTarget->KillMe();
+		Audio::Play(hHealSound); // ヒール音を再生
 	}
 	if (pTarget->GetObjectName() == "ReversalBall")
 	{
@@ -213,8 +222,7 @@ void Player::OnCollision(GameObject* pTarget)
 		ReversalBall* pReversalBall = dynamic_cast<ReversalBall*>(pTarget);
 		Direction reversalDirection = pReversalBall->GetReveralDirectionFromInput();
 		transform_.rotate_.y = pReversalBall->GetRotationFromReveralDirection(reversalDirection);
-		//Shieldの方向・位置を反転
-		
+		//Shieldに反転を通知
 		Shield* pShield = (Shield*)FindObject("Shield");
 		if (pShield)
 		{
