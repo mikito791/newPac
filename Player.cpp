@@ -33,7 +33,7 @@ namespace
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player")
 {
-	hModel = -1;
+	hPlayer = -1;
 	prevSpaceKey = false;
 	HP = 50; // 初期HP
 	MaxHP = 50;
@@ -45,8 +45,8 @@ Player::~Player()
 
 void Player::Initialize()
 {
-	hModel = Model::Load("Model/Player.fbx");
-	assert(hModel >= 0);
+	hPlayer = Model::Load("Model/Player.fbx");
+	assert(hPlayer >= 0);
 	//transform_.position_.y = 10;
 	transform_.position_ = XMFLOAT3(4, 0, 2);
 	transform_.rotate_ = XMFLOAT3(0, 0, 0);
@@ -172,8 +172,8 @@ void Player::Update()
 void Player::Draw()
 {
 	if (!isVisible) return; // 非表示状態なら描画スキップ
-	Model::SetTransform(hModel, transform_);
-	Model::Draw(hModel);
+	Model::SetTransform(hPlayer, transform_);
+	Model::Draw(hPlayer);
 }
 
 void Player::Release()

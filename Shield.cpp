@@ -58,7 +58,7 @@ void Shield::Release()
 {
 }
 
-Direction Shield::GetDirectionFromInput()
+Direction Shield::GetDirectionFromInput()const
 {
 	static Direction lastDirection;
 

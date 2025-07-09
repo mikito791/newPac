@@ -11,7 +11,7 @@ class Shield :
 {
 	int hShield;
 	CsvReader csv;
-	Player* pPlayer=nullptr; // プレイヤーオブジェクトへのポインタ
+	Player* pPlayer; // プレイヤーオブジェクトへのポインタ
 	bool onReversal;
 	float reversalTimer;
 	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
@@ -41,7 +41,7 @@ public:
 		reversalTimer = 0.0f;
 	}
 private:
-	Direction GetDirectionFromInput();
+	Direction GetDirectionFromInput() const;
 	int GetRotationFromDirection(Direction dir);
 	XMFLOAT3 GetPositionFromDirection(Direction dir);
 	float GetDeltaTime();
