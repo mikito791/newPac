@@ -3,12 +3,18 @@
 #include "Engine/Global.h"
 #include"Engine/CsvReader.h"
 #include"Player.h"
+#include <chrono>
+
+class Player; // 前方宣言
 class Shield :
     public GameObject
 {
 	int hShield;
 	CsvReader csv;
-	Player* pPlayer; // プレイヤーオブジェクトへのポインタ
+	Player* pPlayer=nullptr; // プレイヤーオブジェクトへのポインタ
+	bool onReversal;
+	float reversalTimer;
+	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
 public:
 	Shield(GameObject* parent);
 	~Shield();
@@ -29,9 +35,15 @@ public:
 		transform_.position_ = pos;
 		transform_.rotate_.y = rotY;
 	}
+	void StartReversal()
+	{
+		onReversal = true;
+		reversalTimer = 0.0f;
+	}
 private:
 	Direction GetDirectionFromInput();
 	int GetRotationFromDirection(Direction dir);
 	XMFLOAT3 GetPositionFromDirection(Direction dir);
+	float GetDeltaTime();
 };
 

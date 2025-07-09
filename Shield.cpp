@@ -4,6 +4,11 @@
 #include"Engine/Input.h"
 
 
+namespace
+{
+	// 反転の持続時間（秒）
+	const float reversalDuration = 5.0f;
+}
 Shield::Shield(GameObject* parent): 
 	GameObject(parent, "Shield"),hShield(-1)
 {
@@ -27,10 +32,20 @@ void Shield::Initialize()
 
 void Shield::Update()
 {
+	float deltaTime = GetDeltaTime();
 	//入力処理
 	Direction currentDirection = GetDirectionFromInput();
 	transform_.rotate_.y = GetRotationFromDirection(currentDirection); // 向きを更新
 	transform_.position_ = GetPositionFromDirection(currentDirection); // 位置を更新
+	if (onReversal)
+	{
+		reversalTimer += deltaTime;
+		if (reversalTimer >= reversalDuration)
+		{
+			onReversal = false;
+			reversalTimer = 0.0f;
+		}
+	}
 }
 
 void Shield::Draw()
@@ -47,24 +62,20 @@ Direction Shield::GetDirectionFromInput()
 {
 	static Direction lastDirection;
 
-	//if (!pPlayer) return lastDirection; // セーフガード
-
-	//bool isReversed = pPlayer->IsOnReversal();
-
-	//if (!isReversed) 
-	//{
+	if (!onReversal)
+	{
 		if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = LEFT;
 		if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D)) lastDirection = RIGHT;
 		if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W)) lastDirection = FRONT;
 		if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = BACK;
-	//}
-	//else 
-	//{
-		//if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = RIGHT;
-		//if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D)) lastDirection = LEFT;
-		//if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W)) lastDirection = BACK;
-		//if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = FRONT;
-	//}
+	}
+	else 
+	{
+		if (Input::IsKeyDown(DIK_LEFT) || Input::IsKeyDown(DIK_A)) lastDirection = RIGHT;
+		if (Input::IsKeyDown(DIK_RIGHT) || Input::IsKeyDown(DIK_D)) lastDirection = LEFT;
+		if (Input::IsKeyDown(DIK_UP) || Input::IsKeyDown(DIK_W)) lastDirection = BACK;
+		if (Input::IsKeyDown(DIK_DOWN) || Input::IsKeyDown(DIK_S)) lastDirection = FRONT;
+	}
 
 	return lastDirection;
 }
@@ -128,6 +139,14 @@ XMFLOAT3 Shield::GetPositionFromDirection(Direction dir)
 	default:
 		break;
 	} 
+}
+
+float Shield::GetDeltaTime()
+{
+	auto currentTime = std::chrono::steady_clock::now();
+	std::chrono::duration<float> deltaTime = currentTime - lastUpdateTime;
+	lastUpdateTime = currentTime;
+	return deltaTime.count();
 }
 
 

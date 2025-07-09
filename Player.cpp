@@ -66,15 +66,10 @@ void Player::Initialize()
 void Player::Update()
 {
 	float deltaTime = GetDeltaTime(); // ƒfƒ‹ƒ^ƒ^ƒCƒ€‚ðŽæ“¾
-	// ReversalBall‚É“–‚½‚Á‚½‚ç‘€ì‚ð”½“]‚³‚¹‚é
-
 	
 	//“ü—Íˆ—
 	Direction currentDirection = GetDirectionFromInput();
 	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
-
-	//•Ç‚ÌŒü‚«‚ÆˆÊ’u‚à”½“]‚³‚¹‚é
-	
 
 	//ƒJƒƒ‰
 	XMFLOAT3 camPos = transform_.position_;
@@ -219,13 +214,11 @@ void Player::OnCollision(GameObject* pTarget)
 		Direction reversalDirection = pReversalBall->GetReveralDirectionFromInput();
 		transform_.rotate_.y = pReversalBall->GetRotationFromReveralDirection(reversalDirection);
 		//Shield‚Ì•ûŒüEˆÊ’u‚ð”½“]
+		
 		Shield* pShield = (Shield*)FindObject("Shield");
 		if (pShield)
 		{
-			// ”½“]•ûŒü‚É‘Î‰ž‚µ‚½Šp“x‚ÆˆÊ’u‚ðƒZƒbƒg
-			int rot = pReversalBall->GetRotationFromReveralDirection(reversalDirection);
-			XMFLOAT3 pos = pReversalBall->GetPositionFromReveralDirection(reversalDirection);
-			pShield->SetTransform(pos, rot); // ‚‚É”½‰f
+			pShield->StartReversal();
 		}
 		onReversal = true;
 		reversalTimer = 0.0f;

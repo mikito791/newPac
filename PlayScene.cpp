@@ -69,8 +69,6 @@ void PlayScene::Initialize()
 	Instantiate<Stage>(this);
 	Instantiate<Hp>(this);
 	Update_CannonEnemy();
-	//Instantiate<CannonEnemy>(this);
-	//speed = csv.GetValue(1, 1); // speedの初期値をCSVから取得
 	Update_SpawnReversalBall();
 }
 
@@ -261,9 +259,6 @@ void PlayScene::Update_SpawnReversalBall()
 
 void PlayScene::Update_SpawnGhost()
 {
-	float PosX, PosY, PosZ,RotX,RotY,RotZ;
-	XMFLOAT3 Left, Right, Back, Front;
-	// CSVから位置と回転を取得
 	float GhostSpeed = 0.02f; // Ghostの移動速度
 	Ghost* ghost = nullptr; // Ghostのポインタ
 	int GhostRandom = rand() % 4; // 0～3 のランダム値
