@@ -101,20 +101,20 @@ void PlayScene::Update()
 
 		SpawnTimer = 0.0f; // タイマーをリセット
 		
-		//if (rand() % 2 == 0) // 50%の確率で味方をスポーン
-		//{
-		//	Update_SpawnBomb(); //爆弾のスポーン処理
-		//	Update_SpawnHeal(); // 味方のスポーン処理
-		//}
-		//else
-		//{
-		//	Update_SpawnNeedle();// 棘ボールのスポーン処理
-		//	Update_SpawnGhost(); // ゴーストのスポーン処理
-		//}
-		//if (rand() % 5 == 0) // 1/5の確率で反転ボールをスポーン
-		//{
-		//	Update_SpawnReversalBall(); // 反転ボールのスポーン処理
-		//}
+		if (rand() % 2 == 0) // 50%の確率で味方をスポーン
+		{
+			Update_SpawnBomb(); //爆弾のスポーン処理
+			Update_SpawnHeal(); // 味方のスポーン処理
+		}
+		else
+		{
+			Update_SpawnNeedle();// 棘ボールのスポーン処理
+			Update_SpawnGhost(); // ゴーストのスポーン処理
+		}
+		if (rand() % 5 == 0) // 1/5の確率で反転ボールをスポーン
+		{
+			Update_SpawnReversalBall(); // 反転ボールのスポーン処理
+		}
 		
 	}
 	if (FindObject("CannonEnemy") == nullptr)
