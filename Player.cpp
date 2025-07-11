@@ -63,11 +63,6 @@ void Player::Initialize()
 	csv.Load("CSV/Player.csv");
 	onReversal = false;
 	reversalTimer = 0.0f; // 反転タイマーの初期化
-	Shield* pShield = (Shield*)FindObject("Shield");
-	if (pShield)
-	{
-		pShield->SetPlayer(this); // プレイヤーオブジェクトを設定
-	}
 }
 
 void Player::Update()
@@ -242,6 +237,7 @@ void Player::OnCollision(GameObject* pTarget)
 	if (pTarget->GetObjectName() == "Ghost")
 	{
 		HpDown(0.05);
+		Audio::Play(hDamageSound); // ダメージ音を再生
 		isInvincible = true;
 		invincibilityTimer = invincibilityTime;
 		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
@@ -363,4 +359,9 @@ void Player::Invincible()
 	{
 		isVisible = true; // 無敵でなければ常に表示
 	}
+}
+
+void Player::Blink()
+{
+
 }

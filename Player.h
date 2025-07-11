@@ -38,15 +38,14 @@ public:
 		onReversal = true;
 		reversalTimer = 0.0f;
 	}
-	bool IsOnReversal()const { return onReversal; }
 private:
 	Direction GetDirectionFromInput() const;
 	int GetRotationFromDirection(Direction dir);
 	void HpDown(float hp);
 	float GetDeltaTime();
-	void HpUp(int pt);
+	void HpUp(int hp);
 	void Jump();
 	void Invincible();
-	
+	void Blink();
 };
 
