@@ -300,12 +300,17 @@ void PlayScene::Update_CannonEnemy()
 	XMFLOAT3 positions[] = { EnemyLeft, EnemyBack,EnemyFront,EnemyRight};
 	XMFLOAT3 rotations[] = { rotLeft, rotBack,rotFront,rotRight, };
 
+	std::vector<CannonEnemy*> enemies;
+
 	for (int i = 0; i < maxEnemyCount; ++i)
 	{
 		CannonEnemy* enemy = Instantiate<CannonEnemy>(this);
 		enemy->SetPos(positions[i]);
 		enemy->SetRot(rotations[i]);
+		enemies.push_back(enemy);
 	}
+	int randomIndex = rand() % maxEnemyCount;
+	int attackType = rand() % 2; // 0: ¶‰EUŒ‚, 1: ‘OŒãUŒ‚
 }
 
 float PlayScene::GetDeltaTime()
