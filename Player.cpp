@@ -360,8 +360,3 @@ void Player::Invincible()
 		isVisible = true; // –³“G‚Å‚È‚¯‚ê‚Îí‚É•\¦
 	}
 }
-
-void Player::Blink()
-{
-
-}

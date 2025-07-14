@@ -46,6 +46,5 @@ private:
 	void HpUp(int hp);
 	void Jump();
 	void Invincible();
-	void Blink();
 };
 
