@@ -9,7 +9,6 @@
 #include"Engine/Image.h"
 #include"Stage.h"
 #include"ReversalBall.h"
-#include"CannonEnemy.h"
 #include"Ghost.h"
 #include"Engine/SceneManager.h"
 
@@ -55,7 +54,6 @@ PlayScene::PlayScene(GameObject* parent)
 	spawnInterval = 30.0f; // 初期のスポーン間隔を30秒に設定
 	timeElapsed = 0.0f; // 経過時間の初期化
 	frameCount = 0; // フレームカウントの初期化
-	
 }
 
 //初期化
@@ -300,7 +298,7 @@ void PlayScene::Update_CannonEnemy()
 	XMFLOAT3 positions[] = { EnemyLeft, EnemyBack,EnemyFront,EnemyRight};
 	XMFLOAT3 rotations[] = { rotLeft, rotBack,rotFront,rotRight, };
 
-	std::vector<CannonEnemy*> enemies;
+	enemies.clear(); // 既存の敵をクリア
 
 	for (int i = 0; i < maxEnemyCount; ++i)
 	{
@@ -309,8 +307,6 @@ void PlayScene::Update_CannonEnemy()
 		enemy->SetRot(rotations[i]);
 		enemies.push_back(enemy);
 	}
-	int randomIndex = rand() % maxEnemyCount;
-	int attackType = rand() % 2; // 0: 左右攻撃, 1: 前後攻撃
 }
 
 float PlayScene::GetDeltaTime()

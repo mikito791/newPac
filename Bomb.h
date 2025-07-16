@@ -6,9 +6,6 @@ class Bomb :
 {
     int hBomb;
 	XMFLOAT3 moveDirection;
-	int num;
-	float speed; // à⁄ìÆë¨ìx
-	float distance; // è’ìÀîªíËÇÃãóó£
 	int hBombSound;
 public:
     Bomb(GameObject* parent);
@@ -21,8 +18,8 @@ public:
 	void Draw() override;
 
 	void Release() override;
-	void SetPos(XMFLOAT3 pos) { transform_.position_ = pos; }
-	void SetMove(XMFLOAT3 move) { moveDirection = move; }
+	void SetPos(const XMFLOAT3& pos) { transform_.position_ = pos; }
+	void SetMove(const XMFLOAT3& move) { moveDirection = move; }
 	XMFLOAT3 GetPos() { return transform_.position_; }
 	void OnCollision(GameObject* pTarget) override;
 };

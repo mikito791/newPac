@@ -5,7 +5,6 @@ class NeedleBall :
 {
     int hNeedleBall;
 	XMFLOAT3 moveDirection;
-	int num;
 	float speed; // ˆÚ“®‘¬“x
 	float distance; // Õ“Ë”»’è‚Ì‹——£
 	int DirState;

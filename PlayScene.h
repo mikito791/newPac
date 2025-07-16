@@ -2,6 +2,8 @@
 #include "Engine/GameObject.h"
 #include <chrono>
 #include"Engine/CsvReader.h"
+#include <vector>
+#include "CannonEnemy.h"
 
 //プレイシーンを管理するクラス
 class PlayScene : public GameObject
@@ -12,6 +14,7 @@ class PlayScene : public GameObject
 	float spawnInterval; // スポーン間隔（秒）
 	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
 	CsvReader csv; 
+	std::vector<CannonEnemy*> enemies;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
