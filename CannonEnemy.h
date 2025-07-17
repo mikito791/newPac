@@ -12,6 +12,8 @@ class CannonEnemy :
 	int hCannonEnemy; // モデルハンドル
 	int EnemyHP; // 敵のHP
 	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
+	float attackTimer; // 攻撃タイマー
+	float attackInterval; // 攻撃間隔（秒）
 public:
 	CannonEnemy(GameObject* parent);
 	~CannonEnemy();
@@ -33,5 +35,6 @@ private:
 	void FireReversalBall();
 	void FireHealBall();
 	float GetDeltaTime();
+	XMFLOAT3 GetRot() { return transform_.rotate_; }
 };
 

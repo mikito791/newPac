@@ -1,16 +1,23 @@
-#include "CannonEnemy.h"
+ï»¿#include "CannonEnemy.h"
 #include "Engine/Model.h"
 #include "Engine/SphereCollider.h"
 #include "Engine/Debug.h"
 #include "Engine/SceneManager.h"
-#include"NeedleBall.h"
-#include"Bomb.h"
+
+namespace
+{
+	XMFLOAT3 Left(-2, 0, 2);
+	XMFLOAT3 Right(10, 0, 2);
+	XMFLOAT3 Back(4, 0, 6);
+	XMFLOAT3 Front(4, 0, -1.5);
+}
 
 CannonEnemy::CannonEnemy(GameObject* parent)
 	: GameObject(parent, "CannonEnemy")
 {
-	hCannonEnemy = -1; // ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚Ì‰Šú‰»
-	EnemyHP = 3; // “G‚ÌHP‚Ì‰Šú’lİ’è
+	hCannonEnemy = -1; // ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã®åˆæœŸåŒ–
+	EnemyHP = 3; // æ•µã®HPã®åˆæœŸå€¤è¨­å®š
+	attackInterval = 4.0f + static_cast<float>(rand() % 2000) / 1000.0f; // 4ã€œ6ç§’
 }
 
 CannonEnemy::~CannonEnemy()
@@ -27,7 +34,19 @@ void CannonEnemy::Initialize()
 
 void CannonEnemy::Update()
 {
+	float deltaTime = GetDeltaTime(); // PlaySceneã¨ã‹å…±é€šã§ä½œã£ãŸdeltaTime
+	attackTimer += deltaTime;
 
+	if (attackTimer >= attackInterval)
+	{
+		attackTimer = 0.0f;
+		attackInterval = 4.0f + static_cast<float>(rand() % 2000) / 1000.0f;
+
+		//int attackType = rand() % 2; // 0: Bomb, 1: NeedleBall
+		//if (attackType == 0)
+		FireBomb();
+			
+	}
 }
 
 void CannonEnemy::Draw()
@@ -44,17 +63,66 @@ void CannonEnemy::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "NeedleBall")
 	{
-		HpDown(1); // Needle‚É“–‚½‚Á‚½‚çHP‚ğ1Œ¸‚ç‚·
-		pTarget->KillMe(); // Needle‚É“–‚½‚Á‚½‚ç©•ª‚ğíœ
+		HpDown(1); // Needleã«å½“ãŸã£ãŸã‚‰HPã‚’1æ¸›ã‚‰ã™
+		pTarget->KillMe(); // Needleã«å½“ãŸã£ãŸã‚‰è‡ªåˆ†ã‚’å‰Šé™¤
 		if (EnemyHP <= 0)
 		{
-			EnemyHP = 0; // HP‚ª0–¢–‚É‚È‚ç‚È‚¢‚æ‚¤‚É§ŒÀ
-			this->KillMe(); // HP‚ª0ˆÈ‰º‚É‚È‚Á‚½‚ç©•ª‚ğíœ
+			EnemyHP = 0; // HPãŒ0æœªæº€ã«ãªã‚‰ãªã„ã‚ˆã†ã«åˆ¶é™
+			this->KillMe(); // HPãŒ0ä»¥ä¸‹ã«ãªã£ãŸã‚‰è‡ªåˆ†ã‚’å‰Šé™¤
 		}
 	}
 }
 
 void CannonEnemy::HpDown(int hp)
 {
-	EnemyHP -= hp; // HP‚ğŒ¸‚ç‚·
+	EnemyHP -= hp; // HPã‚’æ¸›ã‚‰ã™
+}
+
+void CannonEnemy::FireBomb()
+{
+	Bomb* bomb = Instantiate<Bomb>(this);
+	
+
+	float speed = 0.05f;
+	float yRot = this->GetRot().y;
+	if (yRot == 90.0f)//å·¦
+	{
+		bomb->SetPos(Left);
+		bomb->SetMove(XMFLOAT3(0, 0, speed));
+	}
+	else if (yRot == 270.0f)//å³
+	{
+		bomb->SetPos(Right);
+		bomb->SetMove(XMFLOAT3(0, 0, -speed));
+	}
+	else if (yRot == 0.0f)//æ‰‹å‰
+	{
+		bomb->SetPos(Front);
+		bomb->SetMove(XMFLOAT3(speed, 0, 0));
+	}
+	else if (yRot == 180.0f)//å¥¥
+	{
+		bomb->SetPos(Back);
+		bomb->SetMove(XMFLOAT3(-speed, 0, 0));
+	}
+}
+
+void CannonEnemy::FireNeedle()
+{
+}
+
+void CannonEnemy::FireReversalBall()
+{
+}
+
+void CannonEnemy::FireHealBall()
+{
+}
+
+float CannonEnemy::GetDeltaTime()
+{
+	auto currentTime = std::chrono::steady_clock::now();
+	std::chrono::duration<float> deltaTime = currentTime - lastUpdateTime;
+	lastUpdateTime = currentTime;
+	return deltaTime.count();
 }
