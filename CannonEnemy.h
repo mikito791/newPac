@@ -22,19 +22,10 @@ public:
 	void Draw() override;
 	void Release() override;
 	void OnCollision(GameObject* pTarget) override;
-	XMFLOAT3 GetPos() const { return transform_.position_; }
 	void SetPos(XMFLOAT3 pos) { transform_.position_ = pos; }
 	void SetRot(XMFLOAT3 rot) { transform_.rotate_ = rot; }
-	void HpDown(int hp);
 private:
-	float AttackTimer = 0.0f; // çUåÇÉ^ÉCÉ}Å[
-	float AttackInterval = 5.0f; // çUåÇä‘äuÅiïbÅj
-
-	void FireBomb();
-	void FireNeedle();
-	void FireReversalBall();
-	void FireHealBall();
 	float GetDeltaTime();
-	XMFLOAT3 GetRot() { return transform_.rotate_; }
+	void HpDown(int hp);
 };
 
