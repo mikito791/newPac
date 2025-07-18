@@ -22,6 +22,8 @@ public:
 	void SetMove(const XMFLOAT3& move) { moveDirection = move; }
 	XMFLOAT3 GetPos() { return transform_.position_; }
 	void OnCollision(GameObject* pTarget) override;
+private:
+	void BombEffect();
 };
 
 
