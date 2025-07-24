@@ -11,6 +11,7 @@
 #include"ReversalBall.h"
 #include"Ghost.h"
 #include"Engine/SceneManager.h"
+#include"Engine/Audio.h"
 
 namespace
 {
@@ -54,6 +55,7 @@ PlayScene::PlayScene(GameObject* parent)
 	spawnInterval = 30.0f; // 初期のスポーン間隔を30秒に設定
 	timeElapsed = 0.0f; // 経過時間の初期化
 	frameCount = 0; // フレームカウントの初期化
+	hBGM = -1; // BGMのハンドル初期化
 }
 
 //初期化
@@ -61,6 +63,8 @@ void PlayScene::Initialize()
 {
 	//hPlayScene = Image::Load("Model//playScene.png");
 	csv.Load("CSV/Enemy.csv"); // CSVファイルの読み込み
+	hBGM = Audio::Load("Sound/StageBGM.wav"); // BGMの読み込み
+	assert(hBGM >= 0);
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	Instantiate<Player>(this);
 	Instantiate<Shield>(this);
@@ -119,6 +123,7 @@ void PlayScene::Update()
 		SceneManager* pSM = (SceneManager*)(FindObject("SceneManager"));
 		pSM->ChangeScene(SCENE_ID::SCENE_ID_GAMECLEAR);
 	}
+	Audio::Play(hBGM); // BGMを再生
 }
 
 //描画

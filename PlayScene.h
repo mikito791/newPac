@@ -15,6 +15,7 @@ class PlayScene : public GameObject
 	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
 	CsvReader csv; 
 	std::vector<CannonEnemy*> enemies;
+	int hBGM;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
