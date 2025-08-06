@@ -6,8 +6,9 @@ class Player :
     public GameObject
 {
 	int hPlayer;
-	bool isInvincible; // 無敵状態かどうか
-	float invincibilityTimer; // 無敵時間のカウント
+	int hConfusion;//混乱エフェクトのモデル
+	Transform ConTrans;// 混乱エフェクトのTransform
+	bool IsConfusion; // 混乱状態かどうか
 	std::chrono::steady_clock::time_point lastUpdateTime; // 最後の更新時間
 	bool prevSpaceKey;// 前回のスペースキーの状態
 	float jumpPower; // ジャンプの力

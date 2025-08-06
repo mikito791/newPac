@@ -49,9 +49,10 @@ void Player::Initialize()
 {
 	hPlayer = Model::Load("Model/Player.fbx");
 	assert(hPlayer >= 0);
+	hConfusion = Model::Load("Model/Confusion.fbx"); // 混乱エフェクトのモデル読み込み
+	assert(hConfusion >= 0);
 	hHealSound = Audio::Load("Sound/Heal.wav"); // ヒール音の読み込み
 	assert(hHealSound >= 0);
-	
 	hDamageSound = Audio::Load("Sound/Damage.wav"); // ダメージ音の読み込み
 	assert(hDamageSound >= 0);
 	//transform_.position_.y = 10;
@@ -149,33 +150,25 @@ void Player::Update()
 		{
 			onReversal = false;
 			reversalTimer = 0.0f;
+			IsConfusion = false; // 反転が終了したら混乱状態を解除
 		}
 	}
 
-	//Debug::Log(transform_.position_.y,"\n"); 
-	//if (Input::IsKey(DIK_K))
-	//{
-	//	transform_.position_.x += 0.1f; // Jキーで上昇
-	//}
-	//if (Input::IsKey(DIK_L))
-	//{
-	//	transform_.position_.x -= 0.1f; // Kキーで下降
-	//}
-	//if (Input::IsKey(DIK_I))
-	//{
-	//	transform_.position_.z += 0.1f; // Jキーで上昇
-	//}
-	//if (Input::IsKey(DIK_O))
-	//{
-	//	transform_.position_.z -= 0.1f; // Kキーで下降
-	//}
+	//混乱エフェクト処理
+	ConTrans.position_ = transform_.position_;
+	ConTrans.rotate_.y += 3; // プレイヤーの向きに合わせる
+
 }
 
 void Player::Draw()
-{
+{	
 	if (!isVisible) return; // 非表示状態なら描画スキップ
 	Model::SetTransform(hPlayer, transform_);
 	Model::Draw(hPlayer);
+
+	if (!IsConfusion)return;
+	Model::SetTransform(hConfusion, ConTrans);
+	Model::Draw(hConfusion); // 混乱エフェクトの描画
 }
 
 void Player::Release()
@@ -225,7 +218,7 @@ void Player::OnCollision(GameObject* pTarget)
 		}
 		onReversal = true;
 		reversalTimer = 0.0f;
-		
+		IsConfusion = true; // 混乱状態にする
 	}
 	if (pTarget->GetObjectName() == "Bomb")
 	{
