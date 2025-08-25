@@ -8,6 +8,7 @@ class NeedleBall :
 	float speed; // ˆÚ“®‘¬“x
 	float distance; // Õ“Ë”»’è‚Ì‹——£
 	int DirState;
+	int hDamageSound;
 public:
 	
 	NeedleBall(GameObject* parent);

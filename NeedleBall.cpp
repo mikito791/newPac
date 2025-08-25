@@ -9,6 +9,7 @@
 #include"Engine/SceneManager.h"
 #include"Engine/SphereCollider.h"
 #include"Engine/Input.h"
+#include"Engine/Audio.h"
 
 NeedleBall::NeedleBall(GameObject* parent)
 	: GameObject(parent, "NeedleBall")
@@ -16,6 +17,7 @@ NeedleBall::NeedleBall(GameObject* parent)
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	speed = 0.05f; // 移動速度
 	distance = 0.001f; // 衝突判定の距離
+	hDamageSound = -1; // ダメージ音のハンドル
 }
 
 NeedleBall::~NeedleBall()
@@ -27,6 +29,9 @@ void NeedleBall::Initialize()
 {
 	hNeedleBall = Model::Load("Model//Needle.fbx");
 	assert(hNeedleBall >= 0);
+
+	hDamageSound = Audio::Load("Sound/Damage.wav"); // ダメージ音の読み込み
+	assert(hDamageSound >= 0);
 	
 	SphereCollider* collider = new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f);
 	AddCollider(collider);
@@ -85,5 +90,13 @@ void NeedleBall::OnCollision(GameObject* pTarget)
 	{
 		moveDirection.x = -moveDirection.x; // 壁に衝突したら反転
 		moveDirection.z = -moveDirection.z; // 壁に衝突したら反転
+	}
+	if (pTarget->GetObjectName() == "Player")
+	{
+		Audio::Play(hDamageSound); // ダメージ音を再生
+	}
+	if (pTarget->GetObjectName() == "CannonEnemy")
+	{
+		Audio::Play(hDamageSound); // ダメージ音を再生
 	}
 }

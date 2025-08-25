@@ -17,11 +17,13 @@
 
 namespace
 {
-	float invincibilityTime = 2.0f;
-	bool isInvincible = false;
-	float invincibilityTimer = 0.0f;
-	float blinkTimer = 0.0f;
-	bool isVisible = true;
+	bool isBlinking = false;         // ダメージ演出中（点滅中）かどうか
+	float blinkDuration = 1.0f;      // 点滅全体の長さ（1秒など）
+	float blinkTimer = 0.0f;         // 残り点滅時間
+	float blinkInterval = 0.1f;      // 点滅のON/OFFの間隔
+	float blinkToggleTimer = 0.0f;   // 次に切り替えるまでの時間
+
+	bool isVisible = true;           // 現在表示されているか
 	Direction Front = FRONT;
 	float JumpHeight = 50.0f; // ジャンプの高さ
 	float Gravity = 3.0f / 60.0f; // 重力の強さ
@@ -173,6 +175,16 @@ void Player::Draw()
 
 void Player::Release()
 {
+	if (hPlayer >= 0)
+	{
+		Model::Release(hPlayer);
+		hPlayer = -1;
+	}
+	if (hConfusion >= 0)
+	{
+		Model::Release(hConfusion); // 混乱エフェクトのモデルを解放
+		hConfusion = -1;
+	}
 }
 
 float Player::CalculateDistance(const XMFLOAT3& PlayPos, const XMFLOAT3& Pos)
@@ -192,10 +204,11 @@ void Player::OnCollision(GameObject* pTarget)
 	if (pTarget->GetObjectName() == "NeedleBall")
 	{
 		HpDown(0.5);
-		Audio::Play(hDamageSound); // ダメージ音を再生
-		isInvincible = true;
-		invincibilityTimer = invincibilityTime;
-		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
+		// 点滅開始
+		isBlinking = true;
+		blinkTimer = blinkDuration;
+		blinkToggleTimer = 0.0f;
+		isVisible = false;               // 最初は非表示から始める
 	}
 	if (pTarget->GetObjectName() == "HealBall")
 	{
@@ -223,17 +236,21 @@ void Player::OnCollision(GameObject* pTarget)
 	if (pTarget->GetObjectName() == "Bomb")
 	{
 		HpDown(10);
-		isInvincible = true;
-		invincibilityTimer = invincibilityTime;
-		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
+		// 点滅開始
+		isBlinking = true;
+		blinkTimer = blinkDuration;
+		blinkToggleTimer = 0.0f;
+		isVisible = false;               // 最初は非表示から始める
 	}
 	if (pTarget->GetObjectName() == "Ghost")
 	{
 		HpDown(0.05);
 		Audio::Play(hDamageSound); // ダメージ音を再生
-		isInvincible = true;
-		invincibilityTimer = invincibilityTime;
-		blinkTimer = 0.0f; // 初期化してすぐ点滅開始
+		// 点滅開始
+		isBlinking = true;
+		blinkTimer = blinkDuration;
+		blinkToggleTimer = 0.0f;
+		isVisible = false;               // 最初は非表示から始める
 	}
 }
 
@@ -329,27 +346,23 @@ void Player::Jump()
 
 void Player::Invincible()
 {
-	//無敵処理
-	if (isInvincible)
+	if (isBlinking)
 	{
-		invincibilityTimer -= GetDeltaTime();
 		blinkTimer -= GetDeltaTime();
+		blinkToggleTimer -= GetDeltaTime();
 
-		// 点滅制御：0.1秒ごとに表示・非表示を切り替える
-		if (blinkTimer <= 0.0f)
+		// 点滅切り替え
+		if (blinkToggleTimer <= 0.0f)
 		{
 			isVisible = !isVisible;
-			blinkTimer = 0.1f; // 点滅間隔
+			blinkToggleTimer = blinkInterval;
 		}
 
-		if (invincibilityTimer <= 0.0f)
+		// 点滅終了
+		if (blinkTimer <= 0.0f)
 		{
-			isInvincible = false;
-			isVisible = true; // 最終的に表示に戻す
+			isBlinking = false;
+			isVisible = true;  // 最後に表示で終了
 		}
-	}
-	else
-	{
-		isVisible = true; // 無敵でなければ常に表示
 	}
 }
