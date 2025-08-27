@@ -3,6 +3,7 @@
 #include"Engine/Input.h"
 #include"Engine/SceneManager.h"
 
+
 TitleScene::TitleScene(GameObject* parent):
 	GameObject(parent,"Title")
 {
@@ -18,7 +19,7 @@ TitleScene::~TitleScene()
 
 void TitleScene::Initialize()
 {
-	hTitle = Image::Load("Model//Title.png");
+	hTitle = Image::Load("Model//Title2.png");
 	assert(hTitle >= 0); // 画像の読み込みが成功したか確認
 	hBackground = Image::Load("Model//Background.png");
 	assert(hBackground >= 0); // 背景画像の読み込みが成功したか確認
