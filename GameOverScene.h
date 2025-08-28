@@ -4,6 +4,7 @@ class GameOverScene :
     public GameObject
 {
 	int hGameOver;
+	int hBackground;
 public:
 	GameOverScene(GameObject* parent);
 

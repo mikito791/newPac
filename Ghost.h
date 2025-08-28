@@ -5,9 +5,6 @@ class Ghost :
 {
 	int hGhost;
 	XMFLOAT3 moveDirection;
-	float speed; // ˆÚ“®‘¬“x
-	int num;
-	float distance; // Õ“Ë”»’è‚Ì‹——£
 public:
 	Ghost(GameObject* parent);
 	~Ghost();

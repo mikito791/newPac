@@ -33,7 +33,7 @@ namespace
 	int frameCount = 0;           // フレームカウント用
 	const int framesPerBoost = 300; // 何フレームごとに速度を上げるか（例：300フレーム = 5秒間60fps前提）
 	//敵
-	const int maxEnemyCount = 3; // 最大敵数（例：4体まで出現可能）今は3右の敵が体力無限状態になってる
+	const int maxEnemyCount = 1; // 最大敵数（例：4体まで出現可能）今は3右の敵が体力無限状態になってる
 	XMFLOAT3 EnemyLeft(-2.5, 0, 2);
 	XMFLOAT3 EnemyRight(10.5, 0, 2);
 	XMFLOAT3 EnemyBack(4, 0, 7);

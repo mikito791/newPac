@@ -4,6 +4,7 @@ class GameClearScene :
     public GameObject
 {
 	int hGameClear;
+	int hBackground;
 public:
 	GameClearScene(GameObject* parent);
 	~GameClearScene();
