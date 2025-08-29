@@ -134,6 +134,12 @@ void PlayScene::Draw()
 //ŠJ•ú
 void PlayScene::Release()
 {
+	if (hPlayScene >= 0)
+	{
+		Image::Release(hPlayScene);
+		hPlayScene = -1;
+	}
+	
 }
 
 void PlayScene::Update_SpawnNeedle()

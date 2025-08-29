@@ -53,4 +53,14 @@ void TitleScene::Draw()
 
 void TitleScene::Release()
 {
+	if (hTitle >= 0)
+	{
+		Image::Release(hTitle);
+		hTitle = -1;
+	}
+	if (hBackground >= 0)
+	{
+		Image::Release(hBackground);
+		hBackground = -1;
+	}
 }

@@ -49,6 +49,11 @@ void Bomb::Draw()
 
 void Bomb::Release()
 {
+	if (hBomb >= 0)
+	{
+		Model::Release(hBomb);
+		hBomb = -1;
+	}
 }
 
 void Bomb::OnCollision(GameObject* pTarget)

@@ -22,6 +22,7 @@ Shield::~Shield()
 void Shield::Initialize()
 {
 	hShield = Model::Load("Model/Shield.fbx");
+	//hShield = Model::Load("Model/GoldShield.fbx");
 	assert(hShield >= 0);
 	
 	SphereCollider* collision = new SphereCollider(transform_.position_, 0.01f);
@@ -56,6 +57,11 @@ void Shield::Draw()
 
 void Shield::Release()
 {
+	if (hShield >= 0)
+	{
+		Model::Release(hShield);
+		hShield = -1;
+	}
 }
 
 Direction Shield::GetDirectionFromInput()const
