@@ -19,8 +19,8 @@ void GameClearScene::Initialize()
 	hGameClear = Image::Load("Model//GameClear.png");
 	assert(hGameClear >= 0);
 
-	hBackground = Image::Load("Model//Background.png");
-	assert(hBackground >= 0);
+	//hBackground = Image::Load("Model//Background.png");
+	//assert(hBackground >= 0);
 }
 
 void GameClearScene::Update()
@@ -34,7 +34,7 @@ void GameClearScene::Update()
 
 void GameClearScene::Draw()
 {
-	Image::Draw(hBackground);
+	//Image::Draw(hBackground);
 	Image::Draw(hGameClear);
 }
 
