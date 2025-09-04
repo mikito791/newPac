@@ -118,7 +118,8 @@ void Player::Update()
 	{
 		if (prevSpaceKey == false && onGround)
 		{
-			Jump();
+			jumpPower = sqrt(2.0f * JumpHeight * Gravity) * 0.5f; // ジャンプの初速を計算
+			onGround = false; // ジャンプ中は地面にいないとする
 		}
 		prevSpaceKey = true;
 	}
@@ -131,17 +132,17 @@ void Player::Update()
 	if (!onGround)
 	{
 		// 空中にいる場合は重力を適用
-		jumpPower += Gravity; // 重力を適用
-		if (jumpPower > MaxGravity) // 最大重力を超えないように制限
+		jumpPower -= Gravity; // ★ここを「減算」にする
+		if (jumpPower < -MaxGravity) // 最大落下速度を制限
 		{
-			jumpPower = MaxGravity;
+			jumpPower = -MaxGravity;
 		}
-		transform_.position_.y += jumpPower; // ジャンプの高さを更新
+		transform_.position_.y += jumpPower; // y位置更新
 	}
 	else
 	{
-		jumpPower = 0.0f; // 地面にいる場合はジャンプの力をリセット
-		onGround = true; // 地面にいる状態にする
+		jumpPower = 0.0f; // 接地したらリセット
+		onGround = true;
 	}
 
 	//操作反転

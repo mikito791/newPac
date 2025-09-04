@@ -57,11 +57,11 @@ void Shield::Draw()
 
 void Shield::Release()
 {
-	if (hShield >= 0)
+	/*if (hShield >= 0)
 	{
 		Model::Release(hShield);
 		hShield = -1;
-	}
+	}*/
 }
 
 Direction Shield::GetDirectionFromInput()const
