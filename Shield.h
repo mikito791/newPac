@@ -31,7 +31,7 @@ public:
 		transform_.position_ = pos;
 		transform_.rotate_.y = rotY;
 	}
-	void StartReversal()
+	void StartReversalShield()
 	{
 		onReversal = true;
 		reversalTimer = 0.0f;
@@ -42,4 +42,3 @@ private:
 	XMFLOAT3 GetPositionFromDirection(Direction dir);
 	float GetDeltaTime();
 };
-

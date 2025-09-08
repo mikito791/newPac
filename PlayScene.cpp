@@ -1,15 +1,16 @@
 #include "PlayScene.h"
 #include"Player.h"
 #include"Shield.h"
+#include"FlashLight.h"
 #include"NeedleBall.h"
 #include"Hp.h"
 #include"HealBall.h"
 #include"Bomb.h"
-#include"Engine/Debug.h"
-#include"Engine/Image.h"
 #include"Stage.h"
 #include"ReversalBall.h"
 #include"Ghost.h"
+#include"Engine/Debug.h"
+#include"Engine/Image.h"
 #include"Engine/SceneManager.h"
 #include"Engine/Audio.h"
 
@@ -67,6 +68,7 @@ void PlayScene::Initialize()
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // 乱数初期化（毎回違う結果にする）
 	Instantiate<Player>(this);
 	Instantiate<Shield>(this);
+	Instantiate<FlashLight>(this);
 	Instantiate<Stage>(this);
 	Instantiate<Hp>(this);
 	Update_CannonEnemy();
@@ -101,18 +103,18 @@ void PlayScene::Update()
 	{
 
 		SpawnTimer = 0.0f; // タイマーをリセット
-		
-		if (rand() % 2 == 0) // 50%の確率で味方をスポーン
-		{
-			Update_SpawnBomb(); //爆弾のスポーン処理
-			Update_SpawnHeal(); // 味方のスポーン処理
-		}
-		else
-		{
-			Update_SpawnNeedle();// 棘ボールのスポーン処理
-			Update_SpawnGhost(); // ゴーストのスポーン処理
-		}
-		if (rand() % 5 == 0) // 1/5の確率で反転ボールをスポーン
+		//
+		//if (rand() % 2 == 0) // 50%の確率で味方をスポーン
+		//{
+		//	Update_SpawnBomb(); //爆弾のスポーン処理
+		//	Update_SpawnHeal(); // 味方のスポーン処理
+		//}
+		//else
+		//{
+		//	Update_SpawnNeedle();// 棘ボールのスポーン処理
+		//	Update_SpawnGhost(); // ゴーストのスポーン処理
+		//}
+		if (rand() % 2 == 0) // 1/5の確率で反転ボールをスポーン
 		{
 			Update_SpawnReversalBall(); // 反転ボールのスポーン処理
 		}

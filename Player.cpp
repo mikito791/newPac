@@ -4,14 +4,16 @@
 #include"Engine/SphereCollider.h"
 #include"Engine/SceneManager.h"
 #include"Engine/Camera.h"
+#include"Engine/Audio.h"
+#include"Engine/Debug.h"
+
 #include"Shield.h"
 #include"NeedleBall.h"
 #include"Hp.h"
-#include"Engine/Debug.h"
+#include"FlashLight.h"
 #include"HealBall.h"
 #include"Stage.h"
 #include"ReversalBall.h"
-#include"Engine/Audio.h"
 
 
 
@@ -93,56 +95,17 @@ void Player::Update()
 	data.start = transform_.position_;   //レイの発射位置
 	data.dir = XMFLOAT3(0, -1, 0);       //レイの方向
 	Model::RayCast(hGroundModel, &data); //レイを発射
-	onGround = false;//空中がデフォルト
+	
 	//レイが当たったら
 	if (data.hit)
 	{
-		float correction = data.dist * correctionSpeed * deltaTime; // 補正値を計算
-		//その分位置を下げる
-		if (correction > data.dist)
-		{
-			correction = data.dist; // 補正値が距離を超えないように制限
-		}
-		transform_.position_.y -= correction;
-		onGround = true; // 地面にいる状態にする
-		jumpPower = 0.0f; // ジャンプ力をリセット
-
+		transform_.position_.y -= data.dist;
 	}
-	else
-	{
-		onGround = false; // 地面にいない状態にする
-	}
-
-	//ジャンプ作る
+	
 	if (Input::IsKeyDown(DIK_SPACE))
 	{
-		if (prevSpaceKey == false && onGround)
-		{
-			jumpPower = sqrt(2.0f * JumpHeight * Gravity) * 0.5f; // ジャンプの初速を計算
-			onGround = false; // ジャンプ中は地面にいないとする
-		}
-		prevSpaceKey = true;
-	}
-	else
-	{
-		prevSpaceKey = false; // スペースキーが離されたらフラグをリセット
+		//盾と懐中電灯を切り替える
 
-	}
-
-	if (!onGround)
-	{
-		// 空中にいる場合は重力を適用
-		jumpPower -= Gravity; // ★ここを「減算」にする
-		if (jumpPower < -MaxGravity) // 最大落下速度を制限
-		{
-			jumpPower = -MaxGravity;
-		}
-		transform_.position_.y += jumpPower; // y位置更新
-	}
-	else
-	{
-		jumpPower = 0.0f; // 接地したらリセット
-		onGround = true;
 	}
 
 	//操作反転
@@ -188,18 +151,6 @@ void Player::Release()
 	}
 }
 
-float Player::CalculateDistance(const XMFLOAT3& PlayPos, const XMFLOAT3& Pos)
-{
-	//2点間の距離を計算
-	float dx = PlayPos.x - Pos.x;
-	float dy = PlayPos.y - Pos.y;
-	float dz = PlayPos.z - Pos.z;
-
-	//距離を返す(計算)
-	float distance = sqrt(dx * dx + dy * dy + dz * dz);
-	return distance;
-}
-
 void Player::OnCollision(GameObject* pTarget)
 {
 	if (pTarget->GetObjectName() == "NeedleBall")
@@ -228,7 +179,12 @@ void Player::OnCollision(GameObject* pTarget)
 		Shield* pShield = (Shield*)FindObject("Shield");
 		if (pShield)
 		{
-			pShield->StartReversal();
+			pShield->StartReversalShield();
+		}
+		FlashLight* pFlashLight = (FlashLight*)FindObject("FlashLight");
+		if (pFlashLight)
+		{
+			pFlashLight->StartReversalLight();
 		}
 		onReversal = true;
 		reversalTimer = 0.0f;
@@ -337,12 +293,6 @@ float Player::GetDeltaTime()
 	std::chrono::duration<float> deltaTime = currentTime - lastUpdateTime;
 	lastUpdateTime = currentTime;
 	return deltaTime.count();
-}
-
-void Player::Jump()
-{
-	jumpPower = sqrt(2.0f * JumpHeight * Gravity); // ジャンプの初速を計算
-	onGround = false; // ジャンプ中は地面にいないとする
 }
 
 void Player::Invincible()
