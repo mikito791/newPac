@@ -167,6 +167,7 @@
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Hp.cpp" />
+    <ClCompile Include="FlashLight.cpp" />
     <ClCompile Include="ReversalBall.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="NeedleBall.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Hp.h" />
+    <ClInclude Include="FlashLight.h" />
     <ClInclude Include="ReversalBall.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="NeedleBall.h" />
