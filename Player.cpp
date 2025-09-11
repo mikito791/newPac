@@ -170,8 +170,8 @@ void Player::OnCollision(GameObject* pTarget)
 	}
 	if (pTarget->GetObjectName() == "ReversalBall")
 	{
-		//1:ReversalBallに当たったら操作を反転させる
 		pTarget->KillMe(); // ReversalBallに当たったら自分を削除
+		//playerの操作を反転
 		ReversalBall* pReversalBall = dynamic_cast<ReversalBall*>(pTarget);
 		Direction reversalDirection = pReversalBall->GetReveralDirectionFromInput();
 		transform_.rotate_.y = pReversalBall->GetRotationFromReveralDirection(reversalDirection);
@@ -181,14 +181,16 @@ void Player::OnCollision(GameObject* pTarget)
 		{
 			pShield->StartReversalShield();
 		}
+		//FlashLightに反転を通知
 		FlashLight* pFlashLight = (FlashLight*)FindObject("FlashLight");
 		if (pFlashLight)
 		{
 			pFlashLight->StartReversalLight();
 		}
+		//反転状態にする
 		onReversal = true;
 		reversalTimer = 0.0f;
-		IsConfusion = true; // 混乱状態にする
+		IsConfusion = true; // 混乱エフェクトON
 	}
 	if (pTarget->GetObjectName() == "Bomb")
 	{

@@ -3,6 +3,7 @@
 #include"Engine/SphereCollider.h"
 #include"Engine/Input.h"
 #include"Engine/CsvReader.h"
+#include"Engine/Debug.h"
 
 namespace
 {
@@ -10,7 +11,8 @@ namespace
 	const float reversalDuration = 5.0f;
 }
 
-FlashLight::FlashLight(GameObject* parent)
+FlashLight::FlashLight(GameObject* parent) 
+	:GameObject(parent, "FlashLight")
 {
 	hFlashLight = -1;
 }
@@ -21,10 +23,10 @@ FlashLight::~FlashLight()
 
 void FlashLight::Initialize()
 {
-	hFlashLight = Model::Load("Model/Light.fbx");
+	hFlashLight = Model::Load("Model/FlashLight.fbx");
 	assert(hFlashLight >= 0);
 
-	transform_.position_ = XMFLOAT3(4, 1, 2);
+	transform_.position_ = XMFLOAT3(4, 1.5, 2);
 	csv.Load("CSV/Player.csv");
 }
 
@@ -43,6 +45,10 @@ void FlashLight::Update()
 			onReversal = false;
 			reversalTimer = 0.0f;
 		}
+	}
+	if (Input::IsKeyDown(DIK_C))
+	{
+		//懐中電灯から光を出す（後でやる）
 	}
 }
 

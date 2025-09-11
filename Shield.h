@@ -8,6 +8,8 @@ class Shield :
     public GameObject
 {
 	int hShield;
+	int hGoldShield;//Ø‚è‘Ö‚¦ÀŒ±—p
+	bool isTate;
 	CsvReader csv;
 	bool onReversal;
 	float reversalTimer;

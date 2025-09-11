@@ -22,7 +22,7 @@ Shield::~Shield()
 void Shield::Initialize()
 {
 	hShield = Model::Load("Model/Shield.fbx");
-	//hShield = Model::Load("Model/GoldShield.fbx");
+	hGoldShield = Model::Load("Model/GoldShield.fbx");
 	assert(hShield >= 0);
 	
 	SphereCollider* collision = new SphereCollider(transform_.position_, 0.01f);
@@ -47,11 +47,23 @@ void Shield::Update()
 			reversalTimer = 0.0f;
 		}
 	}
+	if (Input::IsKeyDown(DIK_X))
+	{
+		isTate = false;
+	}
 }
 
 void Shield::Draw()
 {
-	Model::SetTransform(hShield, transform_);
+	if(isTate)
+	{
+		Model::SetTransform(hGoldShield, transform_);
+	}
+	else
+	{
+		Model::SetTransform(hShield, transform_);
+
+	}
 	Model::Draw(hShield);
 }
 
