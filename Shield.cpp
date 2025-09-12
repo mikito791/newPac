@@ -10,9 +10,10 @@ namespace
 	const float reversalDuration = 5.0f;
 }
 Shield::Shield(GameObject* parent): 
-	GameObject(parent, "Shield"),hShield(-1)
+	GameObject(parent, "Shield")
 {
-	
+	hShield = -1;
+	hGoldShield = -1;
 }
 
 Shield::~Shield()
@@ -49,22 +50,15 @@ void Shield::Update()
 	}
 	if (Input::IsKeyDown(DIK_X))
 	{
-		isTate = false;
+		isTate = !isTate;
 	}
 }
 
 void Shield::Draw()
 {
-	if(isTate)
-	{
-		Model::SetTransform(hGoldShield, transform_);
-	}
-	else
-	{
-		Model::SetTransform(hShield, transform_);
-
-	}
-	Model::Draw(hShield);
+	int hHandle = isTate ? hGoldShield : hShield;
+	Model::SetTransform(hHandle, transform_);
+	Model::Draw(hHandle);
 }
 
 void Shield::Release()

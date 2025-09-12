@@ -46,9 +46,12 @@ void FlashLight::Update()
 			reversalTimer = 0.0f;
 		}
 	}
-	if (Input::IsKeyDown(DIK_C))
+	if (Input::IsKey(DIK_C))
 	{
 		//懐中電灯から光を出す（後でやる）
+		//一定時間光るようにして、光る時間をゲージで管理
+		//10秒光る、30秒で満タン回復
+		//光る間はゲージが減り、光ってない間はゲージが回復
 	}
 }
 

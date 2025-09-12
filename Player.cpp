@@ -7,10 +7,8 @@
 #include"Engine/Audio.h"
 #include"Engine/Debug.h"
 
-#include"Shield.h"
 #include"NeedleBall.h"
 #include"Hp.h"
-#include"FlashLight.h"
 #include"HealBall.h"
 #include"Stage.h"
 #include"ReversalBall.h"
@@ -27,10 +25,6 @@ namespace
 
 	bool isVisible = true;           // 現在表示されているか
 	Direction Front = FRONT;
-	float JumpHeight = 50.0f; // ジャンプの高さ
-	float Gravity = 3.0f / 60.0f; // 重力の強さ
-	float MaxGravity = 6.0f; // 最大重力の強さ
-	float correctionSpeed = 5.0f; // 補正の速さ（調整可能）
 	const float reversalDuration = 5.0f; // 反転の持続時間（秒）
 }
 
@@ -38,7 +32,7 @@ Player::Player(GameObject* parent)
 	:GameObject(parent, "Player")
 {
 	hPlayer = -1;
-	prevSpaceKey = false;
+	prevSpaceKey = true;
 	HP = 50; // 初期HP
 	MaxHP = 50;
 	hHealSound = -1; // ヒール音のハンドル
@@ -68,6 +62,11 @@ void Player::Initialize()
 	csv.Load("CSV/Player.csv");
 	onReversal = false;
 	reversalTimer = 0.0f; // 反転タイマーの初期化
+	//
+	pFlashLight = new FlashLight(this);
+	pShield = new Shield(this);	
+	pFlashLight->Initialize();
+	pShield->Initialize();
 }
 
 void Player::Update()
@@ -77,6 +76,16 @@ void Player::Update()
 	//入力処理
 	Direction currentDirection = GetDirectionFromInput();
 	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
+	//盾の位置と向きを更新
+	ShieldTrans.position_ = GetPositionFromDirection(currentDirection);
+	ShieldPos = ShieldTrans.position_;
+	ShieldTrans.rotate_.y = GetRotationFromDirection(currentDirection);
+	ShieldRotY = ShieldTrans.rotate_.y;
+	//懐中電灯の位置と向きを更新
+	FlashLightTrans.position_ = GetPositionFromDirection(currentDirection);
+	FlashLightPos = FlashLightTrans.position_;
+	FlashLightTrans.rotate_.y = GetRotationFromDirection(currentDirection);
+	FlashLightRotY = FlashLightTrans.rotate_.y;
 
 	//カメラ
 	XMFLOAT3 camPos = transform_.position_;
@@ -105,9 +114,18 @@ void Player::Update()
 	if (Input::IsKeyDown(DIK_SPACE))
 	{
 		//盾と懐中電灯を切り替える
-
+		prevSpaceKey = !prevSpaceKey;
 	}
-
+	if (prevSpaceKey)
+	{
+		//pShield->SetTransform(ShieldPos, ShieldRotY);
+		pShield->Update();
+	}
+	else
+	{
+		//pFlashLight->SetTransform(FlashLightPos, FlashLightRotY);
+		pFlashLight->Update();
+	}
 	//操作反転
 	if (onReversal)
 	{
@@ -128,6 +146,16 @@ void Player::Update()
 
 void Player::Draw()
 {	
+	if (prevSpaceKey)
+	{
+		pShield->SetTransform(ShieldPos, ShieldRotY);
+		pShield->Draw();
+	}
+	else
+	{
+		pFlashLight->SetTransform(FlashLightPos, FlashLightRotY);
+		pFlashLight->Draw();
+	}
 	if (!isVisible) return; // 非表示状態なら描画スキップ
 	Model::SetTransform(hPlayer, transform_);
 	Model::Draw(hPlayer);
@@ -258,6 +286,41 @@ int Player::GetRotationFromDirection(Direction dir)
 	case BACK:
 		return Back = csv.GetValue(4, 0);
 		//return 180;
+		break;
+	default:
+		break;
+	}
+}
+
+XMFLOAT3 Player::GetPositionFromDirection(Direction dir)
+{
+	//csvで位置を取得できるようにする
+	float x, y, z;
+	switch (dir)
+	{
+	case LEFT:
+		x = csv.GetValue(1, 1);
+		y = csv.GetValue(2, 1);
+		z = csv.GetValue(3, 1);
+		return XMFLOAT3(x, y, z);
+		break;
+	case RIGHT:
+		x = csv.GetValue(4, 1);
+		y = csv.GetValue(2, 1);
+		z = csv.GetValue(3, 1);
+		return XMFLOAT3(x, y, z);
+		break;
+	case FRONT:
+		x = csv.GetValue(1, 2);
+		y = csv.GetValue(2, 2);
+		z = csv.GetValue(3, 2);
+		return XMFLOAT3(x, y, z);
+		break;
+	case BACK:
+		x = csv.GetValue(1, 2);
+		y = csv.GetValue(2, 2);
+		z = csv.GetValue(4, 2);
+		return XMFLOAT3(x, y, z);
 		break;
 	default:
 		break;

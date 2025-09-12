@@ -24,6 +24,11 @@ public:
 		onReversal = true;
 		reversalTimer = 0.0f;
 	}
+	void SetTransform(const XMFLOAT3& pos, int rotY)
+	{
+		transform_.position_ = pos;
+		transform_.rotate_.y = rotY;
+	}
 private:
 	float GetDeltaTime();
 	Direction GetDirectionFromInput() const;
