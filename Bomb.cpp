@@ -61,13 +61,13 @@ void Bomb::OnCollision(GameObject* pTarget)
 	if (pTarget->GetObjectName() == "Shield")
 	{
 		this->KillMe(); // 壁に衝突したら自分を削除
-		//BombEffect(); // 爆発エフェクトを生成
+		BombEffect(); // 爆発エフェクトを生成
 		Audio::Play(hBombSound); // 爆弾音を再生
 	}
 	if (pTarget->GetObjectName() == "Player")
 	{
 		this->KillMe();
-		//BombEffect();
+		BombEffect();
 		Audio::Play(hBombSound); // 爆弾音を再生
 	}
 }

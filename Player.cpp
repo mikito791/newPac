@@ -76,16 +76,16 @@ void Player::Update()
 	//入力処理
 	Direction currentDirection = GetDirectionFromInput();
 	transform_.rotate_.y = GetRotationFromDirection(currentDirection);
-	//盾の位置と向きを更新
-	ShieldTrans.position_ = GetPositionFromDirection(currentDirection);
-	ShieldPos = ShieldTrans.position_;
-	ShieldTrans.rotate_.y = GetRotationFromDirection(currentDirection);
-	ShieldRotY = ShieldTrans.rotate_.y;
-	//懐中電灯の位置と向きを更新
-	FlashLightTrans.position_ = GetPositionFromDirection(currentDirection);
-	FlashLightPos = FlashLightTrans.position_;
-	FlashLightTrans.rotate_.y = GetRotationFromDirection(currentDirection);
-	FlashLightRotY = FlashLightTrans.rotate_.y;
+	////盾の位置と向きを更新
+	//ShieldTrans.position_ = GetPositionFromDirection(currentDirection);
+	//ShieldPos = ShieldTrans.position_;
+	//ShieldTrans.rotate_.y = GetRotationFromDirection(currentDirection);
+	//ShieldRotY = ShieldTrans.rotate_.y;
+	////懐中電灯の位置と向きを更新
+	//FlashLightTrans.position_ = GetPositionFromDirection(currentDirection);
+	//FlashLightPos = FlashLightTrans.position_;
+	//FlashLightTrans.rotate_.y = GetRotationFromDirection(currentDirection);
+	//FlashLightRotY = FlashLightTrans.rotate_.y;
 
 	//カメラ
 	XMFLOAT3 camPos = transform_.position_;
@@ -111,21 +111,21 @@ void Player::Update()
 		transform_.position_.y -= data.dist;
 	}
 	
-	if (Input::IsKeyDown(DIK_SPACE))
-	{
-		//盾と懐中電灯を切り替える
-		prevSpaceKey = !prevSpaceKey;
-	}
-	if (prevSpaceKey)
-	{
-		//pShield->SetTransform(ShieldPos, ShieldRotY);
-		pShield->Update();
-	}
-	else
-	{
-		//pFlashLight->SetTransform(FlashLightPos, FlashLightRotY);
-		pFlashLight->Update();
-	}
+	//if (Input::IsKeyDown(DIK_SPACE))
+	//{
+	//	//盾と懐中電灯を切り替える
+	//	prevSpaceKey = !prevSpaceKey;
+	//}
+	//if (prevSpaceKey)
+	//{
+	//	//pShield->SetTransform(ShieldPos, ShieldRotY);
+	//	pShield->Update();
+	//}
+	//else
+	//{
+	//	//pFlashLight->SetTransform(FlashLightPos, FlashLightRotY);
+	//	pFlashLight->Update();
+	//}
 	//操作反転
 	if (onReversal)
 	{
@@ -146,7 +146,7 @@ void Player::Update()
 
 void Player::Draw()
 {	
-	if (prevSpaceKey)
+	/*if (prevSpaceKey)
 	{
 		pShield->SetTransform(ShieldPos, ShieldRotY);
 		pShield->Draw();
@@ -155,7 +155,7 @@ void Player::Draw()
 	{
 		pFlashLight->SetTransform(FlashLightPos, FlashLightRotY);
 		pFlashLight->Draw();
-	}
+	}*/
 	if (!isVisible) return; // 非表示状態なら描画スキップ
 	Model::SetTransform(hPlayer, transform_);
 	Model::Draw(hPlayer);
