@@ -168,6 +168,7 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Hp.cpp" />
     <ClCompile Include="FlashLight.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="ReversalBall.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="NeedleBall.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Hp.h" />
     <ClInclude Include="FlashLight.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="ReversalBall.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="NeedleBall.h" />

@@ -9,6 +9,8 @@
 #include"Stage.h"
 #include"ReversalBall.h"
 #include"Ghost.h"
+#include"Light.h"
+
 #include"Engine/Debug.h"
 #include"Engine/Image.h"
 #include"Engine/SceneManager.h"
@@ -69,6 +71,7 @@ void PlayScene::Initialize()
 	Instantiate<Player>(this);
 	Instantiate<Shield>(this);
 	Instantiate<FlashLight>(this);
+	Instantiate<Light>(this);
 	Instantiate<Stage>(this);
 	Instantiate<Hp>(this);
 	Update_CannonEnemy();

@@ -152,6 +152,9 @@
     <ClCompile Include="FlashLight.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -266,6 +269,9 @@
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="FlashLight.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
       <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
