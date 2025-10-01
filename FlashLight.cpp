@@ -1,4 +1,5 @@
 #include "FlashLight.h"
+#include"Light.h"
 #include"Engine/Model.h"
 #include"Engine/SphereCollider.h"
 #include"Engine/Input.h"
@@ -48,6 +49,7 @@ void FlashLight::Update()
 	}
 	if (Input::IsKey(DIK_C))
 	{
+		Instantiate<Light>(this);
 		//懐中電灯から光を出す（後でやる）
 		//一定時間光るようにして、光る時間をゲージで管理
 		//10秒光る、30秒で満タン回復
